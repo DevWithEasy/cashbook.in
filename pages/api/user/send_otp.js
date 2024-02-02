@@ -1,33 +1,52 @@
 import bcrypt from "bcrypt";
 import initDatabase from "../../../database/initDatabase";
-import User from "../../../database/model/User";
 import Verification from "../../../database/model/Veification";
-import { sendOTP, sendSuccessful } from "../../../libs/varification";
-import authentication from "../../../utils/authentication";
+import { sendOTP } from "../../../libs/varification";
+
 import generateOTP from "../../../utils/generateOTP";
 
-async function handler(req, res){
+async function handler(req, res) {
     initDatabase()
     try {
-        const {email} =(req.query)
+        const { email } = (req.query)
 
+        const findCode = await Verification.findOne({ email: email })
         const otp_number = generateOTP()
-        const otp_hash = await bcrypt.hash((otp_number).toString(),10)
-        
-        const verify = new Verification({
-            email : email,
-            code : otp_hash
-        })
+        const otp_hash = await bcrypt.hash((otp_number).toString(), 10)
 
-        await verify.save()
+        if (!findCode) {
+            const verify = new Verification({
+                email: email,
+                code: otp_hash
+            })
 
-        sendOTP(process.env.EMAIL,email,otp_number)
+            await verify.save()
 
-        res.status(200).json({
-            success : true,
-            status : 200,
-            message : "Account successfully verified"
-        })
+            sendOTP(process.env.EMAIL, email, otp_number)
+
+            return res.status(200).json({
+                success: true,
+                status: 200,
+                message: "OTP send successfully."
+            })
+        } else {
+            await Verification.updateOne({ email: email }, {
+                $set: {
+                    code: otp_hash,
+                    expired: Date.now() + 21600000
+                }
+            })
+
+            sendOTP(process.env.EMAIL, email, otp_number)
+
+            return res.status(200).json({
+                success: true,
+                status: 200,
+                message: "OTP send successfully."
+            })
+        }
+
+
     } catch (error) {
         console.log(error.message)
     }

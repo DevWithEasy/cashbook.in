@@ -1,23 +1,57 @@
 import React, { useState } from 'react';
 import Link from 'next/link';
+import axios from 'axios'
+import { IoArrowBackOutline } from "react-icons/io5";
+import { useRouter } from 'next/router';
+import { useDispatch } from 'react-redux';
+import { login } from '../../store/slice/authSlice';
+import { notificationOK } from '../../utils/toastNotification';
 
 const EmailView = ({ inputRef, handleChange,handleLogin, email, valid, handleView, success, setSuccess }) => {
+    const router = useRouter()
+    const dispatch = useDispatch()
     const [otp, setOtp] = useState('')
 
     const handleChangeOTP = (e) => {
         setOtp(e.target.value)
     }
+    const handleVerify=async()=>{
+        const mail = localStorage.getItem('cb_email') || email
+        try {
+            const res = await axios.post(`/api/user/verify_otp?email=${mail}&otp=${otp}`)
+
+            if(res.data.success){
+                dispatch(login(res.data.data))
+                localStorage.setItem('cb_access_token',res.data.token)
+                localStorage.removeItem('cb_email')
+                notificationOK(res.data.message)
+                router.push(`/bussiness/${res.data.data._id}`)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     return (
         <div>
-            <p
+            <div
                 className='text-lg pb-4'
             >
+
                 {success ?
-                'Enter OTP':
+                <p
+                    className='flex items-center space-x-3'
+                >
+                    <IoArrowBackOutline
+                        onClick={()=>{handleView(),setSuccess(false)}}
+                        className='cursor-pointer'
+                    />
+                    <span>Enter OTP</span>
+                </p>
+                :
                 'Enter your email address'
                 }
-            </p>
+            </div>
             <div
                 className='space-y-3'
             >
@@ -72,9 +106,9 @@ const EmailView = ({ inputRef, handleChange,handleLogin, email, valid, handleVie
                             className='pt-3'
                         >
                             <button
-                                onClick={handleView}
+                                onClick={handleVerify}
                                 className={`w-full p-3 rounded ${otp.length == 6 ? 'bg-[#4863D4] text-white' : 'bg-gray-100 text-gray-300 cursor-not-allowed'}`}
-                                disabled={email.length == 6 ? false : true}
+                                disabled={otp.length == 6 ? false : true}
                             >
                                 Verify
                             </button>
@@ -116,7 +150,7 @@ const EmailView = ({ inputRef, handleChange,handleLogin, email, valid, handleVie
                     onClick={handleView}
                     className='w-full p-3 text-blue-500 hover:bg-gray-100 border rounded'
                 >
-                    <span>Resend OTP</span>
+                    <span>Other Ways to Login</span>
                 </button>
             </div>
         </div>

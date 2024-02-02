@@ -14,7 +14,7 @@ import w_image_5 from '../public/image/reports.webp'
 import benifit_image from '../public/image/uncleWithoutBg.webp'
 import HomeSlider from '../components/HomeSlider';
 import HomeLayout from '../components/HomeLayout';
-
+import Head from 'next/head';
 
 export default function Index() {
   const router = useRouter()
@@ -82,6 +82,11 @@ export default function Index() {
 
   return (
     <HomeLayout>
+      <Head>
+        <title>Login your account</title>
+        <meta name="description" content="CashBook App Login" />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
       <div
         style={{ background: c_section_hero }}
         className="px-10 pt-20 flex justify-between overflow-hidden rounded-b-3xl"

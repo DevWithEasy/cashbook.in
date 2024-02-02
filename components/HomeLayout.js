@@ -58,7 +58,7 @@ const HomeLayout = ({ children }) => {
                             <a className="px-4 py-2">{link.title}</a>
                         </Link>
                     ))}
-                    <Link href="/">
+                    <Link href="/signin">
                         <a className="px-4 py-2 bg-[#4863D4] text-white rounded-md">
                             Login/Register
                         </a>

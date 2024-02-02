@@ -34,6 +34,7 @@ const Signup = () => {
             const res = await axios.post(`/api/user/send_otp?email=${email}`)
             if(res.data.success){
                 setSuccess(true)
+                localStorage.setItem('cb_email',email)
             }
         } catch (error) {
             console.log(error)
