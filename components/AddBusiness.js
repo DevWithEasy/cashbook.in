@@ -7,6 +7,7 @@ import Image from 'next/image'
 import { motion } from 'framer-motion'
 import React, { useState } from 'react'
 import { categories, types } from '../public/image/bussiness/business_data';
+import axios from 'axios'
 
 export default function AddBusiness({ view, setView }) {
   const [name, setName] = useState("")
@@ -16,6 +17,26 @@ export default function AddBusiness({ view, setView }) {
   const [typeView, setTypeView] = useState('')
   const [category, setCategory] = useState({})
   const [type, setType] = useState({})
+
+  const createBusiness = async () => {
+    try {
+      const res = await axios.post(`/api/business`,
+        {
+          name,
+          category : category.id,
+          type : type.id
+        },
+        {
+          headers : {
+            "cb-access-token": localStorage.getItem("cb_access_token")
+          }
+        }
+      )
+      console.log(res.data)
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
   return (
     <>
@@ -206,6 +227,7 @@ export default function AddBusiness({ view, setView }) {
             className='h-20 px-6 flex justify-end items-center border-t'
           >
             <button
+              onClick={createBusiness}
               className={`px-6 py-2 font-bold text-white rounded-md ${name.length > 0 ? 'bg-[#4863D4]' : 'bg-[#4863D4]/80 cursor-not-allowed'}`}
             >
               Create Business

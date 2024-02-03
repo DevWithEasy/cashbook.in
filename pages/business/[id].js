@@ -8,9 +8,7 @@ const Bussiness = () => {
     return (
         <UserLayout>
             <BussinesNames/>
-            <BusinessLayout>
-                <Team/>
-            </BusinessLayout>
+            
         </UserLayout>
     );
 };

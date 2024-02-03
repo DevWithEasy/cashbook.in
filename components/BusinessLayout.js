@@ -45,7 +45,7 @@ const BusinessLayout = ({children}) => {
                             className='py-3 pr-3 border-b'
                         >
                             <div
-                                className='p-2 bg-[#EBEEFB] hover:bg-gray-100 rounded cursor-pointer'
+                                className='p-3 space-y-1 bg-[#EBEEFB] hover:bg-gray-100 rounded cursor-pointer'
                             >
                             <p>{topic.title}</p>
                             <p

@@ -69,8 +69,8 @@ const Team = () => {
                 <Image
                     alt=''
                     src={team_image.src}
-                    height={288}
-                    width={288}
+                    height={321}
+                    width={412}
                 />
             </div>
         </div>
