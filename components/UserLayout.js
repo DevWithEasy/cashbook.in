@@ -100,7 +100,7 @@ const UserLayout = ({ children }) => {
                 className='flex justify-between'
             >
                 <div
-                    className='w-2/12 bg-[#2c324B] text-white overflow-y-auto'
+                    className='hidden md:block md:w-2/12 bg-[#2c324B] text-white overflow-y-auto'
                 >
                     <div
                         className='h-[70px] p-4 bg-[#212121]'
@@ -118,7 +118,7 @@ const UserLayout = ({ children }) => {
                     </div>
                 </div>
                 <div
-                    className='w-10/12 overflow-y-auto'
+                    className='w-full md:w-10/12 overflow-y-auto'
                 >
                     {children}
                 </div>
