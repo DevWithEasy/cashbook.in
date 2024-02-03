@@ -1,46 +1,59 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import logo from '../public/cashbook.svg';
 import sideImage from '../public/image/carousel_01.svg'
 import Image from 'next/image';
 import EmailView from '../components/signin/EmailView';
 import GoogleView from '../components/signin/GoogleView';
 import axios from 'axios'
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux'
 
 const Signup = () => {
+    const router = useRouter()
+    const user = useSelector(state => state.auth.user)
     const [emailView, setEmailView] = useState(false)
     const [email, setEmail] = useState('')
-    const [valid,setValid] = useState(true)
-    const [success,setSuccess] = useState(false)
+    const [valid, setValid] = useState(true)
+    const [success, setSuccess] = useState(false)
     const inputRef = useRef(null)
-    const handleView=()=>{
+
+    const handleView = () => {
         setEmailView(!emailView)
-        if(inputRef){
+        if (inputRef) {
             inputRef?.current?.focus()
         }
     }
-    const handleChange=(e)=>{
+    const handleChange = (e) => {
         setEmail(e.target.value)
         const checkValidEmail = /\S+@\S+\.\S+/
         const isValid = checkValidEmail.test(e.target.value)
-        if(isValid){
+        if (isValid) {
             setValid(true)
-        }else{
+        } else {
             setValid(false)
         }
     }
 
-    const handleLogin=async()=>{
+    const handleLogin = async () => {
         try {
             const res = await axios.post(`/api/user/send_otp?email=${email}`)
-            if(res.data.success){
+            if (res.data.success) {
                 setSuccess(true)
-                localStorage.setItem('cb_email',email)
+                localStorage.setItem('cb_email', email)
             }
         } catch (error) {
             console.log(error)
         }
     }
-    
+
+    useEffect(() => {
+        if (user?.email) {
+            setTimeout(() => {
+                router.push(`business/${user?._id}`)
+            }, 1000)
+        }
+    })
+
     return (
         <div
             className='h-screen flex justify-between'
@@ -96,7 +109,7 @@ const Signup = () => {
                         {!emailView ?
                             <GoogleView {...{
                                 handleView
-                            }}/>
+                            }} />
                             :
                             <EmailView {...{
                                 inputRef,
@@ -107,7 +120,7 @@ const Signup = () => {
                                 handleLogin,
                                 success,
                                 setSuccess
-                            }}/>
+                            }} />
                         }
                     </div>
                 </div>

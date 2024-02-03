@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Menu,
     MenuButton,
@@ -12,14 +12,16 @@ import { useSelector } from "react-redux";
 import user_img from '../public/image/profile.png'
 import Link from 'next/link'
 import { GoPlus } from "react-icons/go";
+import AddBusiness from './AddBusiness';
+
 
 
 const UserLayout = ({ children }) => {
     const user = useSelector(state => state.auth.user)
-    
+    const [view,setView] = useState(false)
     return (
         <div
-            className='h-screen'
+            className='h-screen overflow-hidden'
         >
             <div
                 className='h-12 px-4 py-3 pr-8 flex justify-between items-center border-b shadow'
@@ -104,13 +106,13 @@ const UserLayout = ({ children }) => {
                         className='h-[70px] p-4 bg-[#212121]'
                     >
                         <div
-                            className='p-1 flex space-x-3 items-center bg-[#2c324B] rounded-md'
+                            onClick={()=>setView(!view)}
+                            className='p-1 flex space-x-3 items-center bg-[#2c324B] rounded-md cursor-pointer'
                         >
-                            <button
-                                className='w-8 h-8 flex justify-center items-center text-3xl bg-[#4863D4] rounded-md'
-                            >
-                                <GoPlus size={20}/>
-                            </button>
+                            <GoPlus 
+                                size={28}
+                                className='p-0.5 text-3xl bg-[#4863D4] rounded-md'
+                            />
                             <span>Add New Business</span>
                         </div>
                     </div>
@@ -120,6 +122,11 @@ const UserLayout = ({ children }) => {
                 >
                     {children}
                 </div>
+
+                {view && <AddBusiness {...{
+                    view,setView
+                }}/>}
+
             </div>
         </div>
     );
