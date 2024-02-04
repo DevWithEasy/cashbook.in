@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { createBook } from '../libs/allBookAction';
-import { addBook } from '../store/slice/bookSlice';
+import { createBook } from '../../libs/allBookAction';
+import { addBook } from '../../store/slice/bookSlice';
 import React, { useState } from 'react'
 import {
   Modal,
@@ -26,32 +26,37 @@ export default function AddBook({ view, setView }) {
       <Modal
         isOpen={view}
         isCentered
+        size='xl'
 
       >
         <ModalOverlay />
         <ModalContent className='mx-2'>
-          <ModalHeader>
-            Create new book
-          </ModalHeader>
-          <ModalCloseButton 
-            onClick={() => setView(!view)} 
-          />
-          <ModalBody pb={6} >
+          <div
+            className='px-6 py-4 flex justify-between items-center border-b'
+          >
+            <p className='text-xl'>Add New Book</p>
+            <button
+              onClick={() => setView(!view)}
+              className='px-4 py-1 border rounded'
+            >X</button>
+          </div>
+          <ModalBody pb={10} >
             <FormControl>
               <FormLabel>Book name</FormLabel>
               <Input placeholder='Daily Expense' onChange={(e) => setName(e.target.value)} />
             </FormControl>
           </ModalBody>
 
-          <ModalFooter>
-            <Button onClick={() => setView(!view)} mr={3}>Cancel</Button>
-            <Button
+          <ModalFooter
+            className='border-t'
+          >
+            <button
               onClick={(e) => createBook(name, setLoading, dispatch, addBook, setView)}
-              colorScheme='blue'
+              className='px-6 py-2 bg-[#4863D4] text-white rounded'
 
             >
               {loading ? <Spinner /> : 'Save'}
-            </Button>
+            </button>
           </ModalFooter>
         </ModalContent>
       </Modal>
