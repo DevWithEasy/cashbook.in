@@ -8,8 +8,8 @@ const Balance = ({ entries }) => {
     const credit = 15000
     const debit = 2000
     return (
-        <div className='border border-gray-300 p-4 rounded sm:flex sm:justify-between sm:items-center mb-2 space-y-3 sm:space-y-0'>
-            <div className="sm:flex sm:justify-center sm:items-center sm:w-4/12">
+        <div className='border p-4 rounded sm:flex sm:justify-between sm:items-center mb-2 space-y-3 sm:space-y-0'>
+            <div className="flex items-center w-4/12">
                 <div className="flex space-x-2 pt-2 ">
                     <BiPlus color='green' size={25} className="p-1 bg-green-100 rounded-full" />
                     <div>
@@ -21,7 +21,7 @@ const Balance = ({ entries }) => {
                 </div>
             </div>
 
-            <div className="sm:flex sm:justify-center sm:items-center sm:w-4/12">
+            <div className="flex items-center w-4/12">
                 <div className="flex space-x-2 pt-2 ">
                     <BiMinus color='red' size={25} className="p-1 bg-red-100 rounded-full" />
                     <div>
@@ -32,7 +32,7 @@ const Balance = ({ entries }) => {
                     </div>
                 </div>
             </div>
-            <div className="sm:flex sm:justify-center sm:items-center sm:w-4/12">
+            <div className="flex items-center w-4/12">
                 <div className="flex space-x-2 pt-2 ">
                     <TbEqual size={25} className="p-1 bg-gray-100 rounded-full" />
                     <div>
