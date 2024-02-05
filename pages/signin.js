@@ -49,8 +49,8 @@ const Signup = () => {
     useEffect(() => {
         if (user?.email) {
             setTimeout(() => {
-                router.push(`business/${user?._id}`)
-            }, 1000)
+                router.push(`business/${user?._id}/cashbooks`)
+            }, 200)
         }
     })
 

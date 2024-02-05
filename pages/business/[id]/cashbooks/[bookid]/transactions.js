@@ -3,6 +3,7 @@ import UserLayout from '../../../../../components/UserLayout';
 import Balance from '../../../../../components/Balance';
 import { AiOutlineCloudUpload, AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
 import { IoMdArrowRoundBack } from 'react-icons/io';
+import { TbPlusMinus } from "react-icons/tb";
 import {
     Menu,
     MenuButton,
@@ -11,13 +12,20 @@ import {
 } from '@chakra-ui/react'
 import { IoSettingsOutline } from "react-icons/io5";
 import { HiOutlineUsers } from "react-icons/hi2";
-import { MdOutlineFileDownload, MdPictureAsPdf, MdOutlineGridOn, MdOutlineRadioButtonChecked, MdRadioButtonUnchecked, MdOutlineCheckBoxOutlineBlank, MdOutlineCheckBox } from "react-icons/md";
+import { MdOutlineFileDownload, MdPictureAsPdf, MdOutlineGridOn, MdOutlineRadioButtonChecked, MdRadioButtonUnchecked, MdOutlineCheckBoxOutlineBlank, MdOutlineCheckBox, MdDeleteOutline, MdOutlineTurnRight, MdOutlineArrowDropDown, MdContentCopy, MdOutlineCategory, MdOutlinePayments } from "react-icons/md";
 import { TiArrowSortedDown } from 'react-icons/ti';
 import { CiSearch } from 'react-icons/ci';
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
+import { FaExchangeAlt } from "react-icons/fa";
+import { RiEdit2Line } from "react-icons/ri";
+import AddEntry from '../../../../../components/entry/AddEntry';
 
 const Transactions = () => {
+    const [menuId, setMenuId] = useState(null)
     const [check, setCheck] = useState(false)
+    const [selected, setSelected] = useState([])
+    const [view, setView] = useState(false)
+    const [entryType, setEntryType] = useState('cash_in')
     const [durationBy, setDurationBy] = useState({
         title: 'All Time',
         sort: 'all_time'
@@ -69,7 +77,14 @@ const Transactions = () => {
 
     const handleCheck = () => {
         setCheck(!check)
+        setSelected([...selected, '123'])
     }
+
+    const handleView = (type) => {
+        setEntryType(type)
+        setView(!view)
+    }
+
     return (
         <UserLayout>
             <div
@@ -261,12 +276,14 @@ const Transactions = () => {
                         className='flex justify-end text-white space-x-5'
                     >
                         <button
+                            onClick={() => handleView('cash_in')}
                             className='px-8 py-2 flex items-center space-x-2 bg-[#01865F] active:ring-2 rounded'
                         >
                             <AiOutlinePlus />
                             <span>Cash In</span>
                         </button>
                         <button
+                            onClick={() => handleView('cash_out')}
                             className='px-8 py-2 flex items-center space-x-2 bg-[#C93B3B] active:ring-2 rounded'
                         >
                             <AiOutlinePlus />
@@ -279,9 +296,23 @@ const Transactions = () => {
                     className='flex justify-between '
                 >
                     <p
-                        className='text-gray-500 text-sm'
+                        className='text-sm space-x-3'
                     >
-                        Showing 1-2 of 2 Entries
+                        <span
+                            className='text-gray-500'
+                        >
+                            Showing 1-2 of 2 Entries
+                        </span>
+                        {selected.length > 0 &&
+                            <>
+                                <span
+                                    className='text-gray-200'
+                                >
+                                    |
+                                </span>
+                                <span>1 selected on this page.</span>
+                            </>
+                        }
                     </p>
                     <div
                         className='flex justify-end space-x-3'
@@ -331,11 +362,11 @@ const Transactions = () => {
                         >
                             <IoIosArrowBack
                                 size={25}
-                                className='p-1 bg-gray-200 rounded'
+                                className='p-1 bg-gray-200 rounded cursor-pointer'
                             />
                             <IoIosArrowForward
                                 size={25}
-                                className='p-1 bg-gray-200 rounded'
+                                className='p-1 bg-gray-200 rounded cursor-pointer'
                             />
                         </div>
                     </div>
@@ -343,132 +374,284 @@ const Transactions = () => {
                 <div
                     className='w-full overflow-y-auto'
                 >
-                <table
-                    className='w-full'
-                >
-                    <thead
-                        className='text-sm'
+                    <table
+                        className='w-full'
                     >
-                        <tr
-                            className='bg-slate-100 border-b'
-                        >
-                            <td
-                                className='p-4'
+                        {selected.length > 0 ?
+                            <thead
+                                className='text-sm'
                             >
+                                <tr
+                                    className='bg-slate-100 border-b'
+                                >
+                                    <td
+                                        colSpan={9}
+                                        className='p-4'
+                                    >
+                                        <div
+                                            className='flex items-center space-x-5'
+                                        >
+                                            <button
+                                                className='flex items-center space-x-2'
+                                            >
+                                                {check ?
+                                                    <MdOutlineCheckBox
+                                                        size={20}
+                                                        onClick={handleCheck}
+                                                    />
+                                                    :
+                                                    <MdOutlineCheckBoxOutlineBlank
+                                                        size={20}
+                                                        onClick={handleCheck}
+                                                    />
+                                                }
+                                                <span>Select all</span>
+                                            </button>
+                                            <span className='text-[#4863D4]'>|</span>
+                                            <button
+                                                className='px-2 py-0.5 flex items-center space-x-2 hover:bg-[#e7ebff] rounded'
+                                            >
+                                                <MdDeleteOutline
+                                                    size={20}
+                                                    className='text-red-500'
+                                                />
+                                                <span>Delete</span>
+                                            </button>
+                                            <span className='text-[#4863D4]'>|</span>
+                                            <Menu>
+                                                <MenuButton
 
-                                {check ?
-                                    <MdOutlineCheckBox
-                                        size={20}
-                                        onClick={handleCheck}
-                                    />
-                                    :
-                                    <MdOutlineCheckBoxOutlineBlank
-                                        size={20}
-                                        onClick={handleCheck}
-                                    />
-                                }
-                            </td>
-                            <td
-                                className='px-4 py-2'
-                            >
-                                Date & Time</td>
-                            <td
-                                className='px-4 py-2'
-                            >
-                                Details</td>
-                            <td
-                                className='px-4 py-2'
-                            >
-                                Category</td>
-                            <td
-                                className='px-4 py-2'
-                            >
-                                Mode</td>
-                            <td
-                                className='px-4 py-2'
-                            >
-                                Bill</td>
-                            <td
-                                className='px-4 py-2'
-                            >
-                                Amount</td>
-                            <td
-                                className='px-4 py-2'
-                            >
-                                Balance</td>
-                            <td
-                                className='px-4 py-2'
-                            >
+                                                >
+                                                    <button
+                                                        className='flex items-center space-x-2 text-[#4863D4]'
+                                                    >
+                                                        <MdOutlineTurnRight
+                                                            size={20}
+                                                        />
+                                                        <span>Move or Copy</span>
+                                                        <MdOutlineArrowDropDown size={20} className='text-gray-500' />
+                                                    </button>
 
-                            </td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr
-                            className='hover:bg-[#EBEEFD]'
-                        >
-                            <td
-                                className='px-4 py-2'
-                            >
+                                                </MenuButton>
+                                                <MenuList>
+                                                    <MenuItem>
+                                                        <button
+                                                            className='p-2 flex space-x-2 text-gray-700'
+                                                        >
+                                                            <MdOutlineTurnRight size={20} />
+                                                            <span>Move Entry</span>
+                                                        </button>
+                                                    </MenuItem>
+                                                    <MenuItem>
+                                                        <button
+                                                            className='p-2 flex space-x-2'
+                                                        >
+                                                            <MdContentCopy size={20} />
+                                                            <span>Copy Entry</span>
+                                                        </button>
+                                                    </MenuItem>
+                                                    <MenuItem>
+                                                        <button
+                                                            className='p-2 flex space-x-2'
+                                                        >
+                                                            <TbPlusMinus size={20} />
+                                                            <span>Copy Opposite Entry</span>
+                                                        </button>
+                                                    </MenuItem>
+                                                </MenuList>
+                                            </Menu>
+                                            <span className='text-[#4863D4]'>|</span>
+                                            <Menu>
+                                                <MenuButton
 
-                                {check ?
-                                    <MdOutlineCheckBox
-                                        size={20}
-                                        onClick={handleCheck}
-                                    />
-                                    :
-                                    <MdOutlineCheckBoxOutlineBlank
-                                        size={20}
-                                        onClick={handleCheck}
-                                    />
-                                }
-                            </td>
-                            <td
-                                className='px-4 py-2'
-                            >
-                                <span>08 Jan 2024</span>
-                                <br/>
-                                <span className='text-xs'>08:22pm</span>
-                            </td>
-                            <td
-                                className='px-4 py-2'
-                            >
-                                Robiul Awal
-                            </td>
-                            <td
-                                className='px-4 py-2'
-                            >
-                                
-                            </td>
-                            <td
-                                className='px-4 py-2'
-                            >
-                                
-                            </td>
-                            <td
-                                className='px-4 py-2'
-                            >
-                                
-                            </td>
-                            <td
-                                className='px-4 py-2'
-                            >
-                                1000
-                            </td>
-                            <td
-                                className='px-4 py-2'
-                            >
-                                1000
-                            </td>
-                            <td
-                                className='px-4 py-2'
-                            >
+                                                >
+                                                    <button
+                                                        className='flex items-center space-x-2 text-[#4863D4]'
+                                                    >
+                                                        <FaExchangeAlt
+                                                            size={15}
+                                                        />
+                                                        <span>Change Field</span>
+                                                        <MdOutlineArrowDropDown size={20} className='text-gray-500' />
+                                                    </button>
 
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
+                                                </MenuButton>
+                                                <MenuList>
+                                                    <MenuItem>
+                                                        <button
+                                                            className='p-2 flex space-x-2'
+                                                        >
+                                                            <MdOutlineCategory size={20} />
+                                                            <span>Change Category</span>
+                                                        </button>
+                                                    </MenuItem>
+                                                    <MenuItem>
+                                                        <button
+                                                            className='p-2 flex space-x-2'
+                                                        >
+                                                            <MdOutlinePayments size={20} />
+                                                            <span>Change Payment Mode</span>
+                                                        </button>
+                                                    </MenuItem>
+                                                    <MenuItem>
+                                                        <button
+                                                            className='p-2 flex space-x-2'
+                                                        >
+                                                            <HiOutlineUsers size={20} />
+                                                            <span>Change Contact</span>
+                                                        </button>
+                                                    </MenuItem>
+                                                </MenuList>
+                                            </Menu>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </thead>
+                            :
+                            <thead
+                                className='text-sm'
+                            >
+                                <tr
+                                    className='bg-slate-100 border-b'
+                                >
+                                    <td
+                                        className='p-4'
+                                    >
+
+                                        {check ?
+                                            <MdOutlineCheckBox
+                                                size={20}
+                                                onClick={handleCheck}
+                                            />
+                                            :
+                                            <MdOutlineCheckBoxOutlineBlank
+                                                size={20}
+                                                onClick={handleCheck}
+                                            />
+                                        }
+                                    </td>
+                                    <td
+                                        className='px-4 py-2'
+                                    >
+                                        Date & Time</td>
+                                    <td
+                                        className='px-4 py-2'
+                                    >
+                                        Details</td>
+                                    <td
+                                        className='px-4 py-2'
+                                    >
+                                        Category</td>
+                                    <td
+                                        className='px-4 py-2'
+                                    >
+                                        Mode</td>
+                                    <td
+                                        className='px-4 py-2'
+                                    >
+                                        Bill</td>
+                                    <td
+                                        className='px-4 py-2 text-right'
+                                    >
+                                        Amount</td>
+                                    <td
+                                        className='px-4 py-2 text-right'
+                                    >
+                                        Balance</td>
+                                    <td
+                                        className='px-4 py-2'
+                                    >
+                                    </td>
+                                </tr>
+                            </thead>
+                        }
+
+                        <tbody>
+                            <tr
+                                className='hover:bg-[#EBEEFD]'
+                                onMouseEnter={() => setMenuId(1)}
+
+                            >
+                                <td
+                                    className='px-4 py-2'
+                                >
+
+                                    {check ?
+                                        <MdOutlineCheckBox
+                                            size={20}
+                                            onClick={handleCheck}
+                                        />
+                                        :
+                                        <MdOutlineCheckBoxOutlineBlank
+                                            size={20}
+                                            onClick={handleCheck}
+                                        />
+                                    }
+                                </td>
+                                <td
+                                    className='px-4 py-2'
+                                >
+                                    <span>08 Jan 2024</span>
+                                    <br />
+                                    <span className='text-xs'>08:22pm</span>
+                                </td>
+                                <td
+                                    className='px-4 py-2'
+                                >
+                                    Robiul Awal
+                                </td>
+                                <td
+                                    className='px-4 py-2'
+                                >
+
+                                </td>
+                                <td
+                                    className='px-4 py-2'
+                                >
+
+                                </td>
+                                <td
+                                    className='px-4 py-2'
+                                >
+
+                                </td>
+                                <td
+                                    className='px-4 py-2 text-right'
+                                >
+                                    1000
+                                </td>
+                                <td
+                                    className='px-4 py-2 text-right'
+                                >
+                                    1000
+                                </td>
+                                <td
+                                    className='py-4 flex justify-center items-center'
+                                >
+                                    <div
+                                        className={`flex space-x-2 ${menuId === 1 ? 'visible' : 'invisible'}`}
+                                    >
+                                        <RiEdit2Line
+                                            size={22}
+                                            className='text-[#4863D4] cursor-pointer'
+                                        />
+                                        <MdDeleteOutline
+                                            size={22}
+                                            className='text-red-500 cursor-pointer'
+                                        />
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
+                {view &&
+                    <AddEntry {...{
+                        type : entryType,
+                        setType : setEntryType,
+                        view,setView
+                    }}/>
+                }
             </div>
 
         </UserLayout>

@@ -41,6 +41,9 @@ const businessSchema = mongoose.Schema({
     email : {
         type: String
     },
+    payment : {
+        type: String
+    },
 }, {
     timestamps: true
 })
