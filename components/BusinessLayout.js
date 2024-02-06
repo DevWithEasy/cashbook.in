@@ -1,6 +1,8 @@
+import { useRouter } from 'next/router';
 import React from 'react';
 
 const BusinessLayout = ({children}) => {
+    const router = useRouter()
     const sidebars = [
         {
             title : 'Business Team',
@@ -42,6 +44,7 @@ const BusinessLayout = ({children}) => {
                         sidebars.map((topic,i)=>
                         <div
                             key={i}
+                            onClick={()=>router.push(`/business/businessId/business-settings/${topic.path}`)}
                             className='py-3 pr-3 border-b'
                         >
                             <div

@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import UserLayout from "../../../../components/UserLayout";
 import BusinessLayout from "../../../../components/BusinessLayout";
 import Image from "next/image";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { IoIosArrowForward } from "react-icons/io";
 import team_image from "../../../../public/image/AddTeamFirstTime.png";
+import BusinessAddTeamMember from "../../../../components/business/BusinessAddTeamMember";
 
 const team = () => {
+    const [view,setView] = useState(false)
     return (
         <UserLayout>
             <BusinessLayout>
-                <div className="w-8/12">
+                <div className="w-8/12 pb-10">
                     <div className="p-4 flex justify-between items-center border rounded">
                         <div className="w-7/12">
                             <p className="text-lg">Business Team</p>
@@ -19,7 +21,9 @@ const team = () => {
                                 cashflow together
                             </p>
                         </div>
-                        <button className="px-4 py-2 flex items-center space-x-2 bg-[#4863D4] text-white rounded active:ring-2">
+                        <button 
+                        onClick={()=>setView(!view)}
+                        className="px-4 py-2 flex items-center space-x-2 bg-[#4863D4] text-white rounded active:ring-2">
                             <IoPersonAddSharp />
                             <span>Add team member</span>
                         </button>
@@ -38,9 +42,14 @@ const team = () => {
                                 Give access to limited features & books
                             </p>
                         </div>
-                        <Image alt="" src={team_image.src} height={321} width={412} />
+                        <Image alt="" src={team_image.src} height={250} width={300} />
                     </div>
                 </div>
+                {view &&
+                    <BusinessAddTeamMember {...{
+                        view,setView
+                    }}/>
+                }
             </BusinessLayout>
         </UserLayout>
     );
