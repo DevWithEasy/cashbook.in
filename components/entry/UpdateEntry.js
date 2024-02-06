@@ -11,7 +11,7 @@ import { RiArrowDownSFill } from "react-icons/ri";
 import { GoPlus } from "react-icons/go";
 
 
-const AddEntry = ({ type, setType, view, setView }) => {
+const UpdateEntry = ({ type, setType, view, setView }) => {
     const [timeView, setTimeView] = useState(false)
     const [categoryView, setCategoryView] = useState(false)
     const [paymentView, setPaymentView] = useState(false)
@@ -304,4 +304,4 @@ const AddEntry = ({ type, setType, view, setView }) => {
     );
 };
 
-export default AddEntry;
+export default UpdateEntry;

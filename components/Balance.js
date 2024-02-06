@@ -14,9 +14,9 @@ const Balance = ({ entries }) => {
                     <BiPlus color='green' size={25} className="p-1 bg-green-100 rounded-full" />
                     <div>
                         <p className='text-sm text-gray-600'>
-                            Net Balance
+                            Cash In
                         </p>
-                        <p className='font-xl'>{credit - debit}/-</p>
+                        <p className='font-xl font-bold'>{credit - debit}/-</p>
                     </div>
                 </div>
             </div>
@@ -26,9 +26,9 @@ const Balance = ({ entries }) => {
                     <BiMinus color='red' size={25} className="p-1 bg-red-100 rounded-full" />
                     <div>
                         <p className='text-sm text-gray-600'>
-                            Net Balance
+                            Cash Out
                         </p>
-                        <p className='font-xl'>{credit - debit}/-</p>
+                        <p className='font-xl font-bold'>{credit - debit}/-</p>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@ const Balance = ({ entries }) => {
                         <p className='text-sm text-gray-600'>
                             Net Balance
                         </p>
-                        <p className='font-xl'>{credit - debit}/-</p>
+                        <p className='font-xl font-bold'>{credit - debit}/-</p>
                     </div>
                 </div>
             </div>

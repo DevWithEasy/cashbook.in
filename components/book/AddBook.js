@@ -43,7 +43,11 @@ export default function AddBook({ view, setView }) {
           <ModalBody pb={10} >
             <FormControl>
               <FormLabel>Book name</FormLabel>
-              <Input placeholder='Daily Expense' onChange={(e) => setName(e.target.value)} />
+              <Input 
+                placeholder='Daily Expense' 
+                onChange={(e) => setName(e.target.value)} 
+                autoFocus={true}
+              />
             </FormControl>
           </ModalBody>
 

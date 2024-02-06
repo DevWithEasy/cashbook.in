@@ -19,12 +19,18 @@ import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { FaExchangeAlt } from "react-icons/fa";
 import { RiEdit2Line } from "react-icons/ri";
 import AddEntry from '../../../../../components/entry/AddEntry';
+import EntryDetails from '../../../../../components/entry/EntryDetails';
+import DeleteEntry from '../../../../../components/entry/DeleteEntry';
+import UpdateEntry from '../../../../../components/entry/UpdateEntry';
 
 const Transactions = () => {
     const [menuId, setMenuId] = useState(null)
     const [check, setCheck] = useState(false)
     const [selected, setSelected] = useState([])
     const [view, setView] = useState(false)
+    const [detailsView, setDetailsView] = useState(false)
+    const [deleteView, setDeleteView] = useState(false)
+    const [updateView, setUpdateView] = useState(false)
     const [entryType, setEntryType] = useState('cash_in')
     const [durationBy, setDurationBy] = useState({
         title: 'All Time',
@@ -83,6 +89,10 @@ const Transactions = () => {
     const handleView = (type) => {
         setEntryType(type)
         setView(!view)
+    }
+
+    const handleDetails=()=>{
+        setDetailsView(!deleteView)
     }
 
     return (
@@ -568,8 +578,9 @@ const Transactions = () => {
 
                         <tbody>
                             <tr
-                                className='hover:bg-[#EBEEFD]'
-                                onMouseEnter={() => setMenuId(1)}
+                            onMouseEnter={() => setMenuId(1)}
+                                className='hover:bg-[#EBEEFD] cursor-pointer'
+                                
 
                             >
                                 <td
@@ -589,6 +600,7 @@ const Transactions = () => {
                                     }
                                 </td>
                                 <td
+                                onClick={handleDetails}
                                     className='px-4 py-2'
                                 >
                                     <span>08 Jan 2024</span>
@@ -596,31 +608,37 @@ const Transactions = () => {
                                     <span className='text-xs'>08:22pm</span>
                                 </td>
                                 <td
+                                onClick={handleDetails}
                                     className='px-4 py-2'
                                 >
                                     Robiul Awal
                                 </td>
                                 <td
+                                onClick={handleDetails}
                                     className='px-4 py-2'
                                 >
 
                                 </td>
                                 <td
+                                onClick={handleDetails}
                                     className='px-4 py-2'
                                 >
 
                                 </td>
                                 <td
+                                onClick={handleDetails}
                                     className='px-4 py-2'
                                 >
 
                                 </td>
                                 <td
+                                onClick={handleDetails}
                                     className='px-4 py-2 text-right'
                                 >
                                     1000
                                 </td>
                                 <td
+                                onClick={handleDetails}
                                     className='px-4 py-2 text-right'
                                 >
                                     1000
@@ -629,14 +647,16 @@ const Transactions = () => {
                                     className='py-4 flex justify-center items-center'
                                 >
                                     <div
-                                        className={`flex space-x-2 ${menuId === 1 ? 'visible' : 'invisible'}`}
+                                        className={`flex space-x-3 ${menuId === 1 ? 'visible' : 'invisible'}`}
                                     >
                                         <RiEdit2Line
                                             size={22}
+                                            onClick={()=>setUpdateView(!updateView)}
                                             className='text-[#4863D4] cursor-pointer'
                                         />
                                         <MdDeleteOutline
                                             size={22}
+                                            onClick={()=>setDeleteView(!deleteView)}
                                             className='text-red-500 cursor-pointer'
                                         />
                                     </div>
@@ -650,6 +670,27 @@ const Transactions = () => {
                         type : entryType,
                         setType : setEntryType,
                         view,setView
+                    }}/>
+                }
+                {detailsView &&
+                    <EntryDetails {...{
+                        id : menuId,
+                        view : detailsView,
+                        setView : setDetailsView
+                    }}/>
+                }
+                {updateView &&
+                    <UpdateEntry {...{
+                        id : menuId,
+                        view : updateView,
+                        setView : setUpdateView
+                    }}/>
+                }
+                {deleteView &&
+                    <DeleteEntry {...{
+                        id : menuId,
+                        view : deleteView,
+                        setView : setDeleteView
                     }}/>
                 }
             </div>

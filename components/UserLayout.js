@@ -14,8 +14,6 @@ import Link from 'next/link'
 import { GoPlus } from "react-icons/go";
 import AddBusiness from './AddBusiness';
 
-
-
 const UserLayout = ({ children }) => {
     const user = useSelector(state => state.auth.user)
     const [view,setView] = useState(false)

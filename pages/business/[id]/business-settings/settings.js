@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { useState } from 'react';
 import UserLayout from '../../../../components/UserLayout';
 import BusinessLayout from '../../../../components/BusinessLayout';
 import { FaExchangeAlt } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
+import BusinessDelete from '../../../../components/business/BusinessDelete';
+import BusinessOwnerChange from '../../../../components/business/BusinessOwnerChange';
 
 const settings = () => {
+    const [deleteView,setDeleteView] = useState(false)
+    const [ownerChangeView,setOwnerChangeView] = useState(false)
     return (
         <UserLayout>
             <BusinessLayout>
@@ -27,6 +31,7 @@ const settings = () => {
                             </p>
                         </div>
                         <button
+                            onClick={()=>setOwnerChangeView(!ownerChangeView)}
                             className='px-6 py-2 flex items-center space-x-2 text-yellow-600 active:ring-2'
                         >
                             <FaExchangeAlt />
@@ -49,6 +54,7 @@ const settings = () => {
                             </p>
                         </div>
                         <button
+                            onClick={()=>setDeleteView(!deleteView)}
                             className='px-6 py-2 flex items-center space-x-2 text-red-600 active:ring-2'
                         >
                             <MdOutlineDelete />
@@ -56,6 +62,18 @@ const settings = () => {
                         </button>
                     </div>
                 </div>
+                {deleteView &&
+                    <BusinessDelete {...{
+                        view : deleteView,
+                        setView : setDeleteView
+                    }}/>
+                }
+                {ownerChangeView &&
+                    <BusinessOwnerChange {...{
+                        view : ownerChangeView,
+                        setView : setOwnerChangeView
+                    }}/>
+                }
             </BusinessLayout>
         </UserLayout>
     );
