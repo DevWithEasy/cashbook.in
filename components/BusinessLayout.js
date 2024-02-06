@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 
-const BusinessLayout = ({children}) => {
+const BusinessLayout = ({path,children}) => {
     const router = useRouter()
     const sidebars = [
         {
@@ -48,7 +48,7 @@ const BusinessLayout = ({children}) => {
                             className='py-3 pr-3 border-b'
                         >
                             <div
-                                className='p-3 space-y-1 bg-[#EBEEFB] hover:bg-gray-100 rounded cursor-pointer'
+                                className={`p-3 space-y-1 rounded cursor-pointer ${topic.path == path ? 'bg-[#EBEEFB]' : 'hover:bg-gray-100'}`}
                             >
                             <p>{topic.title}</p>
                             <p

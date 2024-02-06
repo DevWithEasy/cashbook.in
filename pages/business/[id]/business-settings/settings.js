@@ -5,13 +5,17 @@ import { FaExchangeAlt } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
 import BusinessDelete from '../../../../components/business/BusinessDelete';
 import BusinessOwnerChange from '../../../../components/business/BusinessOwnerChange';
+import { useRouter } from 'next/router';
 
 const settings = () => {
+    const router = useRouter()
+    const {pathname} = router
+    const path = pathname.split('/').pop()
     const [deleteView,setDeleteView] = useState(false)
     const [ownerChangeView,setOwnerChangeView] = useState(false)
     return (
         <UserLayout>
-            <BusinessLayout>
+            <BusinessLayout {...{path}}>
                 <div
                     className='w-8/12 space-y-5'
                 >

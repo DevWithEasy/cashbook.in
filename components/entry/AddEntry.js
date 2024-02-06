@@ -70,7 +70,7 @@ const AddEntry = ({ type, setType, view, setView }) => {
                                 <label className='block text-sm'>Date</label>
                                 <input
                                     type="date"
-                                    className='px-4 py-2 rounded border focus:ring-2 ring-[#4863D4] focus:outline-none'
+                                    className='px-4 py-2 rounded border focus:outline-[#4863D4]'
                                 />
                             </div>
                             <div
@@ -90,7 +90,7 @@ const AddEntry = ({ type, setType, view, setView }) => {
                                         className='space-x-2'
                                     >
                                         <select
-                                            className='px-4 py-2 border rounded focus:ring-2 ring-[#4863D4] focus:outline-none'
+                                            className='px-4 py-2 border rounded focus:outline-[#4863D4]'
                                         >
                                             {
                                                 new Array(12).fill(0).map((_, i) =>
@@ -108,7 +108,7 @@ const AddEntry = ({ type, setType, view, setView }) => {
                                             }
                                         </select>
                                         <select
-                                            className='px-4 py-2 border rounded focus:ring-2 ring-[#4863D4] focus:outline-none'
+                                            className='px-4 py-2 border rounded focus:outline-[#4863D4]'
                                         >
                                             {
                                                 new Array(59).fill(0).map((_, i) =>
@@ -126,7 +126,7 @@ const AddEntry = ({ type, setType, view, setView }) => {
                                             }
                                         </select>
                                         <select
-                                            className='px-4 py-2 border rounded focus:ring-2 ring-[#4863D4] focus:outline-none'
+                                            className='px-4 py-2 border rounded focus:outline-[#4863D4]'
                                         >
                                             <option
                                                 className='flex items-center space-x-2'
@@ -160,7 +160,7 @@ const AddEntry = ({ type, setType, view, setView }) => {
                                 type='number'
                                 placeholder='eg - 1000'
                                 autoFocus
-                                className='w-full px-4 py-2 border rounded focus:ring-2 ring-[#4863D4] focus:outline-none'
+                                className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                             />
                         </div>
                         <div
@@ -170,7 +170,7 @@ const AddEntry = ({ type, setType, view, setView }) => {
                             <input
                                 type='text'
                                 placeholder='eg - Enter Detail (Name, Bill No, Item, Quantity etc)'
-                                className='w-full px-4 py-2 border rounded focus:ring-2 ring-[#4863D4] focus:outline-none'
+                                className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                             />
                         </div>
                         <div
@@ -194,7 +194,7 @@ const AddEntry = ({ type, setType, view, setView }) => {
                                     <input
                                         onFocus={() => setCategoryView(!categoryView)}
                                         placeholder='Search or Select'
-                                        className='w-full px-4 py-2 border rounded focus:ring-2 ring-[#4863D4] focus:outline-none'
+                                        className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                                     />
                                     <button
                                         onClick={() => setCategoryView(!categoryView)}
@@ -247,7 +247,7 @@ const AddEntry = ({ type, setType, view, setView }) => {
                                     <input
                                         onClick={() => setPaymentView(!paymentView)}
                                         placeholder='Search or Select'
-                                        className='w-full px-4 py-2 border rounded focus:ring-2 ring-[#4863D4] focus:outline-none'
+                                        className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                                     />
                                     <button
                                         onClick={() => setPaymentView(!paymentView)}

@@ -5,9 +5,11 @@ import { useRouter } from 'next/router';
 
 const fields = () => {
     const router = useRouter()
+    const {pathname} = router
+    const path = pathname.split('/').pop()
     return (
         <UserLayout>
-            <BookSettingLayout>
+            <BookSettingLayout {...{path}}>
                 <div className="w-8/12 space-y-5">
                     <p className='text-sm text-gray-500'>Entry Field</p>
                     <div

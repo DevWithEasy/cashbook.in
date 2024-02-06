@@ -5,11 +5,15 @@ import { MdOutlineEdit } from "react-icons/md";
 import { BsBuildings } from "react-icons/bs";
 import { TiInfo } from "react-icons/ti";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
+import { useRouter } from 'next/router';
 
 const profile = () => {
+    const router = useRouter()
+    const {pathname} = router
+    const path = pathname.split('/').pop()
     return (
         <UserLayout>
-            <BusinessLayout>
+            <BusinessLayout {...{path}}>
                 <div
                     className='w-8/12 space-y-5'
                 >

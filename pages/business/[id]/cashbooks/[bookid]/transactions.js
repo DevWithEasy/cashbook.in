@@ -22,8 +22,10 @@ import AddEntry from '../../../../../components/entry/AddEntry';
 import EntryDetails from '../../../../../components/entry/EntryDetails';
 import DeleteEntry from '../../../../../components/entry/DeleteEntry';
 import UpdateEntry from '../../../../../components/entry/UpdateEntry';
+import { useRouter } from 'next/router';
 
 const Transactions = () => {
+    const router = useRouter()
     const [menuId, setMenuId] = useState(null)
     const [check, setCheck] = useState(false)
     const [selected, setSelected] = useState([])
@@ -123,8 +125,7 @@ const Transactions = () => {
                                 className='relative group'
                             >
                                 <IoSettingsOutline
-                                    onClick={() => {
-                                    }}
+                                    onClick={() => router.push(`/business/businessId/cashbooks/bookId/settings/fields`)}
                                     size={22}
                                     className='text-[#4863D4] cursor-pointer'
                                 />
@@ -139,8 +140,7 @@ const Transactions = () => {
                                 className='relative group'
                             >
                                 <HiOutlineUsers
-                                    onClick={() => {
-                                    }}
+                                    onClick={() => router.push(`/business/businessId/cashbooks/bookId/settings/members`)}
                                     size={22}
                                     className='text-[#4863D4] cursor-pointer'
                                 />

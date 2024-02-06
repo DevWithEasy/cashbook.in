@@ -6,13 +6,16 @@ import { IoIosArrowForward } from 'react-icons/io';
 import Image from 'next/image'
 import user_image from '../../../../../../public/image/profile.png'
 import { useSelector } from "react-redux";
+import { useRouter } from 'next/router';
 
 const members = () => {
     const user = useSelector(state => state.auth.user)
-    console.log(user)
+    const router = useRouter()
+    const {pathname} = router
+    const path = pathname.split('/').pop()
     return (
         <UserLayout>
-            <BookSettingLayout>
+            <BookSettingLayout {...{path}}>
                 <div className="w-8/12">
                     <div className="p-4 flex justify-between items-center border rounded">
                         <div className="w-7/12">
