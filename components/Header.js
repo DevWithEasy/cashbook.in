@@ -9,12 +9,17 @@ import React from 'react';
 import { FaCloudDownloadAlt } from "react-icons/fa";
 import { IoIosLogOut } from "react-icons/io";
 import { IoHelpBuoyOutline } from "react-icons/io5";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import logo from '../public/cashbook.svg';
 import user_img from '../public/image/profile.png';
+import { logout } from '../store/slice/authSlice';
 
 const Header = () => {
+    const dispatch = useDispatch()
     const user = useSelector(state => state.auth.user)
+    const handleLogout = () => {
+        dispatch(logout())
+    }
     return (
         <div
             className='h-12 px-4 py-3 pr-8 flex justify-between items-center border-b shadow'
@@ -96,14 +101,13 @@ const Header = () => {
                         className="py-2 border-b"
                     >
                         <p className="px-4 text-sm text-gray-400">Settings</p>
-                        <Link href=''>
-                            <a
-                                className="px-4 py-2 flex items-center space-x-2 hover:bg-slate-200"
-                            >
-                                <IoIosLogOut />
-                                <span>Logout</span>
-                            </a>
-                        </Link>
+                        <button
+                            onClick={handleLogout}
+                            className="w-full px-4 py-2 flex items-center space-x-2 hover:bg-slate-200"
+                        >
+                            <IoIosLogOut />
+                            <span>Logout</span>
+                        </button>
                     </div>
                     <div
                         className="py-2"

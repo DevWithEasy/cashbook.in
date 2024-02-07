@@ -8,7 +8,6 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/slice/authSlice';
 
-
 const GoogleView = ({ handleView }) => {
     const router = useRouter()
     const dispatch = useDispatch()
