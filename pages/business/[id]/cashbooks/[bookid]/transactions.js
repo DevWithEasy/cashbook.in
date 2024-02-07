@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import UserLayout from '../../../../../components/UserLayout';
 import Balance from '../../../../../components/Balance';
-import { AiOutlineCloudUpload, AiOutlinePlus, AiOutlineMinus } from "react-icons/ai";
+import { AiOutlineCloudUpload, AiOutlinePlus } from "react-icons/ai";
 import { IoMdArrowRoundBack } from 'react-icons/io';
 import { TbPlusMinus } from "react-icons/tb";
 import {

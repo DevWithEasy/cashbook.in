@@ -1,167 +1,94 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import React from 'react';
-import { BiUserCircle, BiLogOutCircle } from 'react-icons/bi';
-import { BsBook } from 'react-icons/bs';
-import { AiOutlineUserAdd, AiOutlineLogin, AiOutlineSetting, AiOutlineInfoCircle } from 'react-icons/ai';
-import { useDispatch, useSelector } from 'react-redux';
-import { useState } from 'react';
-import { logout } from '../store/slice/authSlice';
-import { logoutReset } from '../store/slice/bookSlice';
-import { useRouter } from 'next/router';
+import Head from "next/head";
+import React, { useState } from 'react';
 import {
     Menu,
     MenuButton,
     MenuList,
     MenuItem,
-    Button
+    MenuDivider,
 } from '@chakra-ui/react'
+import logo from '../public/cashbook.svg'
+import Image from "next/image";
+import user_img from '../public/image/profile.png'
+import { useDispatch, useSelector } from "react-redux";
+import Link from 'next/link'
+
 const Header = () => {
-    const dispatch = useDispatch()
-    const router = useRouter()
     const user = useSelector(state => state.auth.user)
-    const [account, setAccount] = useState(false)
-    const userLogout = () => {
-        const user = useSelector(state => state.auth.user)
-        const userLogout = () => {
-            dispatch(logout())
-            dispatch(logoutReset())
-            router.push('/')
-            localStorage.removeItem('cb_access_token')
-        }
-        return (
-            <div className='header_main'>
-                <div className="header">
-                    <Link href='/'><a>CASHBOOK</a></Link>
-                    <div className="icon">
-                        <button onClick={() => setAccount(!account)}>
-                            {!user.image && <AiOutlineUserAdd />}
-                            {user.image && <img src={user?.image?.url} alt="profile" className='rounded-full' />}
-                        </button>
-                    </div>
-                    {
-                        account && <div className="link">
+    return (
+        <div
+        className='h-12 px-4 py-3 pr-8 flex justify-between items-center border-b shadow'
+    >
+        <Image
+            src={logo.src}
+            alt="logo"
+            className=""
+            height={25}
+            width={150}
+        />
+        <Menu>
+            <MenuButton
+                className='flex items-center'
+            >
+                <button
+                    className='flex items-center space-x-2'
+                >
+                    <Image
+                        src={user?.image?.url || user_img.src}
+                        alt="logo"
+                        className=""
+                        height={30}
+                        width={30}
+                    />
+                    <span>{user?.name}</span>
+                </button>
 
-                            {
-                                !user.email && <Link href='/user/signup'>
-                                    <a>
-                                        <AiOutlineUserAdd />
-                                        <span>Sign up</span>
-                                    </a>
-                                </Link>
-                            }
+            </MenuButton>
+            <MenuList
+                className='overflow-hidden'
+            >
+                <Link
+                    href={`/profile`}
 
-                            {
-                                !user.email && <Link href='/user/signin'>
-                                    <a>
-                                        <AiOutlineLogin />
-                                        <span>Sign in</span>
-                                    </a>
-                                </Link>
-                            }
-
-                            {
-                                user.name && <Link href='/user/profile'>
-                                    <a>
-                                        <BiUserCircle />
-                                        <span>Account</span>
-                                    </a>
-                                </Link>
-                            }
-
-                            <Link href='/'>
-                                <a>
-                                    <BsBook />
-                                    <span>All Books</span>
-                                </a>
-                            </Link>
-                            <Link href='/settings'>
-                                <a>
-                                    <AiOutlineSetting />
-                                    <span>Settings</span>
-                                </a>
-                            </Link>
-                            <Link href='/abouts'>
-                                <a>
-                                    <AiOutlineInfoCircle />
-                                    <span>Abouts</span>
-                                </a>
-                            </Link>
-
-                            {
-                                user.name && <button onClick={() => userLogout()}>
-                                    <BiLogOutCircle />
-                                    <span>Logout</span>
-                                </button>
-                            }
-
+                >
+                    <a
+                        className='-mt-2 p-2 flex items-center space-x-4 border-b hover:bg-slate-200'
+                    >
+                        <Image
+                            src={user?.image?.url || user_img.src}
+                            alt="logo"
+                            className=""
+                            height={40}
+                            width={40}
+                        />
+                        <div>
+                            <p
+                                className=''
+                            >
+                                {user?.name}
+                            </p>
+                            <p
+                                className='text-sm text-gray-400'
+                            >
+                                {user?.number}
+                            </p>
+                            <p
+                                className='text-blue-500 text-xs'
+                            >
+                                Your Profile
+                            </p>
                         </div>
-                    }
-                    <Menu>
-                        <MenuButton className='border h-10 w-10 rounded-full'>
-                            {!user.image && <AiOutlineUserAdd />}
-                            {user.image && <img src={user?.image?.url} alt="profile" className='rounded-full' />}
-                        </MenuButton>
-                        <MenuList p='4px' color='black'>
-                            {!user.email && <MenuItem className='rounded-md hover:bg-blue-500 hover:text-white transition-all duration-300'>
-                                <Link href='/user/signup' >
-                                    <a className='flex items-center space-x-2'>
-                                        <AiOutlineUserAdd />
-                                        <span>Sign up</span>
-                                    </a>
-                                </Link>
-                            </MenuItem>}
-                            {!user.email && <MenuItem className='rounded-md hover:bg-blue-500 hover:text-white transition-all duration-300'>
-                                <Link href='/user/signin' >
-                                    <a className='flex items-center space-x-2'>
-                                        <AiOutlineLogin />
-                                        <span>Sign in</span>
-                                    </a>
-                                </Link>
-                            </MenuItem>}
-                            {user.name && <MenuItem className='rounded-md hover:bg-blue-500 hover:text-white transition-all duration-300'>
-                                <Link href='/user/profile' >
-                                    <a className='flex items-center space-x-2'>
-                                        <BiUserCircle />
-                                        <span>Account</span>
-                                    </a>
-                                </Link>
-                            </MenuItem>}
-                            <MenuItem className='rounded-md hover:bg-blue-500 hover:text-white transition-all duration-300'>
-                                <Link href='/' >
-                                    <a className='flex items-center space-x-2'>
-                                        <BsBook />
-                                        <span>All Books</span>
-                                    </a>
-                                </Link>
-                            </MenuItem>
-                            <MenuItem className='rounded-md hover:bg-blue-500 hover:text-white transition-all duration-300'>
-                                <Link href='/settings' >
-                                    <a className='flex items-center space-x-2'>
-                                        <AiOutlineSetting />
-                                        <span>Settings</span>
-                                    </a>
-                                </Link>
-                            </MenuItem>
-                            <MenuItem className='rounded-md hover:bg-blue-500 hover:text-white transition-all duration-300'>
-                                <Link href='/abouts' >
-                                    <a className='flex items-center space-x-2'>
-                                        <AiOutlineInfoCircle />
-                                        <span>Abouts</span>
-                                    </a>
-                                </Link>
-                            </MenuItem>
-                            {user.name && <MenuItem className='rounded-md hover:bg-red-500 hover:text-white transition-all duration-300'>
-                                <button onClick={() => userLogout()} className='flex items-center space-x-2'>
-                                    <BiLogOutCircle />
-                                    <span>Logout</span>
-                                </button>
-                            </MenuItem>}
-                        </MenuList>
-                    </Menu>
-                </div>
-            </div>
-        );
-    };
-}
+                    </a>
+
+                </Link>
+                <MenuItem>New Window</MenuItem>
+                <MenuDivider />
+                <MenuItem>Open...</MenuItem>
+                <MenuItem>Save File</MenuItem>
+            </MenuList>
+        </Menu>
+    </div>
+    );
+};
+
 export default Header;

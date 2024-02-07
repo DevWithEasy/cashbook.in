@@ -1,20 +1,12 @@
 import {
     Modal,
-    ModalBody,
     ModalContent,
-    ModalFooter,
     ModalOverlay
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { MdDeleteOutline } from "react-icons/md";
-import { RxCross2 } from "react-icons/rx";
-import { TiInfo } from "react-icons/ti";
-import { useDispatch } from 'react-redux';
-import { createBook } from '../../libs/allBookAction';
-import { addBook } from '../../store/slice/bookSlice';
-import { MdOutlineTurnRight, MdOutlineContentCopy } from "react-icons/md";
+import { MdOutlineContentCopy, MdOutlineTurnRight } from "react-icons/md";
 import { TbPlusMinus } from "react-icons/tb";
-import { Link } from 'next/link'
+import { useDispatch } from 'react-redux';
 
 export default function ActionEntry({ view, setView }) {
     const [name, setName] = useState("")

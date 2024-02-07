@@ -22,6 +22,7 @@ import DuplicateBook from '../../../components/book/DuplicateBook';
 import MoveBook from '../../../components/book/MoveBook';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux'
+import Head from 'next/head'
 
 const Cashbooks = () => {
     const user = useSelector(state => state.auth.user)
@@ -62,6 +63,9 @@ const Cashbooks = () => {
     return (
         <UserLayout>
             <div>
+                <Head>
+                    <title>Loan - CashBook</title>
+                </Head>
                 <div
                     className='h-[70px] px-6 border-b flex justify-between items-center'
                 >
@@ -71,6 +75,7 @@ const Cashbooks = () => {
                         Loan
                     </p>
                     <button
+                        onClick={()=>router.push(`/business/businessId/business-settings/team`)}
                         className='px-6 py-2 flex items-center space-x-2 text-[#4863D4] border rounded hover:border-[#4863D4]'
                     >
                         <HiUsers size={20} />

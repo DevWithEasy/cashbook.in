@@ -4,11 +4,15 @@ import { PersistGate } from "redux-persist/integration/react";
 import store, { persistor } from '../store/store';
 import '../styles/globals.css';
 import { Toaster } from 'react-hot-toast';
+import Head from 'next/head';
 
 function MyApp({ Component, pageProps }) {
   return <Provider store={store}>
     <PersistGate loading={null} persistor={persistor}>
       <ChakraProvider>
+        <Head>
+        <link rel="icon" href="/logo.svg" sizes="any" />
+        </Head>
         <Component {...pageProps} />
         <Toaster
           position="bottom-center"
