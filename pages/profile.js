@@ -9,6 +9,7 @@ import { IoIosLogOut } from "react-icons/io";
 import Image from "next/image";
 import user_img from '../public/image/profile.png'
 import UpadateProfile from "../components/UpdateProfile";
+import UpdateProfilePhoto from "../components/UpdateProfilePhoto";
 
 export default function Profile() {
     const [isNoti, setNoti] = useState(false)
@@ -72,9 +73,10 @@ export default function Profile() {
                                     <Image
                                         src={user?.image?.url || user_img.src}
                                         alt="logo"
-                                        className=""
+                                        className="cursor-pointer"
                                         height={100}
                                         width={100}
+                                        onClick={() => setUpdatePhoto(!updatePhoto)}
                                     />
                                 </div>
                             </div>
@@ -97,7 +99,7 @@ export default function Profile() {
                                 className="pt-2 pb-5 flex items-center space-x-5"
                             >
                                 <button
-                                    onClick={()=>setView(!view)}
+                                    onClick={() => setView(!view)}
                                     className="px-6 py-1 flex items-center space-x-2 border rounded text-[#4863d4]"
                                 >
                                     <RiEdit2Line />
@@ -159,6 +161,13 @@ export default function Profile() {
                 {view &&
                     <UpadateProfile {...{
                         view, setView
+                    }} />
+                }
+
+                {updatePhoto &&
+                    <UpdateProfilePhoto {...{
+                        view: updatePhoto,
+                        setView: setUpdatePhoto
                     }} />
                 }
             </div>
