@@ -9,9 +9,14 @@ const businessSchema = mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'User'
     },
-    books: {
-        type: mongoose.Types.ObjectId,
-        ref: 'Book'
+    books:{
+        type : [
+            {
+                type: mongoose.Types.ObjectId,
+                ref: 'Book'
+            }
+        ],
+        default : []
     },
     category: {
         type: Number,
@@ -21,12 +26,15 @@ const businessSchema = mongoose.Schema({
         type: Number,
         required: true
     },
-    teams: [
-        {
-            type: mongoose.Types.ObjectId,
-            ref: 'User'
-        }
-    ],
+    teams: {
+        type : [
+            {
+                type: mongoose.Types.ObjectId,
+                ref: 'User'
+            }
+        ],
+        default : []
+    },
     address : {
         type: String
     },

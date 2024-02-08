@@ -43,7 +43,7 @@ async function handler(req, res) {
                 success : true,
                 status:200,
                 data : user,
-                business : {},
+                business : null,
                 message:"Successfully signin",
                 token
             })
@@ -59,7 +59,7 @@ async function handler(req, res) {
                 success : true,
                 status:200,
                 data : finduser,
-                business : findBusiness.length > 0 ? findBusiness[0] : {},
+                businessId : findBusiness.length > 0 ? findBusiness[0]._id : null,
                 message:"Successfully signin",
                 token
             })

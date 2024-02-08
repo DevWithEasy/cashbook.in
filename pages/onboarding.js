@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import { ImSpinner9 } from 'react-icons/im';
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
-import { createData } from '../libs/api_crud';
 import { useDispatch } from 'react-redux';
 import Layout from '../components/Layout';
 import Head  from 'next/head';
+import axios from 'axios'
+import handleInput from '../utils/handleInput';
+import { login } from '../store/slice/authSlice';
+import { useRouter } from 'next/router';
 
 const Onboarding = () => {
+    const router = useRouter()
     const [value, setValue] = useState({
         name: '',
         businessName: ''
@@ -14,6 +18,29 @@ const Onboarding = () => {
     const [check, setCheck] = useState(false)
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
+    const handleComplete=async()=>{
+        setLoading(!loading)
+        try {
+            const res = await axios.post(`api/user/account_confirm`,{
+                ...value,check
+            },
+            {
+                headers : {
+                    "cb-access-token": localStorage.getItem("cb_access_token")
+                }
+            }
+            )
+            if(res.data.success){
+                const {data,businessId} = res.data
+                setLoading(!loading)
+                dispatch(login(data))
+                router.push(`/business/${businessId}/cashbooks`)
+            }
+        } catch (error) {
+            console.log(error)
+            setLoading(!loading)
+        }
+    }
     return (
         <Layout>
             <Head>
@@ -40,6 +67,7 @@ const Onboarding = () => {
                             Your Full Name
                         </label>
                         <input
+                            name = 'name'
                             placeholder='Your name'
                             onChange={(e) => handleInput(e, value, setValue)}
                             className='w-full px-2 py-2 border rounded focus:outline-[#4863D4]'
@@ -54,9 +82,11 @@ const Onboarding = () => {
                             Business Name
                         </label>
                         <input
+                            name='businessName'
                             placeholder='Added Business Name'
                             onChange={(e) => handleInput(e, value, setValue)}
                             className='w-full px-2 py-2 border rounded focus:outline-[#4863D4]'
+                            disabled= {check}
                         />
                     </div>
                     <div
@@ -80,17 +110,13 @@ const Onboarding = () => {
                         className='h-20 px-6 flex justify-end items-center'
                     >
                         <button
-                            onClick={() => createData({
-                                value,
-                                setLoading,
-                                dispatch, addBook
-                            })}
-                            className={`px-6 py-3 text-white rounded-md ${value?.name.length > 0 ? 'bg-[#4863D4]' : 'bg-[#4863D4]/80 cursor-not-allowed'}`}
+                            onClick={handleComplete}
+                            className={`px-6 py-3 flex items-center text-white rounded-md ${value?.name.length > 0 ? 'bg-[#4863D4]' : 'bg-[#4863D4]/80 cursor-not-allowed'}`}
                         >
                             {!loading ?
                                 'Get Started'
                                 :
-                                <ImSpinner9 />
+                                'Createing...'
                             }
 
                         </button>

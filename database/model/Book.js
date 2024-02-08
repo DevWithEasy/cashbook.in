@@ -8,6 +8,10 @@ const bookSchema = mongoose.Schema({
     user:{
         type:mongoose.Types.ObjectId,
         ref:'User'
+    },
+    Business:{
+        type:mongoose.Types.ObjectId,
+        ref:'Business'
     }
 },{
     timestamps:true

@@ -13,12 +13,15 @@ import { useDispatch, useSelector } from "react-redux";
 import logo from '../public/cashbook.svg';
 import user_img from '../public/image/profile.png';
 import { logout } from '../store/slice/authSlice';
+import { useRouter } from 'next/router';
 
 const Header = () => {
+    const router = useRouter()
     const dispatch = useDispatch()
     const user = useSelector(state => state.auth.user)
     const handleLogout = () => {
         dispatch(logout())
+        router.push('/')
     }
     return (
         <div

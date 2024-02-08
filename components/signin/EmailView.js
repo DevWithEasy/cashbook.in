@@ -22,15 +22,26 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
             const res = await axios.post(`/api/user/verify_otp?email=${mail}&otp=${otp}`)
 
             if (res.data.success) {
-                dispatch(login(res.data.data))
+                console.log(res.data)
+
+                const {message,data,businessId} = res.data
+
+                setLoading(!loading)
+                dispatch(login(data))
+
                 localStorage.setItem('cb_access_token', res.data.token)
 
                 localStorage.removeItem('cb_email')
-                notificationOK(res.data.message)
+                notificationOK(message)
 
-                router.push(`/business/${res.data.data._id}`)
+                if(data.name.length > 0 && businessId !== null){
+                    return router.push(`/business/${res.data.businessId}`)
+                }else if (!data.name.length > 0 && businessId === null){
+                    return router.push(`/onboarding`)
+                }else if(data.name.length > 0 && businessId === null){
+                    return router.push(`/add-first-business`)
+                }
 
-                setLoading(!loading)
             }
         } catch (error) {
             console.log(error)
@@ -121,9 +132,9 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
                                 disabled={otp.length == 6 ? false : true}
                             >
                                 {!loading ?
-                                    'Verify'
-                                    :
                                     'Verifying...'
+                                    :
+                                    'Verify'
                                 }
                             </button>
                         </div>
