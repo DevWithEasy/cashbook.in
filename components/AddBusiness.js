@@ -1,42 +1,24 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { createBook } from '../libs/allBookAction';
-import { addBook } from '../store/slice/bookSlice';
-import { IoIosArrowUp, IoIosArrowDown } from "react-icons/io";
-import { IoMdCheckmarkCircle } from "react-icons/io";
-import Image from 'next/image'
-import { motion } from 'framer-motion'
-import React, { useState } from 'react'
+import { motion } from 'framer-motion';
+import Image from 'next/image';
+import React, { useState } from 'react';
+import { IoIosArrowDown, IoIosArrowUp, IoMdCheckmarkCircle } from "react-icons/io";
+import { useDispatch } from 'react-redux';
 import { categories, types } from '../public/image/bussiness/business_data';
-import axios from 'axios'
+import handleInput from '../utils/handleInput';
+import { createData } from '../libs/api_crud';
+import { addBook } from '../store/slice/bookSlice';
+import { ImSpinner9 } from "react-icons/im";
 
 export default function AddBusiness({ view, setView }) {
-  const [name, setName] = useState("")
+  const [value, setValue] = useState({
+    name : ''
+  })
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
   const [categoryView, setCategoryView] = useState('')
   const [typeView, setTypeView] = useState('')
   const [category, setCategory] = useState({})
   const [type, setType] = useState({})
-
-  const createBusiness = async () => {
-    try {
-      const res = await axios.post(`/api/business`,
-        {
-          name,
-          category : category.id,
-          type : type.id
-        },
-        {
-          headers : {
-            "cb-access-token": localStorage.getItem("cb_access_token")
-          }
-        }
-      )
-      console.log(res.data)
-    } catch (error) {
-      console.log(error)
-    }
-  }
 
   return (
     <>
@@ -80,7 +62,7 @@ export default function AddBusiness({ view, setView }) {
               </label>
               <input
                 placeholder='Added Business Name'
-                onChange={(e) => setName(e.target.value)}
+                onChange={(e) => handleInput(e,value,setValue)}
                 className='w-1/2 p-2 border rounded focus:outline-[#4863D4]'
               />
             </div>
@@ -227,10 +209,22 @@ export default function AddBusiness({ view, setView }) {
             className='h-20 px-6 flex justify-end items-center border-t'
           >
             <button
-              onClick={createBusiness}
-              className={`px-6 py-2 font-bold text-white rounded-md ${name.length > 0 ? 'bg-[#4863D4]' : 'bg-[#4863D4]/80 cursor-not-allowed'}`}
+              onClick={()=>createData({
+                value : {
+                  ...value,category,type
+                },
+                setView,
+                setLoading,
+                dispatch,addBook
+              })}
+              className={`px-6 py-3 font-bold text-white rounded-md ${value?.name.length > 0 ? 'bg-[#4863D4]' : 'bg-[#4863D4]/80 cursor-not-allowed'}`}
             >
-              Create Business
+              {!loading ?
+                'Create Business'
+                :
+                <ImSpinner9/>
+              }
+              
             </button>
           </div>
         </motion.div>

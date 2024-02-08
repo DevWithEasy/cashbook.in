@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../store/slice/authSlice';
 import { notificationOK } from '../../utils/toastNotification';
 
-const EmailView = ({ inputRef, handleChange,handleLogin, email, valid, handleView, success, setSuccess }) => {
+const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleView, success, setSuccess, loading,setLoading }) => {
     const router = useRouter()
     const dispatch = useDispatch()
     const [otp, setOtp] = useState('')
@@ -15,20 +15,26 @@ const EmailView = ({ inputRef, handleChange,handleLogin, email, valid, handleVie
     const handleChangeOTP = (e) => {
         setOtp(e.target.value)
     }
-    const handleVerify=async()=>{
+    const handleVerify = async () => {
         const mail = localStorage.getItem('cb_email') || email
+        setLoading(!loading)
         try {
             const res = await axios.post(`/api/user/verify_otp?email=${mail}&otp=${otp}`)
 
-            if(res.data.success){
+            if (res.data.success) {
                 dispatch(login(res.data.data))
-                localStorage.setItem('cb_access_token',res.data.token)
+                localStorage.setItem('cb_access_token', res.data.token)
+
                 localStorage.removeItem('cb_email')
                 notificationOK(res.data.message)
-                router.push(`/bussiness/${res.data.data._id}`)
+
+                router.push(`/business/${res.data.data._id}`)
+
+                setLoading(!loading)
             }
         } catch (error) {
             console.log(error)
+            setLoading(!loading)
         }
     }
 
@@ -39,17 +45,17 @@ const EmailView = ({ inputRef, handleChange,handleLogin, email, valid, handleVie
             >
 
                 {success ?
-                <p
-                    className='flex items-center space-x-3'
-                >
-                    <IoArrowBackOutline
-                        onClick={()=>{handleView(),setSuccess(false)}}
-                        className='cursor-pointer'
-                    />
-                    <span>Enter OTP</span>
-                </p>
-                :
-                'Enter your email address'
+                    <p
+                        className='flex items-center space-x-3'
+                    >
+                        <IoArrowBackOutline
+                            onClick={() => { handleView(), setSuccess(false) }}
+                            className='cursor-pointer'
+                        />
+                        <span>Enter OTP</span>
+                    </p>
+                    :
+                    'Enter your email address'
                 }
             </div>
             <div
@@ -81,7 +87,11 @@ const EmailView = ({ inputRef, handleChange,handleLogin, email, valid, handleVie
                                 className={`w-full p-3 rounded ${email.length > 0 ? 'bg-[#4863D4] text-white' : 'bg-gray-100 text-gray-300 cursor-not-allowed'}`}
                                 disabled={email.length > 0 ? false : true}
                             >
-                                Send OTP
+                                {!loading ?
+                                    'Send OTP'
+                                    :
+                                    'Sending...'
+                                }
                             </button>
                         </div>
 
@@ -110,7 +120,11 @@ const EmailView = ({ inputRef, handleChange,handleLogin, email, valid, handleVie
                                 className={`w-full p-3 rounded ${otp.length == 6 ? 'bg-[#4863D4] text-white' : 'bg-gray-100 text-gray-300 cursor-not-allowed'}`}
                                 disabled={otp.length == 6 ? false : true}
                             >
-                                Verify
+                                {!loading ?
+                                    'Verify'
+                                    :
+                                    'Verifying...'
+                                }
                             </button>
                         </div>
 

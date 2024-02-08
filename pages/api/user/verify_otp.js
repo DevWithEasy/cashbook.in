@@ -3,6 +3,7 @@ import initDatabase from "../../../database/initDatabase";
 import User from "../../../database/model/User";
 import Verification from "../../../database/model/Veification";
 import jwt from 'jsonwebtoken';
+import Business from "../../../database/model/Business";
 
 async function handler(req, res) {
     initDatabase()
@@ -42,6 +43,7 @@ async function handler(req, res) {
                 success : true,
                 status:200,
                 data : user,
+                business : {},
                 message:"Successfully signin",
                 token
             })
@@ -50,11 +52,14 @@ async function handler(req, res) {
             await Verification.deleteOne({email: email})
 
             const token = await jwt.sign({id : finduser._id},process.env.JWT_SECRET)
+
+            const findBusiness = await Business.find({user: finduser._id})
         
             return res.status(200).json({
                 success : true,
                 status:200,
                 data : finduser,
+                business : findBusiness.length > 0 ? findBusiness[0] : {},
                 message:"Successfully signin",
                 token
             })

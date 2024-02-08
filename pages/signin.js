@@ -15,6 +15,7 @@ const Signup = () => {
     const [email, setEmail] = useState('')
     const [valid, setValid] = useState(true)
     const [success, setSuccess] = useState(false)
+    const [loading, setLoading] = useState(false)
     const inputRef = useRef(null)
 
     const handleView = () => {
@@ -35,14 +36,17 @@ const Signup = () => {
     }
 
     const handleLogin = async () => {
+        setLoading(!loading)
         try {
             const res = await axios.post(`/api/user/send_otp?email=${email}`)
             if (res.data.success) {
                 setSuccess(true)
                 localStorage.setItem('cb_email', email)
+                setLoading(!loading)
             }
         } catch (error) {
             console.log(error)
+            setLoading(!loading)
         }
     }
 
@@ -119,7 +123,9 @@ const Signup = () => {
                                 handleChange,
                                 handleLogin,
                                 success,
-                                setSuccess
+                                setSuccess,
+                                loading,
+                                setLoading
                             }} />
                         }
                     </div>

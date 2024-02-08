@@ -5,8 +5,8 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { BsBuildings } from "react-icons/bs";
+import { ImSpinner9 } from "react-icons/im";
 import { MdInfo } from "react-icons/md";
-import { ImSpinner, ImSpinner9 } from "react-icons/im";
 
 const MoveBook = ({ view, setView }) => {
 
