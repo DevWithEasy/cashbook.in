@@ -50,11 +50,11 @@ const Signup = () => {
         }
     }
 
-    // useEffect(() => {
-    //     if (user?.email) {
-    //         router.push(`business/${user?._id}/cashbooks`)
-    //     }
-    // })
+    useEffect(() => {
+        if (user?.email) {
+            router.push(`/checking`)
+        }
+    })
 
     return (
         <div

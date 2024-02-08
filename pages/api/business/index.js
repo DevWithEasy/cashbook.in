@@ -1,7 +1,9 @@
 import { createBusiness, deleteBusiness, getBusiness, updateBusiness } from "../../../database/controllers/businessControllers";
+import initDatabase from "../../../database/initDatabase";
 import authentication from "../../../utils/authentication";
 
 function handler(req, res) {
+    initDatabase()
     switch (req.method) {
         case 'GET':
             getBusiness(req, res)

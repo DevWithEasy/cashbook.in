@@ -1,13 +1,20 @@
+import Book from "../model/Book"
 import Business from "../model/Business"
 import User from "../model/User"
 
 export const getBusiness = async(req,res)=>{
     try {
-        const book = await Business.findOne({"_id" : req.query.id})
+        const bussiness = await Business.findOne({"_id" : req.query.id})
+
+        const books = await Book.find({business : req.query.id})
+
         res.status(200).json({
             success : "success",
             status:200,
-            data : {}
+            data : {
+                bussiness,
+                books
+            }
         })
     } catch (err) {
         res.status(500).json({
@@ -36,7 +43,6 @@ export const createBusiness = async(req,res)=>{
 
         const business = await newBusiness.save()
         
-        // await Business.findOne({"_id" : req.query.id})
         res.status(200).json({
             success : true,
             status:200,
@@ -53,11 +59,17 @@ export const createBusiness = async(req,res)=>{
 
 export const updateBusiness = async(req,res)=>{
     try {
-        const book = await Business.findOne({"_id" : req.query.id})
+        const book = await Business.findByIdAndUpdate(req.query.id,{
+            $set : {
+                name : req.body.name,
+            }
+        },
+        {new : true}
+        )
         res.status(200).json({
             success : "success",
             status:200,
-            data : {}
+            data : book
         })
     } catch (err) {
         res.status(500).json({
@@ -70,7 +82,7 @@ export const updateBusiness = async(req,res)=>{
 
 export const deleteBusiness = async(req,res)=>{
     try {
-        const book = await Business.findOne({"_id" : req.query.id})
+        await Business.findByIdAndDelete(req.query.id)
         res.status(200).json({
             success : "success",
             status:200,

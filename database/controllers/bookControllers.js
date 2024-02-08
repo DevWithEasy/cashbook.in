@@ -19,6 +19,24 @@ export const getBook = async(req,res)=>{
     }
 }
 
+export const createBook = async(req,res)=>{
+    try {
+        const book = await Book.findOne({"_id" : req.query.id})
+        const entries = await Post.find({book: book._id}).sort({createdAt: -1})
+        res.status(200).json({
+            success : "success",
+            status:200,
+            data : {...book._doc,entries}
+        })
+    } catch (err) {
+        res.status(500).json({
+            success : false,
+            status:500,
+            message:err.message
+        })
+    }
+}
+
 export const updateBook = async(req,res)=>{
     try {
         await Book.updateOne({"_id" : req.query.id},{$set:{

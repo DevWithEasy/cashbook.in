@@ -56,48 +56,43 @@ const Header = () => {
                 >
                     <Link
                         href={`/profile`}
+                        className='-mt-2 p-2 flex items-center space-x-4 hover:bg-slate-200'
 
                     >
-                        <a
-                            className='-mt-2 p-2 flex items-center space-x-4 hover:bg-slate-200'
-                        >
-                            <Image
-                                src={user?.image?.url || user_img.src}
-                                alt="logo"
-                                className=""
-                                height={40}
-                                width={40}
-                            />
-                            <div>
-                                <p
-                                    className=''
-                                >
-                                    {user?.name}
-                                </p>
-                                <p
-                                    className='text-sm text-gray-400'
-                                >
-                                    {user?.number}
-                                </p>
-                                <p
-                                    className='text-blue-500 text-xs'
-                                >
-                                    Your Profile
-                                </p>
-                            </div>
-                        </a>
+                        <Image
+                            src={user?.image?.url || user_img.src}
+                            alt="logo"
+                            className=""
+                            height={40}
+                            width={40}
+                        />
+                        <div>
+                            <p
+                                className=''
+                            >
+                                {user?.name}
+                            </p>
+                            <p
+                                className='text-sm text-gray-400'
+                            >
+                                {user?.number}
+                            </p>
+                            <p
+                                className='text-blue-500 text-xs'
+                            >
+                                Your Profile
+                            </p>
+                        </div>
 
                     </Link>
                     <div
                         className="py-2 border-y"
                     >
-                        <Link href=''>
-                            <a
-                                className="px-4 py-2 flex items-center space-x-2 hover:bg-slate-200"
-                            >
-                                <IoHelpBuoyOutline />
-                                <span>Help & Support</span>
-                            </a>
+                        <Link href=''
+                            className="px-4 py-2 flex items-center space-x-2 hover:bg-slate-200"
+                        >
+                            <IoHelpBuoyOutline />
+                            <span>Help & Support</span>
                         </Link>
                     </div>
                     <div
@@ -116,13 +111,11 @@ const Header = () => {
                         className="py-2"
                     >
                         <p className="px-4 text-sm text-gray-400">Mobile App</p>
-                        <Link href=''>
-                            <a
-                                className="px-4 py-2 flex items-center space-x-2 hover:bg-slate-200"
-                            >
-                                <FaCloudDownloadAlt />
-                                <span>Download App</span>
-                            </a>
+                        <Link href=''
+                            className="px-4 py-2 flex items-center space-x-2 hover:bg-slate-200"
+                        >
+                            <FaCloudDownloadAlt />
+                            <span>Download App</span>
                         </Link>
                     </div>
                     <p

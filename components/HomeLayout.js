@@ -41,27 +41,23 @@ const HomeLayout = ({ children }) => {
             <div className="sticky top-0 px-10 py-4 bg-white flex justify-between items-center border-b z-50">
                 <div>
                     <Link href="/">
-                        <a>
-                            <Image
+                    <Image
                                 src={logo.src}
                                 alt="logo"
                                 className=""
                                 height={39}
                                 width={150}
                             />
-                        </a>
                     </Link>
                 </div>
                 <div className="flex items-center space-x-4 text-base font-medium">
                     {links.map((link, i) => (
                         <Link key={i} href={link.path}>
-                            <a className="px-4 py-2">{link.title}</a>
+                            {link.title}
                         </Link>
                     ))}
-                    <Link href="/signin">
-                        <a className="px-4 py-2 bg-[#4863D4] text-white rounded-md">
-                            Login/Register
-                        </a>
+                    <Link href="/signin" className="px-4 py-2 bg-[#4863D4] text-white rounded-md">
+                        Login/Register
                     </Link>
                 </div>
             </div>
@@ -120,10 +116,10 @@ const HomeLayout = ({ children }) => {
                     <div className="w-3/12 flex flex-col space-y-5">
                         <h2 className="text-lg font-bold">Company</h2>
                         <Link href="">
-                            <a>Blogs</a>
+                        Blogs
                         </Link>
                         <Link href="">
-                            <a>About</a>
+                        About
                         </Link>
                         <div className="flex space-x-5">
                             <a href="">
@@ -146,19 +142,19 @@ const HomeLayout = ({ children }) => {
                     <div className="w-3/12 flex flex-col space-y-5">
                         <h2 className="text-lg font-bold">Legal</h2>
                         <Link href="">
-                            <a>Privacy Policies</a>
+                        Privacy Policies
                         </Link>
                         <Link href="">
-                            <a>FAQs</a>
+                        FAQs
                         </Link>
                         <Link href="">
-                            <a>Terms and Conditions</a>
+                        Terms and Conditions
                         </Link>
                         <Link href="">
-                            <a>Grievence Redressal Policy</a>
+                        Grievence Redressal Policy
                         </Link>
                         <Link href="">
-                            <a>LivQuik Terms & Conditions</a>
+                        LivQuik Terms & Conditions
                         </Link>
                     </div>
                     <div className="w-3/12 flex flex-col space-y-5">

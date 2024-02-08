@@ -9,7 +9,7 @@ const bookSchema = mongoose.Schema({
         type:mongoose.Types.ObjectId,
         ref:'User'
     },
-    Business:{
+    business:{
         type:mongoose.Types.ObjectId,
         ref:'Business'
     }

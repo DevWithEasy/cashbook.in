@@ -22,9 +22,8 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
             const res = await axios.post(`/api/user/verify_otp?email=${mail}&otp=${otp}`)
 
             if (res.data.success) {
-                console.log(res.data)
 
-                const {message,data,businessId} = res.data
+                const {message,data} = res.data
 
                 setLoading(!loading)
                 dispatch(login(data))
@@ -32,16 +31,9 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
                 localStorage.setItem('cb_access_token', res.data.token)
 
                 localStorage.removeItem('cb_email')
+
                 notificationOK(message)
-
-                if(data.name.length > 0 && businessId !== null){
-                    return router.push(`/business/${res.data.businessId}`)
-                }else if (!data.name.length > 0 && businessId === null){
-                    return router.push(`/onboarding`)
-                }else if(data.name.length > 0 && businessId === null){
-                    return router.push(`/add-first-business`)
-                }
-
+                
             }
         } catch (error) {
             console.log(error)
@@ -151,24 +143,18 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
                     </span>
                     <Link
                         href=''
+                        className='px-1 text-blue-500'
                     >
-                        <a
-                            className='px-1 text-blue-500'
-                        >
-                            Terms
-                        </a>
+                        Terms
                     </Link>
                     <span>
                         and
                     </span>
                     <Link
                         href=''
+                        className='px-1 text-blue-500'
                     >
-                        <a
-                            className='px-1 text-blue-500'
-                        >
-                            Policies.
-                        </a>
+                        Policies.
                     </Link>
                 </div>
                 <button

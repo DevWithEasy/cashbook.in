@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { notificationOK } from '../utils/toastNotification'
+import { notificationNOT, notificationOK } from '../utils/toastNotification'
 
 export const createData=async(data)=>{
     const {url,value,setView,setLoading,dispatch,action} = data
@@ -20,7 +20,7 @@ export const createData=async(data)=>{
         }
     } catch (error) {
         console.log(error)
-        notificationOK(res?.data?.message)
+        notificationNOT(error.message)
     }
 }
 

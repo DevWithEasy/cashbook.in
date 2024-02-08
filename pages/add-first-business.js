@@ -41,6 +41,7 @@ const AddFirstBusiness = () => {
                             Business Name
                         </label>
                         <input
+                            name = 'name'
                             placeholder='Added Business Name'
                             onChange={(e) => handleInput(e, value, setValue)}
                             className='w-1/2 p-2 border rounded focus:outline-[#4863D4]'
@@ -189,10 +190,10 @@ const AddFirstBusiness = () => {
                     >
                         <button
                             onClick={() => createData({
+                                url : `/api/business`,
                                 value: {
                                     ...value, category, type
                                 },
-                                setView,
                                 setLoading,
                                 dispatch, addBook
                             })}

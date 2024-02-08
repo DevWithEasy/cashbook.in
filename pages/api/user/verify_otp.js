@@ -17,7 +17,7 @@ async function handler(req, res) {
             return res.status(404).json({
                 success: false,
                 status: 404,
-                message: "Credentials not valid"
+                message: "OTP Not Found."
             })
         }
         const finduser = await User.findOne({email: email})
@@ -43,7 +43,6 @@ async function handler(req, res) {
                 success : true,
                 status:200,
                 data : user,
-                business : null,
                 message:"Successfully signin",
                 token
             })
@@ -52,14 +51,11 @@ async function handler(req, res) {
             await Verification.deleteOne({email: email})
 
             const token = await jwt.sign({id : finduser._id},process.env.JWT_SECRET)
-
-            const findBusiness = await Business.find({user: finduser._id})
         
             return res.status(200).json({
                 success : true,
                 status:200,
                 data : finduser,
-                businessId : findBusiness.length > 0 ? findBusiness[0]._id : null,
                 message:"Successfully signin",
                 token
             })

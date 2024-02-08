@@ -53,24 +53,18 @@ const GoogleView = ({ handleView }) => {
                 </span>
                 <Link
                     href=''
+                    className='px-1 text-blue-500'
                 >
-                    <a
-                        className='px-1 text-blue-500'
-                    >
-                        Terms of Service
-                    </a>
+                    Terms of Service
                 </Link>
                 <span>
                     and
                 </span>
                 <Link
                     href=''
+                    className='px-1 text-blue-500'
                 >
-                    <a
-                        className='px-1 text-blue-500'
-                    >
-                        Privacy Policy.
-                    </a>
+                    Privacy Policy.
                 </Link>
             </div>
             <h2
