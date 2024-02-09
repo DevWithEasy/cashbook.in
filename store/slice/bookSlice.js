@@ -15,8 +15,10 @@ const bookSlice = createSlice({
             state.businesses = action.payload
         },
         addCurrentBusiness: (state, action) => {
-            console.log(action.payload)
             state.currentBusiness = action.payload
+        },
+        addBusiness: (state, action) => {
+            state.businesses = [action.payload, ...state.businesses]
         },
         addBooks: (state, action) => {
             state.books = action.payload
@@ -32,7 +34,8 @@ const bookSlice = createSlice({
             state.currentBook = {}
         },
         renameBook: (state, action) => {
-            state.currentBook = { ...state.currentBook, name: action.payload }
+            console.log(action.payload)
+            state.books = state.books.map(book => book._id === action.payload._id ? action.payload : book)
         },
         addEntries: (state, action) => {
             state.entries = action.payload
@@ -60,5 +63,5 @@ const bookSlice = createSlice({
 
     }
 })
-export const {addBusinesses,addCurrentBusiness, addBooks, addCurrentBook, addBook, removeBook, renameBook, addEntries, addEntry, removeEntry, updatePrevEntry, logoutReset } = bookSlice.actions
+export const {addBusinesses,addCurrentBusiness,addBusiness, addBooks, addCurrentBook, addBook, removeBook, renameBook, addEntries, addEntry, removeEntry, updatePrevEntry, logoutReset } = bookSlice.actions
 export default bookSlice.reducer

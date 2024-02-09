@@ -21,19 +21,25 @@ export const createBook =async(id,name,setLoading,dispatch,action,setView)=>{
     }
 }
 
-export const updateBook =async(id,value,setLoading,dispatch,action,onClose)=>{
+export const updateBook =async(id,name,setLoading,dispatch,action,setView)=>{
     try{
         setLoading(true)
-        const res = await axios.put(`/api/book/${id}`,{name : value})
+        const res = await axios.put(`/api/book/${id}`,{name},{
+            headers: {
+                "cb-access-token": localStorage.getItem("cb_access_token")
+            }
+        })
         if(res.data.status === 200){
+            console.log(res.data.data)
             setLoading(false)
             notificationOK(res.data.message)
-            dispatch(action(res.data.data.name))
-            onClose()
+            dispatch(action(res.data.data))
+            setView(false)
         }
-    }catch(err){
+    }catch(error){
         setLoading(false)
-        notificationNOT(err.message)
+        notificationNOT(error.message)
+        console.log(error)
     }
 }
 

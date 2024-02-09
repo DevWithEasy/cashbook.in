@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { UserLayout, Cashbooks_Book, Cashbooks_Contact, Cashbooks_Header, Cashbooks_NoBook, Cashbooks_Search, Book_Add, Book_Duplicate, Book_Move, Book_Update } from '../../../components/Index'
 import { addBooks, addBusinesses, addCurrentBusiness } from '../../../store/slice/bookSlice';
 import { notificationNOT } from '../../../utils/toastNotification';
+import Loading from '../../../components/Loading';
 
 const Cashbooks = () => {
     const { currentBusiness, books } = useSelector(state => state.book)
@@ -22,8 +23,6 @@ const Cashbooks = () => {
     const [moveView, setMoveView] = useState(false)
     const [id, setId] = useState(null)
 
-
-
     const getBusiness = async () => {
         try {
             setLoading(true)
@@ -35,7 +34,6 @@ const Cashbooks = () => {
             if (res.data.success) {
                 const { data } = res.data
                 setLoading(false)
-                console.log(data.bussiness)
                 dispatch(addBusinesses(data.bussinesses))
                 dispatch(addCurrentBusiness(data.bussinesses.find(business => business._id === router.query.id)))
                 dispatch(addBooks(data.books))
@@ -48,12 +46,12 @@ const Cashbooks = () => {
 
     useEffect(() => {
         router.query.id && getBusiness()
-    }, [])
-
+    }, [currentBusiness._id])
 
     return (
         <UserLayout>
-            <div>
+            {!loading ?
+                <div>
                 <Head>
                     <title>{currentBusiness?.name} - CashBook</title>
                 </Head>
@@ -120,6 +118,9 @@ const Cashbooks = () => {
                     }} />
                 }
             </div>
+            :
+            <Loading/>
+            }
         </UserLayout>
     );
 }

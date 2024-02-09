@@ -1,17 +1,18 @@
 import { motion } from 'framer-motion';
 import Image from 'next/image';
 import React, { useState } from 'react';
+import { ImSpinner9 } from "react-icons/im";
 import { IoIosArrowDown, IoIosArrowUp, IoMdCheckmarkCircle } from "react-icons/io";
 import { useDispatch } from 'react-redux';
-import { categories, types } from '../public/image/bussiness/business_data';
-import handleInput from '../utils/handleInput';
-import { createData } from '../libs/api_crud';
-import { addBook } from '../store/slice/bookSlice';
-import { ImSpinner9 } from "react-icons/im";
+import { categories, types } from '../../public/image/bussiness/business_data';
+import { addBusiness } from '../../store/slice/bookSlice';
+import handleInput from '../../utils/handleInput';
+import axios from 'axios'
+import { notificationNOT, notificationOK } from '../../utils/toastNotification';
 
 export default function AddBusiness({ view, setView }) {
   const [value, setValue] = useState({
-    name : ''
+    name: ''
   })
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
@@ -19,7 +20,30 @@ export default function AddBusiness({ view, setView }) {
   const [typeView, setTypeView] = useState('')
   const [category, setCategory] = useState({})
   const [type, setType] = useState({})
-
+  const createBusiness = async () => {
+    try {
+      setLoading(true)
+      const res = await axios.post('/api/business', {
+        ...value,
+        category: category.id,
+        type: type.id
+      }, {
+        headers: {
+          "cb-access-token": localStorage.getItem("cb_access_token")
+        }
+      })
+      if (res.data.status === 200) {
+        const { data, message } = res.data
+        setLoading(false)
+        notificationOK(message)
+        dispatch(addBusiness(data))
+        setView(false)
+      }
+    } catch (err) {
+      setLoading(false)
+      notificationNOT(err.message)
+    }
+  }
   return (
     <>
       <div
@@ -61,8 +85,9 @@ export default function AddBusiness({ view, setView }) {
                 Business Name
               </label>
               <input
+                name='name'
                 placeholder='Added Business Name'
-                onChange={(e) => handleInput(e,value,setValue)}
+                onChange={(e) => handleInput(e, value, setValue)}
                 className='w-1/2 p-2 border rounded focus:outline-[#4863D4]'
               />
             </div>
@@ -86,17 +111,19 @@ export default function AddBusiness({ view, setView }) {
                 <div
                   className={`flex items-center space-x-2 ${category?.name && 'px-4 py-1 bg-gray-100 border rounded-md'}`}
                 >
-                  <div
-                    className='flex items-center space-x-2'
-                  >
-                    <Image
-                      alt=''
-                      src={category.image}
-                      height={35}
-                      width={35}
-                    />
-                    <p className='text-sm'>{category.name}</p>
-                  </div>
+                  {category.id &&
+                    <div
+                      className='flex items-center space-x-2'
+                    >
+                      <Image
+                        alt=''
+                        src={category.image}
+                        height={35}
+                        width={35}
+                      />
+                      <p className='text-sm'>{category.name}</p>
+                    </div>
+                  }
                   {categoryView ?
                     <IoIosArrowUp size={20} /> :
                     <IoIosArrowDown size={20} />
@@ -156,17 +183,19 @@ export default function AddBusiness({ view, setView }) {
                 <div
                   className={`flex items-center space-x-2 ${type?.name && 'px-4 py-1 bg-gray-100 border rounded-md'}`}
                 >
-                  <div
-                    className='flex items-center space-x-2'
-                  >
-                    <Image
-                      alt=''
-                      src={type?.image}
-                      height={35}
-                      width={35}
-                    />
-                    <p className='text-sm'>{type?.name}</p>
-                  </div>
+                  {type.id &&
+                    <div
+                      className='flex items-center space-x-2'
+                    >
+                      <Image
+                        alt=''
+                        src={type?.image}
+                        height={35}
+                        width={35}
+                      />
+                      <p className='text-sm'>{type?.name}</p>
+                    </div>
+                  }
                   {typeView ?
                     <IoIosArrowUp size={20} /> :
                     <IoIosArrowDown size={20} />
@@ -209,22 +238,15 @@ export default function AddBusiness({ view, setView }) {
             className='h-20 px-6 flex justify-end items-center border-t'
           >
             <button
-              onClick={()=>createData({
-                value : {
-                  ...value,category,type
-                },
-                setView,
-                setLoading,
-                dispatch,addBook
-              })}
+              onClick={createBusiness}
               className={`px-6 py-3 font-bold text-white rounded-md ${value?.name.length > 0 ? 'bg-[#4863D4]' : 'bg-[#4863D4]/80 cursor-not-allowed'}`}
             >
               {!loading ?
                 'Create Business'
                 :
-                <ImSpinner9/>
+                <ImSpinner9 />
               }
-              
+
             </button>
           </div>
         </motion.div>

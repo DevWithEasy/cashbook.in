@@ -1,5 +1,4 @@
 import Book from "../model/Book"
-import Post from "../model/Post"
 
 export const getBook = async(req,res)=>{
     try {
@@ -39,21 +38,25 @@ export const createBook = async(req,res)=>{
 
 export const updateBook = async(req,res)=>{
     try {
-        await Book.updateOne({"_id" : req.query.id},{$set:{
-            "name" : req.body.name
-        }})
-        const book = await Book.findOne({"_id" : req.query.id})
-        res.status(200).json({
+        const book = await Book.findByIdAndUpdate(req.query.id,
+        {
+            name : req.body.name
+        },
+        {
+            new : true
+        }
+        )
+        return res.status(200).json({
             success : "success",
             status:200,
             data : book,
             message : "Successfully updated."
         })
     } catch (error) {
-        res.status(500).json({
+        return res.status(500).json({
             success : false,
             status:500,
-            message:err.message
+            message:error.message
         })
     }
 }

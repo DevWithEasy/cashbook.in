@@ -3,11 +3,13 @@ import React, { useState } from 'react';
 import { ImUsers } from 'react-icons/im';
 import {useSelector} from 'react-redux'
 import { MdBook, MdOutlineContentCopy, MdOutlineEdit, MdOutlineTurnRight } from 'react-icons/md';
+import moment from 'moment'
 
 const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDuplicateView,moveView,setMoveView}) => {
     const { currentBusiness } = useSelector(state => state.book)
     const router = useRouter()
     const [menu, setMenu] = useState(false)
+    const days = moment().diff(moment(book?.updatedAt),'days')
     return (
         <div
                 onMouseOver={() => setMenu(true)}
@@ -31,7 +33,7 @@ const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDu
                         <p
                             className='text-xs text-gray-500'
                         >
-                            Update 20 days ago
+                            Update {days} days ago
                         </p>
                     </div>
                 </div>
@@ -50,7 +52,7 @@ const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDu
                             <MdOutlineEdit
                                 onClick={() => {
                                     setUpdateView(!updateView)
-                                    setId(0)
+                                    setId(book?._id)
                                 }}
                                 size={22}
                                 className='text-[#4863D4] cursor-pointer'
@@ -67,7 +69,7 @@ const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDu
                             <MdOutlineContentCopy
                                 onClick={() => {
                                     setDuplicateView(!duplicateView)
-                                    setId(0)
+                                    setId(book?._id)
                                 }}
                                 size={22}
                                 className='text-[#4863D4] cursor-pointer'
@@ -98,7 +100,7 @@ const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDu
                             <MdOutlineTurnRight
                                 onClick={() => {
                                     setMoveView(!moveView)
-                                    setId(0)
+                                    setId(book?._id)
                                 }} size={22}
                                 className='text-red-500 cursor-pointer'
                             />
