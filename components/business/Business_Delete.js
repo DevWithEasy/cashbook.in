@@ -8,7 +8,7 @@ import { RxCross2 } from 'react-icons/rx';
 import { TiInfo } from "react-icons/ti";
 import { IoMdCheckmark } from "react-icons/io";
 
-const BusinessDelete = ({ view, setView }) => {
+const Business_Delete = ({ view, setView }) => {
 
     return (
         <>
@@ -107,4 +107,4 @@ const BusinessDelete = ({ view, setView }) => {
     );
 };
 
-export default BusinessDelete;
+export default Business_Delete;

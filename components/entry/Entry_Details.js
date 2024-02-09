@@ -12,7 +12,7 @@ import { IoCloudDone } from "react-icons/io5";
 import ActionEntry from './ActionEntry';
 
 
-const EntryDetails = ({ id, view, setView }) => {
+const Entry_Details = ({ id, view, setView }) => {
     const type = 'cash_in'
     const [actionView,setActionView] = useState(false)
     return (
@@ -154,4 +154,4 @@ const EntryDetails = ({ id, view, setView }) => {
     );
 };
 
-export default EntryDetails;
+export default Entry_Details;

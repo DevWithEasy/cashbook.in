@@ -13,7 +13,7 @@ import { useDispatch } from 'react-redux';
 import { createBook } from '../../libs/allBookAction';
 import { addBook } from '../../store/slice/bookSlice';
 
-export default function DeleteEntry({ view, setView }) {
+export default function Entry_Delete({ view, setView }) {
   const [name, setName] = useState("")
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)

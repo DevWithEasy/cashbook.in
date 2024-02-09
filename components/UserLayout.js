@@ -5,9 +5,8 @@ import { GoPlus } from "react-icons/go";
 import { IoSettingsOutline } from 'react-icons/io5';
 import { MdBook } from "react-icons/md";
 import { useSelector,useDispatch } from 'react-redux';
-import Header from './Header';
-import AddBusiness from './business/AddBusiness';
 import { addCurrentBusiness } from '../store/slice/bookSlice';
+import { Business_Add, Header } from './Index';
 
 const UserLayout = ({ path, children }) => {
     const dispatch = useDispatch()
@@ -100,7 +99,7 @@ const UserLayout = ({ path, children }) => {
                     {children}
                 </div>
 
-                {view && <AddBusiness {...{
+                {view && <Business_Add {...{
                     view, setView
                 }} />}
 

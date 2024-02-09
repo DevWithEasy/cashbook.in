@@ -8,7 +8,7 @@ import { MdOutlineContentCopy, MdOutlineTurnRight } from "react-icons/md";
 import { TbPlusMinus } from "react-icons/tb";
 import { useDispatch } from 'react-redux';
 
-export default function ActionEntry({ view, setView }) {
+export default function Entry_Action({ view, setView }) {
     const [name, setName] = useState("")
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)

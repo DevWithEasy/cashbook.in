@@ -8,7 +8,7 @@ import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 import { IoMdInformationCircle } from "react-icons/io";
 
-const BusinessRolePermission = ({ view, setView }) => {
+const Business_RolePermission = ({ view, setView }) => {
     const [active, setActive] = useState('staff')
 
     const ownTopics = [
@@ -183,4 +183,4 @@ const BusinessRolePermission = ({ view, setView }) => {
     );
 };
 
-export default BusinessRolePermission;
+export default Business_RolePermission;

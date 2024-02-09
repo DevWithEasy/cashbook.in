@@ -10,7 +10,7 @@ import handleInput from '../../utils/handleInput';
 import axios from 'axios'
 import { notificationNOT, notificationOK } from '../../utils/toastNotification';
 
-export default function AddBusiness({ view, setView }) {
+export default function Business_Add({ view, setView }) {
   const [value, setValue] = useState({
     name: ''
   })

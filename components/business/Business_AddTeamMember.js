@@ -9,7 +9,7 @@ import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 
 
-const BusinessAddTeamMember = ({ view, setView }) => {
+const Business_AddTeamMember = ({ view, setView }) => {
     const [nextStep, setNextStep] = useState(false)
     const [emailView, setEmailView] = useState(false)
     const [active, setActive] = useState('staff')
@@ -301,4 +301,4 @@ const BusinessAddTeamMember = ({ view, setView }) => {
     );
 };
 
-export default BusinessAddTeamMember;
+export default Business_AddTeamMember;

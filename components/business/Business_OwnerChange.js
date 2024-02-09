@@ -9,7 +9,7 @@ import { IoMdArrowBack } from "react-icons/io";
 import user_img from '../../public/image/profile.png'
 import Image from "next/image";
 
-const BusinessOwnerChange = ({ view, setView }) => {
+const Business_OwnerChange = ({ view, setView }) => {
     const [nextStep, setNextStep] = useState(false)
 
     const topics = [
@@ -162,4 +162,4 @@ const BusinessOwnerChange = ({ view, setView }) => {
     );
 };
 
-export default BusinessOwnerChange;
+export default Business_OwnerChange;
