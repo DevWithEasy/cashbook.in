@@ -46,7 +46,7 @@ const Cashbooks = () => {
 
     useEffect(() => {
         router.query.id && getBusiness()
-    }, [currentBusiness._id])
+    }, [currentBusiness?._id])
 
     return (
         <UserLayout>
@@ -70,7 +70,7 @@ const Cashbooks = () => {
                             >
                                 <Cashbooks_Search {...{ sortBy, setSortBy }} />
 
-                                {books.length > 0 ?
+                                {books?.length > 0 ?
                                     <div>
                                         {
                                             books.map(book =>

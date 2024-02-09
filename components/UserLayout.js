@@ -46,7 +46,7 @@ const UserLayout = ({ path, children }) => {
                     <div
                         className='h-[calc(100vh-118px)] p-2 space-y-2 overflow-y-auto'
                     >
-                        {businesses.length > 0 &&
+                        {businesses?.length > 0 &&
                             businesses.map(business =>
                                 <div
                                     key={business?._id}
