@@ -1,6 +1,3 @@
-import Link from 'next/link';
-import { useRouter } from "next/router";
-import { useSelector } from "react-redux";
 import { c_green, c_main, c_section_hero } from "../public/colors";
 import android from '../public/image/Google_Play_Store_badge.svg';
 import apple from '../public/image/IOS_App_Store_badge.svg';
@@ -15,10 +12,12 @@ import benifit_image from '../public/image/uncleWithoutBg.webp'
 import HomeSlider from '../components/HomeSlider';
 import HomeLayout from '../components/HomeLayout';
 import Head from 'next/head';
+import Entry from '../utils/Entry';
+import { TiArrowRightThick } from "react-icons/ti";
 
 export default function Index() {
-  const router = useRouter()
-  const user = useSelector(state => state.auth.user)
+  const entry = new Entry()
+  console.log(entry.generatedEntry())
 
   const hero_topics = [
     'Track Income & Expenses',
@@ -112,9 +111,10 @@ export default function Index() {
               hero_topics.map((topic, i) =>
                 <li
                   key={i}
-                  className="text-lg"
+                  className="flex items-center space-x-2 text-lg"
                 >
-                  {topic}
+                  <TiArrowRightThick className='text-[#4863D4]'/>
+                  <span>{topic}</span>
                 </li>
               )
             }

@@ -19,7 +19,7 @@ const entrySchema = mongoose.Schema({
     },
     entryType :{
         type : String,
-        enum : ["Credit","Debit"]
+        enum : ["CashIn","CashOut"]
     },
     history : [
         {
