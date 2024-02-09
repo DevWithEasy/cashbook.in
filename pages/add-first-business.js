@@ -2,24 +2,47 @@ import React, { useState } from 'react';
 import Layout from '../components/Layout';
 import Image from 'next/image';
 import { IoIosArrowDown, IoIosArrowUp, IoMdCheckmarkCircle } from "react-icons/io";
-import { useDispatch } from 'react-redux';
+import axios from 'axios';
 import { categories, types } from '../public/image/bussiness/business_data';
 import handleInput from '../utils/handleInput';
-import { createData } from '../libs/api_crud';
-import { addBook } from '../store/slice/bookSlice';
 import { ImSpinner9 } from "react-icons/im";
 import Head  from 'next/head';
+import { notificationNOT, notificationOK } from '../utils/toastNotification';
+import { useRouter } from 'next/router';
 
 const AddFirstBusiness = () => {
+    const router = useRouter()
     const [value, setValue] = useState({
         name: ''
     })
-    const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
     const [categoryView, setCategoryView] = useState('')
     const [typeView, setTypeView] = useState('')
     const [category, setCategory] = useState({})
     const [type, setType] = useState({})
+    const createBusiness =async()=>{
+        try{
+            setLoading(true)
+            const res = await axios.post('/api/business',{
+                ...value, 
+                category :category.id,
+                type : type.id
+            },{
+                headers: {
+                    "cb-access-token": localStorage.getItem("cb_access_token")
+                }
+            })
+            if(res.data.status === 200){
+                const {data,message} = res.data
+                setLoading(false)
+                notificationOK(message)
+                router.push(`/business/${data._id}/cashbooks`)
+            }
+        }catch(err){
+            setLoading(false)
+            notificationNOT(err.message)
+        }
+    }
     return (
         <Layout>
             <Head>
@@ -67,7 +90,8 @@ const AddFirstBusiness = () => {
                             <div
                                 className={`flex items-center space-x-2 ${category?.name && 'px-4 py-1 bg-gray-100 border rounded-md'}`}
                             >
-                                <div
+                                {category.image &&
+                                    <div
                                     className='flex items-center space-x-2'
                                 >
                                     <Image
@@ -78,6 +102,7 @@ const AddFirstBusiness = () => {
                                     />
                                     <p className='text-sm'>{category.name}</p>
                                 </div>
+                                }
                                 {categoryView ?
                                     <IoIosArrowUp size={20} /> :
                                     <IoIosArrowDown size={20} />
@@ -137,7 +162,8 @@ const AddFirstBusiness = () => {
                             <div
                                 className={`flex items-center space-x-2 ${type?.name && 'px-4 py-1 bg-gray-100 border rounded-md'}`}
                             >
-                                <div
+                                {type.image &&
+                                    <div
                                     className='flex items-center space-x-2'
                                 >
                                     <Image
@@ -148,6 +174,7 @@ const AddFirstBusiness = () => {
                                     />
                                     <p className='text-sm'>{type?.name}</p>
                                 </div>
+                                }
                                 {typeView ?
                                     <IoIosArrowUp size={20} /> :
                                     <IoIosArrowDown size={20} />
@@ -189,14 +216,7 @@ const AddFirstBusiness = () => {
                         className='h-20 px-6 flex justify-end items-center border-t'
                     >
                         <button
-                            onClick={() => createData({
-                                url : `/api/business`,
-                                value: {
-                                    ...value, category, type
-                                },
-                                setLoading,
-                                dispatch, addBook
-                            })}
+                            onClick={createBusiness}
                             className={`px-6 py-3 font-bold text-white rounded-md ${value?.name.length > 0 ? 'bg-[#4863D4]' : 'bg-[#4863D4]/80 cursor-not-allowed'}`}
                         >
                             {!loading ?

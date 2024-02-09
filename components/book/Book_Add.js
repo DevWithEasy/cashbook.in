@@ -6,18 +6,11 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  ModalHeader,
-  ModalFooter,
-  ModalBody,
-  ModalCloseButton,
-  Button,
-  FormControl,
-  FormLabel,
-  Input,
   Spinner,
 } from '@chakra-ui/react'
 
-export default function AddBook({ view, setView }) {
+export default function Book_Add({ view, setView }) {
+  const { currentBusiness } = useSelector(state => state.book)
   const [name, setName] = useState("")
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
@@ -40,28 +33,36 @@ export default function AddBook({ view, setView }) {
               className='px-4 py-1 border rounded'
             >X</button>
           </div>
-          <ModalBody pb={10} >
-            <FormControl>
-              <FormLabel>Book name</FormLabel>
-              <Input 
-                placeholder='Daily Expense' 
-                onChange={(e) => setName(e.target.value)} 
-                autoFocus={true}
-              />
-            </FormControl>
-          </ModalBody>
 
-          <ModalFooter
-            className='border-t'
+          <div
+            className='px-6 pt-3 pb-10 space-y-1'
+          >
+            <label className='text-sm text-gray-500'>Book name</label>
+            <input
+              placeholder='Daily Expense'
+              onChange={(e) => setName(e.target.value)}
+              className='w-full px-4 py-2 rounded border focus:outline-[#4863D4]'
+              autoFocus={true}
+            />
+          </div>
+          <div
+            className='px-6 py-4 flex justify-end border-t'
           >
             <button
-              onClick={(e) => createBook(name, setLoading, dispatch, addBook, setView)}
-              className='px-6 py-2 bg-[#4863D4] text-white rounded'
+              onClick={(e) => createBook(
+                currentBusiness?._id,
+                name,
+                setLoading,
+                dispatch,
+                addBook,
+                setView
+              )}
+              className='px-8 py-3 bg-[#4863D4] text-white rounded'
 
             >
               {loading ? <Spinner /> : 'Save'}
             </button>
-          </ModalFooter>
+          </div>
         </ModalContent>
       </Modal>
     </>

@@ -27,18 +27,21 @@ const Header = () => {
         <div
             className='h-12 px-4 py-3 pr-8 flex justify-between items-center border-b shadow'
         >
+            <Link href='/'>
             <Image
                 src={logo.src}
                 alt="logo"
                 className=""
                 height={25}
                 width={150}
+                style={{ width: "auto", height: "auto" }}
             />
+            </Link>
             <Menu>
                 <MenuButton
                     className='flex items-center'
                 >
-                    <button
+                    <div
                         className='flex items-center space-x-2 focus:ring-2'
                     >
                         <Image
@@ -47,9 +50,10 @@ const Header = () => {
                             className=""
                             height={30}
                             width={30}
+                            style={{ width: "auto", height: "auto" }}
                         />
                         <span>{user?.name}</span>
-                    </button>
+                    </div>
                 </MenuButton>
                 <MenuList
                     className='overflow-hidden'
@@ -65,6 +69,7 @@ const Header = () => {
                             className=""
                             height={40}
                             width={40}
+                            style={{ width: "auto", height: "auto" }}
                         />
                         <div>
                             <p

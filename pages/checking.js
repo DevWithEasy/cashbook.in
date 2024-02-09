@@ -16,8 +16,7 @@ const Checking = () => {
             const res = await axios.post(`/api/user/checking?id=${user._id}`)
 
             if (res.data.success) {
-                console.log(res.data)
-
+                
                 const {data,businessId} = res.data
 
                 setLoading(!loading)

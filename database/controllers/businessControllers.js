@@ -4,15 +4,15 @@ import User from "../model/User"
 
 export const getBusiness = async(req,res)=>{
     try {
-        const bussiness = await Business.findOne({"_id" : req.query.id})
+        const bussinesses = await Business.find({user : req.user.id})
 
         const books = await Book.find({business : req.query.id})
-
+        
         res.status(200).json({
-            success : "success",
+            success : true,
             status:200,
             data : {
-                bussiness,
+                bussinesses,
                 books
             }
         })

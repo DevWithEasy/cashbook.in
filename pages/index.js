@@ -83,8 +83,8 @@ export default function Index() {
   return (
     <HomeLayout>
       <Head>
-        <title>Login your account</title>
-        <meta name="description" content="CashBook App Login" />
+        <title>CashBook - Digital Khata</title>
+        <meta name="description" content="CashBook - Digital Khat" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div

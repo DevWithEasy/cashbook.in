@@ -6,7 +6,7 @@ import {
 import React, { useState } from 'react';
 import { MdCheckBox, MdCheckBoxOutlineBlank, MdInfo } from "react-icons/md";
 
-const DuplicateBook = ({ view, setView }) => {
+const Book_Duplicate = ({ view, setView }) => {
     const [steps, setSteps] = useState([
         'members',
         'category',
@@ -159,4 +159,4 @@ const DuplicateBook = ({ view, setView }) => {
     );
 };
 
-export default DuplicateBook;
+export default Book_Duplicate;

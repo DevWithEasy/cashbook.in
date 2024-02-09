@@ -1,0 +1,118 @@
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { ImUsers } from 'react-icons/im';
+import {useSelector} from 'react-redux'
+import { MdBook, MdOutlineContentCopy, MdOutlineEdit, MdOutlineTurnRight } from 'react-icons/md';
+
+const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDuplicateView,moveView,setMoveView}) => {
+    const { currentBusiness } = useSelector(state => state.book)
+    const router = useRouter()
+    const [menu, setMenu] = useState(false)
+    return (
+        <div
+                onMouseOver={() => setMenu(true)}
+                onMouseOut={() => setMenu(false)}
+                className='relative p-4 flex justify-between items-center space-x-5 border-b hover:bg-gray-100 hover:border-none cursor-pointer'
+            >
+                <div
+                    onClick={() => router.push(`/business/${currentBusiness?._id}/cashbooks/${book?._id}/transactions`)}
+                    className='w-1/2 flex items-center space-x-3'
+                >
+                    <div>
+                        <MdBook
+                            size={35}
+                            className='p-1 bg-[#EBEEFD] text-[#4863D4] rounded-full'
+                        />
+                    </div>
+                    <div
+                        className='w-full'
+                    >
+                        <p>{book?.name}</p>
+                        <p
+                            className='text-xs text-gray-500'
+                        >
+                            Update 20 days ago
+                        </p>
+                    </div>
+                </div>
+                {!menu ?
+                    <p className='w-1/2 text-right text-[#21B15E]'>10000</p>
+                    :
+                    <div
+                        onMouseOver={() => setMenu(true)}
+                        onMouseOut={() => setMenu(false)}
+                        className='absolute right-0 w-1/2 p-4 flex justify-end items-center space-x-4 '
+                    >
+                        <p className='text-[#21B15E]'>10000</p>
+                        <button
+                            className='relative group'
+                        >
+                            <MdOutlineEdit
+                                onClick={() => {
+                                    setUpdateView(!updateView)
+                                    setId(0)
+                                }}
+                                size={22}
+                                className='text-[#4863D4] cursor-pointer'
+                            />
+                            <span
+                                className='absolute hidden group-hover:block w-28 px-4 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded'
+                            >
+                                Rename Book
+                            </span>
+                        </button>
+                        <button
+                            className='relative group'
+                        >
+                            <MdOutlineContentCopy
+                                onClick={() => {
+                                    setDuplicateView(!duplicateView)
+                                    setId(0)
+                                }}
+                                size={22}
+                                className='text-[#4863D4] cursor-pointer'
+                            />
+                            <span
+                                className='absolute hidden group-hover:block w-28 px-4 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded'
+                            >
+                                Move Book
+                            </span>
+                        </button>
+                        <button
+                            className='relative group'
+                        >
+                            <ImUsers
+                                size={22}
+                                onClick={() => router.push(`/business/businessid/cashbooks/bookid/settings/members`)}
+                                className='text-[#4863D4] cursor-pointer'
+                            />
+                            <span
+                                className='absolute hidden group-hover:block w-28 px-4 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded'
+                            >
+                                Add member
+                            </span>
+                        </button>
+                        <button
+                            className='relative group'
+                        >
+                            <MdOutlineTurnRight
+                                onClick={() => {
+                                    setMoveView(!moveView)
+                                    setId(0)
+                                }} size={22}
+                                className='text-red-500 cursor-pointer'
+                            />
+                            <span
+                                className='absolute hidden group-hover:block w-28 px-4 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded'
+                            >
+                                Move Book
+                            </span>
+                        </button>
+
+                    </div>
+                }
+            </div>
+    );
+};
+
+export default Cashbooks_Book;

@@ -14,8 +14,7 @@ async function handler(req, res) {
             status:200,
             data : user,
             businessId : businesses.length > 0 ? businesses[0]._id : null,
-            message:"Successfully signin",
-            token
+            message:"Successfully signin"
         })
 
     } catch (error) {

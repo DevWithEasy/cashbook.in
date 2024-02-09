@@ -14,7 +14,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { updateBook } from '../../libs/allBookAction';
 import { renameBook } from '../../store/slice/bookSlice';
 
-const UpdateBook = ({ id, view, setView }) => {
+const Book_Update = ({ id, view, setView }) => {
   const book = useSelector(state => state.book.currentBook)
   const [loading, setLoading] = useState(false)
   const [value, setValue] = useState(book?.name)
@@ -50,7 +50,7 @@ const UpdateBook = ({ id, view, setView }) => {
           >
             <button
               onClick={(e) => updateBook(book._id, value, setLoading, dispatch, renameBook, setView)}
-              className='px-6 py-2 bg-[#4863D4] text-white rounded'
+              className='px-8 py-3 bg-[#4863D4] text-white rounded'
             >
               {loading ? <Spinner /> : 'Update'}
             </button>
@@ -61,4 +61,4 @@ const UpdateBook = ({ id, view, setView }) => {
   );
 };
 
-export default UpdateBook;
+export default Book_Update;

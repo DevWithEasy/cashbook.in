@@ -8,7 +8,7 @@ import { BsBuildings } from "react-icons/bs";
 import { ImSpinner9 } from "react-icons/im";
 import { MdInfo } from "react-icons/md";
 
-const MoveBook = ({ view, setView }) => {
+const Book_Move = ({ view, setView }) => {
 
     return (
         <>
@@ -84,4 +84,4 @@ const MoveBook = ({ view, setView }) => {
     );
 };
 
-export default MoveBook;
+export default Book_Move;
