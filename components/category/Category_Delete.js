@@ -29,7 +29,7 @@ export default function Category_Delete({ view, setView }) {
                     <div
                         className='px-6 py-4 flex justify-between items-center border-b'
                     >
-                        <p className='text-xl'>Delete Book</p>
+                        <p className='text-xl'>Delete Category</p>
                         <button
                             onClick={() => setView(!view)}
                             className='px-4 py-1 border rounded'
@@ -52,16 +52,7 @@ export default function Category_Delete({ view, setView }) {
                         <div
                             className='space-y-1'
                         >
-                            <label className='space-x-1 text-sm text-gray-500'>
-                                <span>Please type</span>
-                                <span className='font-bold'>Robiul Awal</span>
-                                <span>to confirm</span>
-                            </label>
-                            <input
-                                onChange={(e) => setName(e.target.value)}
-                                className='w-full px-4 py-2 rounded border focus:outline-[#4863D4]'
-                                autoFocus={true}
-                            />
+                            
                         </div>
                     </div>
                     <div

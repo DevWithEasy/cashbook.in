@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
-import UserLayout from '../../../../../../../components/UserLayout';
-import BookSettingLayout from '../../../../../../../components/BookSettingLayout';
 import { useRouter } from 'next/router';
-import Link from 'next/link'
+import React, { useState } from 'react';
+import { AiOutlinePlus } from 'react-icons/ai';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { MdLabel } from 'react-icons/md';
+import { BookSettingLayout, Category_Add, Category_Delete, Category_Update, UserLayout } from '../../../../../../../components/Index';
 
 const Category = () => {
     const router = useRouter()
     const { pathname } = router
     const path = pathname.split('/')[(pathname.split('/').length - 2)]
     const [isNoti, setNoti] = useState(true)
+    const [addView, setAddView] = useState(false)
+    const [updateView, setUpdateView] = useState(false)
+    const [deleteView, setDeleteView] = useState(false)
 
     return (
         <UserLayout>
@@ -67,31 +69,51 @@ const Category = () => {
                         </div>
                     </div>
                     <div
-                            className='p-10'
+                        className={`w-8/12 mx-auto pt-5 flex flex-col justify-center items-center space-y-5 ${!isNoti && 'pointer-events-none grayscale'}`}
+                    >
+                        <MdLabel
+                            size={60}
+                            className='p-4 bg-[#ebeefb] text-[#4863D4] rounded-full'
+                        />
+                        <div
+                            className='w-full text-center'
                         >
-                            <div
-                                className='flex flex-col justify-center items-center space-y-5'
-                            >
-                                <MdLabel
-                                size={60}
-                                className='p-4 bg-[#ebeefb] text-[#4863D4] rounded-full'
-                                />
-                                <div
-                                    className='w-full text-center'
-                                >
-                                    <p className='text-xl font-semibold'>No Categories Found</p>
-                                    <p className='text-gray-500 text-sm Add new or import from other books'>
-                                    Add new or import from other books
-                                    </p>
-                                </div>
-                                <div
-                                    className='py-10'
-                                >
-                                    
-                                </div>
-                            </div>
+                            <p className='text-xl font-semibold'>No Categories Found</p>
+                            <p className='text-gray-500 text-sm Add new or import from other books'>
+                                Add new or import from other books
+                            </p>
                         </div>
+                        <div
+                            className='w-full pt-5'
+                        >
+                            <button
+                                onClick={() => setAddView(!addView)}
+                                className='w-full px-8 py-2 flex justify-center items-center space-x-2 bg-[#4863D4] text-white focus:ring-2 rounded'
+                            >
+                                <AiOutlinePlus />
+                                <span>Add New category</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
+                {addView &&
+                    <Category_Add {...{
+                        view: addView,
+                        setView: setAddView
+                    }} />
+                }
+                {updateView &&
+                    <Category_Update {...{
+                        view: updateView,
+                        setView: setUpdateView
+                    }} />
+                }
+                {deleteView &&
+                    <Category_Delete {...{
+                        view: deleteView,
+                        setView: setDeleteView
+                    }} />
+                }
             </BookSettingLayout>
         </UserLayout>
     );

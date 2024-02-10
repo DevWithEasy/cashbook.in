@@ -4,7 +4,6 @@ import {
   ModalOverlay,
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-
 import { useDispatch, useSelector } from 'react-redux';
 import { updateBook } from '../../libs/allBookAction';
 import { refresh, renameBook } from '../../store/slice/bookSlice';
@@ -28,7 +27,7 @@ const Category_Update = ({ id, view, setView }) => {
           <div
             className='px-6 py-4 flex justify-between items-center border-b'
           >
-            <p className='text-xl'>Update Book</p>
+            <p className='text-xl'>Update Category</p>
             <button
               onClick={() => setView(!view)}
               className='px-4 py-1 border rounded'
@@ -38,7 +37,7 @@ const Category_Update = ({ id, view, setView }) => {
           <div
             className='px-6 pt-3 pb-10 space-y-1'
           >
-            <label className='text-sm text-gray-500'>Book name</label>
+            <label className='text-sm text-gray-500'>Category name</label>
             <input
               name='name'
               value={value?.name}

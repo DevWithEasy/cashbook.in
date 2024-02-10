@@ -27,7 +27,7 @@ export default function Category_Add({ view, setView }) {
           <div
             className='px-6 py-4 flex justify-between items-center border-b'
           >
-            <p className='text-xl'>Add New Book</p>
+            <p className='text-xl'>Add New Category</p>
             <button
               onClick={() => setView(!view)}
               className='px-4 py-1 border rounded'
@@ -37,9 +37,9 @@ export default function Category_Add({ view, setView }) {
           <div
             className='px-6 pt-3 pb-10 space-y-1'
           >
-            <label className='text-sm text-gray-500'>Book name</label>
+            <label className='text-sm text-gray-500'>Category name</label>
             <input
-              placeholder='Daily Expense'
+              placeholder='e.g - Salary, EMI, Travel, Food'
               onChange={(e) => setName(e.target.value)}
               className='w-full px-4 py-2 rounded border focus:outline-[#4863D4]'
               autoFocus={true}
@@ -61,7 +61,7 @@ export default function Category_Add({ view, setView }) {
               className='px-8 py-3 bg-[#4863D4] text-white rounded'
 
             >
-              {loading ? <Spinner /> : 'Save'}
+              {loading ? 'Saving...' : 'Save'}
             </button>
           </div>
         </ModalContent>
