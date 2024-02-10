@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { updateBook } from '../../libs/allBookAction';
-import { renameBook } from '../../store/slice/bookSlice';
+import { refresh, renameBook } from '../../store/slice/bookSlice';
 import handleInput from '../../utils/handleInput';
 
 const Book_Update = ({ id, view, setView }) => {
@@ -58,6 +58,7 @@ const Book_Update = ({ id, view, setView }) => {
                 setLoading,
                 dispatch,
                 renameBook,
+                refresh,
                 setView
               )}
               className='px-8 py-3 bg-[#4863D4] text-white rounded'

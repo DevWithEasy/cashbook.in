@@ -9,8 +9,11 @@ import { ImSpinner9 } from "react-icons/im";
 import Head  from 'next/head';
 import { notificationNOT, notificationOK } from '../utils/toastNotification';
 import { useRouter } from 'next/router';
+import {useDispatch} from 'react-redux'
+import { addBusiness } from '../store/slice/bookSlice';
 
 const AddFirstBusiness = () => {
+    const dispatch = useDispatch()
     const router = useRouter()
     const [value, setValue] = useState({
         name: ''
@@ -34,8 +37,12 @@ const AddFirstBusiness = () => {
             })
             if(res.data.status === 200){
                 const {data,message} = res.data
+
+                dispatch(addBusiness(data))
+
                 setLoading(false)
                 notificationOK(message)
+
                 router.push(`/business/${data._id}/cashbooks`)
             }
         }catch(err){

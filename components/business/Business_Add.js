@@ -34,8 +34,10 @@ export default function Business_Add({ view, setView }) {
       })
       if (res.data.status === 200) {
         const { data, message } = res.data
+
         setLoading(false)
         notificationOK(message)
+        
         dispatch(addBusiness(data))
         setView(false)
       }

@@ -1,7 +1,7 @@
 import axios from "axios"
 import { notificationNOT, notificationOK } from "../utils/toastNotification"
 
-export const createBook =async(id,name,setLoading,dispatch,action,setView)=>{
+export const createBook =async(id,name,setLoading,dispatch,action,refresh,setView)=>{
     try{
         setLoading(true)
         const res = await axios.post(`/api/book/add?id=${id}`,{name},{
@@ -13,6 +13,7 @@ export const createBook =async(id,name,setLoading,dispatch,action,setView)=>{
             setLoading(false)
             notificationOK(res.data.message)
             dispatch(action(res.data.data))
+            dispatch(refresh())
             setView(false)
         }
     }catch(err){
@@ -21,7 +22,7 @@ export const createBook =async(id,name,setLoading,dispatch,action,setView)=>{
     }
 }
 
-export const updateBook =async(id,name,setLoading,dispatch,action,setView)=>{
+export const updateBook =async(id,name,setLoading,dispatch,action,refresh,setView)=>{
     try{
         setLoading(true)
         const res = await axios.put(`/api/book/${id}`,{name},{
@@ -34,6 +35,7 @@ export const updateBook =async(id,name,setLoading,dispatch,action,setView)=>{
             setLoading(false)
             notificationOK(res.data.message)
             dispatch(action(res.data.data))
+            dispatch(refresh())
             setView(false)
         }
     }catch(error){

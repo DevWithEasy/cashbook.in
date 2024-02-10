@@ -1,51 +1,35 @@
-import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { UserLayout, Cashbooks_Book, Cashbooks_Contact, Cashbooks_Header, Cashbooks_NoBook, Cashbooks_Search, Book_Add, Book_Duplicate, Book_Move, Book_Update } from '../../../components/Index'
-import { addBooks, addBusinesses, addCurrentBusiness } from '../../../store/slice/bookSlice';
-import { notificationNOT } from '../../../utils/toastNotification';
+import { Book_Add, Book_Duplicate, Book_Move, Book_Update, Cashbooks_Book, Cashbooks_Contact, Cashbooks_Header, Cashbooks_NoBook, Cashbooks_Search, UserLayout } from '../../../components/Index';
+import { addCurrentBooks, addCurrentBusiness } from '../../../store/slice/bookSlice';
 
 const Cashbooks = () => {
-    const { currentBusiness, books } = useSelector(state => state.book)
+    const { businesses,currentBusiness,currentBooks, books,random } = useSelector(state => state.book)
     const dispatch = useDispatch()
     const router = useRouter()
     const [sortBy, setSortBy] = useState({
         title: 'Last Update',
         sort: 'last_update'
     })
-    const [loading, setLoading] = useState(false)
     const [view, setView] = useState(false)
     const [updateView, setUpdateView] = useState(false)
     const [duplicateView, setDuplicateView] = useState(false)
     const [moveView, setMoveView] = useState(false)
     const [id, setId] = useState(null)
 
-    const getBusiness = async () => {
-        try {
-            setLoading(true)
-            const res = await axios.get(`/api/business/?q=${router.query.id}`, {
-                headers: {
-                    "cb-access-token": localStorage.getItem("cb_access_token")
-                }
-            })
-            if (res.data.success) {
-                const { data } = res.data
-                setLoading(false)
-                dispatch(addBusinesses(data.bussinesses))
-                dispatch(addCurrentBusiness(data.bussinesses.find(business => business._id === router.query.id)))
-                dispatch(addBooks(data.books))
-            }
-        } catch (err) {
-            setLoading(false)
-            notificationNOT(err.message)
-        }
+    const getBusinessBooks = () => {
+        const findBusiness = businesses.find(business => business._id === router.query.id)
+        dispatch(addCurrentBusiness(findBusiness))
+
+        const findbooks = books.filter(book => book.business == router.query.id)
+        dispatch(addCurrentBooks(findbooks))
     }
 
     useEffect(() => {
-        router.query.id && getBusiness()
-    }, [currentBusiness?._id])
+        router.query.id && getBusinessBooks()
+    }, [router.query.id,random])
 
     return (
         <UserLayout>
@@ -68,10 +52,10 @@ const Cashbooks = () => {
                                 >
                                     <Cashbooks_Search {...{ sortBy, setSortBy }} />
 
-                                    {books?.length > 0 ?
+                                    {currentBooks?.length > 0 ?
                                         <div>
                                             {
-                                                books.map(book =>
+                                                currentBooks.map(book =>
                                                     <Cashbooks_Book key={book._id}
                                                         {...{
                                                             book,

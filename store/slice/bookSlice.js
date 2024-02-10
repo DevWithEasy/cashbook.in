@@ -6,11 +6,16 @@ const bookSlice = createSlice({
         businesses : [],
         currentBusiness : {},
         books: [],
+        currentBooks : [],
         currentBook: {},
         book: {},
-        entries: []
+        entries: [],
+        random : 0
     },
     reducers: {
+        refresh: (state, action) => {
+            state.random = Math.random() * 0.52
+        },
         addBusinesses: (state, action) => {
             state.businesses = action.payload
         },
@@ -22,6 +27,9 @@ const bookSlice = createSlice({
         },
         addBooks: (state, action) => {
             state.books = action.payload
+        },
+        addCurrentBooks: (state, action) => {
+            state.currentBooks = action.payload
         },
         addCurrentBook: (state, action) => {
             state.currentBook = action.payload
@@ -63,5 +71,5 @@ const bookSlice = createSlice({
 
     }
 })
-export const {addBusinesses,addCurrentBusiness,addBusiness, addBooks, addCurrentBook, addBook, removeBook, renameBook, addEntries, addEntry, removeEntry, updatePrevEntry, logoutReset } = bookSlice.actions
+export const {refresh,addBusinesses,addCurrentBusiness,addBusiness, addBooks,addCurrentBooks, addCurrentBook, addBook, removeBook, renameBook, addEntries, addEntry, removeEntry, updatePrevEntry, logoutReset } = bookSlice.actions
 export default bookSlice.reducer

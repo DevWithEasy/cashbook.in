@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { createBook } from '../../libs/allBookAction';
-import { addBook } from '../../store/slice/bookSlice';
+import { addBook, refresh } from '../../store/slice/bookSlice';
 import React, { useState } from 'react'
 import {
   Modal,
@@ -55,6 +55,7 @@ export default function Book_Add({ view, setView }) {
                 setLoading,
                 dispatch,
                 addBook,
+                refresh,
                 setView
               )}
               className='px-8 py-3 bg-[#4863D4] text-white rounded'
