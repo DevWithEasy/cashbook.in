@@ -14,7 +14,7 @@ const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDu
         <div
                 onMouseOver={() => setMenu(true)}
                 onMouseOut={() => setMenu(false)}
-                className='relative p-4 flex justify-between items-center space-x-5 border-b hover:bg-gray-100 hover:border-none cursor-pointer'
+                className='relative p-4 flex justify-between items-center space-x-5 border-b hover:bg-gray-100 cursor-pointer'
             >
                 <div
                     onClick={() => router.push(`/business/${currentBusiness?._id}/cashbooks/${book?._id}/transactions`)}
