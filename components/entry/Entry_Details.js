@@ -9,7 +9,8 @@ import { AiOutlineEdit } from "react-icons/ai";
 import { GoPlus } from "react-icons/go";
 import { FiMinus } from "react-icons/fi";
 import { IoCloudDone } from "react-icons/io5";
-import ActionEntry from './ActionEntry';
+import {Entry_Action} from '../Index';
+
 
 
 const Entry_Details = ({ id, view, setView }) => {
@@ -143,7 +144,7 @@ const Entry_Details = ({ id, view, setView }) => {
                     </div>
                     
                     {actionView &&
-                        <ActionEntry {...{
+                        <Entry_Action {...{
                             view : actionView,
                             setView : setActionView
                         }}/>

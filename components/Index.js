@@ -1,3 +1,4 @@
+import Balance from "./Balance";
 import Header from "./Header";
 import Loading from "./Loading";
 import UserLayout from "./UserLayout";
@@ -17,9 +18,24 @@ import Cashbooks_NoBook from "./cashbooks/Cashbooks_NoBook";
 import Cashbooks_Search from "./cashbooks/Cashbooks_Search";
 import Entry_Action from "./entry/Entry_Action";
 import Entry_Add from "./entry/Entry_Add";
+import Entry_Category from "./entry/Entry_Category";
+import Entry_Contact from "./entry/Entry_Contact";
 import Entry_Delete from "./entry/Entry_Delete";
 import Entry_Details from "./entry/Entry_Details";
+import Entry_Duplicate from "./entry/Entry_Duplicate";
+import Entry_Move from "./entry/Entry_Move";
+import Entry_Opposite from "./entry/Entry_Opposite";
+import Entry_Payment from "./entry/Entry_Payment";
 import Entry_Update from "./entry/Entry_Update";
+import Transections_Header from "./transections/Transections_Header";
+import Transections_Pagination from "./transections/Transections_Pagination";
+import Transections_Search from "./transections/Transections_Search";
+import Transections_SortBy from "./transections/Transections_SortBy";
+import Transections_Tbody_Tr from "./transections/Transections_Tbody_Tr";
+import Transections_TheadAction from "./transections/Transections_TheadAction";
+import Transections_TheadAction_Change from "./transections/Transections_TheadAction_Change";
+import Transections_TheadAction_MoveCopy from "./transections/Transections_TheadAction_MoveCopy";
+import Transections_TheadMain from "./transections/Transections_TheadMain";
 
 
-export {Header,Loading,UserLayout, Cashbooks_Book, Cashbooks_Contact, Cashbooks_Header, Cashbooks_NoBook, Cashbooks_Search,Book_Add,Book_Duplicate,Book_Move,Book_Update,Business_Add,Business_OwnerChange,Business_AddTeamMember,Business_Delete,Business_RolePermission,Entry_Action,Entry_Add,Entry_Delete,Entry_Details,Entry_Update };
+export {Header,Loading,UserLayout,Balance, Cashbooks_Book, Cashbooks_Contact, Cashbooks_Header, Cashbooks_NoBook, Cashbooks_Search,Book_Add,Book_Duplicate,Book_Move,Book_Update,Business_Add,Business_OwnerChange,Business_AddTeamMember,Business_Delete,Business_RolePermission,Entry_Action,Entry_Add,Entry_Delete,Entry_Details,Entry_Update,Entry_Move,Entry_Opposite,Entry_Duplicate,Entry_Category,Entry_Contact,Entry_Payment,Transections_TheadMain,Transections_TheadAction,Transections_TheadAction_Change,Transections_TheadAction_MoveCopy,Transections_Header,Transections_SortBy,Transections_Search,Transections_Pagination,Transections_Tbody_Tr };
