@@ -1,16 +1,14 @@
 import React, { useState } from 'react';
 import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdOutlineEdit, MdOutlineContentCopy, MdDeleteOutline } from "react-icons/md";
-import UpdateBook from './book/UpdateBook';
-import DuplicateBook from './book/DuplicateBook';
+import { Book_Update, Book_Duplicate, Book_Delete } from '../components/Index'
 import { useRouter } from 'next/router';
 
-const BookSettingLayout = ({ path,children }) => {
+const BookSettingLayout = ({ path, children }) => {
     const router = useRouter()
     const [updateView, setUpdateView] = useState(false)
     const [duplicateView, setDuplicateView] = useState(false)
-    const [moveView, setMoveView] = useState(false)
-    const [id, setId] = useState(null)
+    const [deleteView, setDeleteView] = useState(false)
     const sidebars = [
         {
             title: 'Members',
@@ -34,7 +32,7 @@ const BookSettingLayout = ({ path,children }) => {
                     className='w-1/2 flex items-center space-x-3'
                 >
                     <IoMdArrowRoundBack
-                        onClick={()=>router.push(`/business/businessid/cashbooks/`)}
+                        onClick={() => router.push(`/business/businessid/cashbooks/`)}
                         size={25}
                         className='mt-1 cursor-pointer'
                     />
@@ -48,26 +46,21 @@ const BookSettingLayout = ({ path,children }) => {
                     className='w-1/2 flex justify-end'
                 >
                     <button
-                        onClick={() => {
-                            setUpdateView(!updateView)
-                            setId(0)
-                        }}
+                        onClick={() => setUpdateView(!updateView)}
                         className='px-4 py-2 flex items-center space-x-2 text-[#4863D4]'
                     >
                         <MdOutlineEdit size={20} />
                         <span>Rename</span>
                     </button>
                     <button
-                        onClick={() => {
-                            setDuplicateView(!duplicateView)
-                            setId(0)
-                        }}
+                        onClick={() => setDuplicateView(!duplicateView)}
                         className='px-4 py-2 flex items-center space-x-2 text-[#4863D4]'
                     >
                         <MdOutlineContentCopy size={20} />
                         <span>Duplicate</span>
                     </button>
                     <button
+                        onClick={() => setDeleteView(!deleteView)}
                         className='px-4 py-2 flex items-center space-x-2 text-red-500'
                     >
                         <MdDeleteOutline size={20} />
@@ -85,7 +78,7 @@ const BookSettingLayout = ({ path,children }) => {
                         sidebars.map((topic, i) =>
                             <div
                                 key={i}
-                                onClick={()=>router.push(`/business/businessid/cashbooks/bookid/settings/${topic.path}`)}
+                                onClick={() => router.push(`/business/businessid/cashbooks/bookid/settings/${topic.path}`)}
                                 className='py-3 pr-3 border-b'
                             >
                                 <div
@@ -107,17 +100,26 @@ const BookSettingLayout = ({ path,children }) => {
                 >
                     {children}
                 </div>
+
                 {updateView &&
-                    <UpdateBook {...{
-                        id,
+                    <Book_Update {...{
                         view: updateView,
                         setView: setUpdateView
                     }} />
                 }
+
                 {duplicateView &&
-                    <DuplicateBook {...{
+                    <Book_Duplicate {...{
                         view: duplicateView,
                         setView: setDuplicateView
+                    }} />
+                }
+
+
+                {deleteView &&
+                    <Book_Delete {...{
+                        view: deleteView,
+                        setView: setDeleteView
                     }} />
                 }
             </div>

@@ -9,13 +9,23 @@ import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { IoSettingsOutline } from "react-icons/io5";
 import { RiArrowDownSFill } from "react-icons/ri";
 import { GoPlus } from "react-icons/go";
+import moment from 'moment'
 
 
 const Entry_Add = ({ type, setType, view, setView }) => {
     const [timeView, setTimeView] = useState(false)
     const [categoryView, setCategoryView] = useState(false)
     const [paymentView, setPaymentView] = useState(false)
-
+    const [date, setDate] = useState(moment().format('YYYY-MM-DD'))
+    const [hour, setHour] = useState(moment().format('hh'))
+    const [minute, setMinute] = useState(moment().format('mm'))
+    const [ampm, setAmPm] = useState(moment().format('A'))
+    const [value,setValue] = useState({
+        amount : 0,
+        remark : '',
+        category : '',
+        payment : ''
+    })
     return (
         <>
             <Drawer
@@ -70,6 +80,8 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                                 <label className='block text-sm'>Date</label>
                                 <input
                                     type="date"
+                                    value={date}
+                                    onChange={(e) => setDate(e.target.value)}
                                     className='px-4 py-2 rounded border focus:outline-[#4863D4]'
                                 />
                             </div>
@@ -83,13 +95,15 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                                         className='px-6 py-2 flex items-center space-x-2 rounded border'
                                     >
                                         <BsClock />
-                                        <span>12:30 PM</span>
+                                        <span>{`${hour}:${minute}:${ampm}`}</span>
                                     </button>
                                     :
                                     <div
                                         className='space-x-2'
                                     >
                                         <select
+                                            value={hour}
+                                            onChange={(e) => setHour(e.target.value)}
                                             className='px-4 py-2 border rounded focus:outline-[#4863D4]'
                                         >
                                             {
@@ -99,7 +113,7 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                                                         value={i + 1}
                                                         className='flex items-center space-x-2'
                                                     >
-                                                        <span>{i + 2}</span>
+                                                        <span>{i + 1}</span>
                                                         <span >
                                                             <MdOutlineKeyboardArrowDown />
                                                         </span>
@@ -108,6 +122,8 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                                             }
                                         </select>
                                         <select
+                                            value={minute}
+                                            onChange={(e) => setMunite(e.target.value)}
                                             className='px-4 py-2 border rounded focus:outline-[#4863D4]'
                                         >
                                             {
@@ -126,11 +142,12 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                                             }
                                         </select>
                                         <select
+                                            onChange={(e) => setAmPm(e.target.value)}
                                             className='px-4 py-2 border rounded focus:outline-[#4863D4]'
                                         >
                                             <option
                                                 className='flex items-center space-x-2'
-                                                value='AM'
+                                                value={ampm}
                                             >
                                                 <span>AM</span>
                                                 <span >

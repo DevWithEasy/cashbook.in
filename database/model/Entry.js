@@ -14,8 +14,13 @@ const entrySchema = mongoose.Schema({
         required :true
     },
     remark : {
-        type : String,
-        required :true
+        type : String
+    },
+    category :{
+        type : String
+    },
+    payment :{
+        type : String
     },
     entryType :{
         type : String,

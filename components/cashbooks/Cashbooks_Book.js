@@ -58,7 +58,7 @@ const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDu
                                 className='text-[#4863D4] cursor-pointer'
                             />
                             <span
-                                className='absolute hidden group-hover:block w-28 px-4 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded'
+                                className='absolute hidden group-hover:block w-24 px-2 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded'
                             >
                                 Rename Book
                             </span>
@@ -75,9 +75,9 @@ const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDu
                                 className='text-[#4863D4] cursor-pointer'
                             />
                             <span
-                                className='absolute hidden group-hover:block w-28 px-4 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded'
+                                className='absolute hidden group-hover:block w-24 px-2 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded'
                             >
-                                Move Book
+                                Copy Book
                             </span>
                         </button>
                         <button
@@ -89,7 +89,7 @@ const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDu
                                 className='text-[#4863D4] cursor-pointer'
                             />
                             <span
-                                className='absolute hidden group-hover:block w-28 px-4 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded'
+                                className='absolute hidden group-hover:block w-24 px-2 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded'
                             >
                                 Add member
                             </span>
@@ -105,7 +105,7 @@ const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDu
                                 className='text-red-500 cursor-pointer'
                             />
                             <span
-                                className='absolute hidden group-hover:block w-28 px-4 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded'
+                                className='absolute hidden group-hover:block w-24 px-2 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded'
                             >
                                 Move Book
                             </span>

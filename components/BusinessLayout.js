@@ -1,7 +1,9 @@
 import { useRouter } from 'next/router';
 import React from 'react';
+import {useSelector} from 'react-redux'
 
 const BusinessLayout = ({path,children}) => {
+    const {currentBusiness} = useSelector(state=>state.book)
     const router = useRouter()
     const sidebars = [
         {
@@ -32,7 +34,7 @@ const BusinessLayout = ({path,children}) => {
                 >
                     Business Settings
                 </p>
-                <p className='mx-2'>(Name)</p>
+                <p className='mx-2'>({currentBusiness?.name})</p>
             </div>
             <div
                 className='h-[calc(100vh-118px)] flex justify-between'

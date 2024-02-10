@@ -1,12 +1,9 @@
 import React, { useState } from "react";
-import UserLayout from "../../../../components/UserLayout";
-import BusinessLayout from "../../../../components/BusinessLayout";
+import {UserLayout,BusinessLayout,Business_AddTeamMember,Business_RolePermission} from "../../../../components/Index";
 import Image from "next/image";
 import { IoPersonAddSharp } from "react-icons/io5";
 import { IoIosArrowForward } from "react-icons/io";
 import team_image from "../../../../public/image/AddTeamFirstTime.png";
-import BusinessAddTeamMember from "../../../../components/business/BusinessAddTeamMember";
-import BusinessRolePermission from "../../../../components/business/BusinessRolePermission";
 import { useRouter } from "next/router";
 
 const team = () => {
@@ -54,12 +51,12 @@ const team = () => {
                     </div>
                 </div>
                 {view &&
-                    <BusinessAddTeamMember {...{
+                    <Business_AddTeamMember {...{
                         view, setView
                     }} />
                 }
                 {roleView &&
-                    <BusinessRolePermission {...{
+                    <Business_RolePermission {...{
                         view : roleView,
                         setView : setRoleView
                     }}/>

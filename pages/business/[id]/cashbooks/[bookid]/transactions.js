@@ -1,7 +1,11 @@
-import React, { useState } from 'react';
-import { Balance, Entry_Add, Entry_Category, Entry_Contact, Entry_Delete, Entry_Details, Entry_Duplicate, Entry_Move, Entry_Opposite, Entry_Payment, Entry_Update, Transections_Header, Transections_Pagination, Transections_Search, Transections_SortBy, Transections_Tbody, Transections_Tbody_Tr, Transections_TheadAction, Transections_TheadMain, UserLayout } from '../../../../../components/Index';
+import React, { useEffect, useState } from 'react';
+import { Balance, Entry_Add, Entry_Category, Entry_Contact, Entry_Delete, Entry_Details, Entry_Duplicate, Entry_Move, Entry_Opposite, Entry_Payment, Entry_Update, Transections_Header, Transections_NoFound, Transections_Pagination, Transections_Search, Transections_SortBy, Transections_Tbody, Transections_TheadAction, Transections_TheadMain, UserLayout } from '../../../../../components/Index';
+import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux'
 
 const Transactions = () => {
+    const { entries } = useSelector(state => state.book)
+    const router = useRouter()
     const [menuId, setMenuId] = useState(null)
     const [check, setCheck] = useState(false)
     const [selected, setSelected] = useState([])
@@ -39,6 +43,23 @@ const Transactions = () => {
         setDetailsView(!deleteView)
     }
 
+    const getTransections=async()=>{
+        try {
+            const res = await Axios.get(`/api/entry`,{
+                headers : {
+                    "cb-access-token": localStorage.getItem("cb_access_token")
+                }
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    useEffect(() => {
+        
+    },[])
+
+    
     return (
         <UserLayout>
             <div
@@ -53,45 +74,55 @@ const Transactions = () => {
 
                 <Transections_Search {...{ handleView }} />
 
-                <Balance {...{}} />
+                
+                {entries?.length > 0 &&
+                    <Balance/>
+                }
 
-                <Transections_Pagination {...{ selected }} />
+                {entries?.length > 0 &&
+                    <Transections_Pagination {...{ selected }} />
+                }
 
                 <div
                     className='w-full overflow-y-auto'
                 >
-                    <table
-                        className='w-full'
-                    >
-                        {selected.length > 0 ?
-                            <Transections_TheadAction {...{
+                    {entries?.length > 0 ?
+                        <table
+                            className='w-full'
+                        >
+                            {selected.length > 0 ?
+                                <Transections_TheadAction {...{
+                                    check,
+                                    handleCheck,
+                                    copyView, setCopyView,
+                                    moveView, setMoveView,
+                                    oppositeView, setOppositeView,
+                                    categoryView, setCategoryView,
+                                    paymentView, setPaymentView,
+                                    contactView, setContactView,
+
+                                }} />
+                                :
+                                <Transections_TheadMain {...{
+                                    check,
+                                    handleCheck
+                                }} />
+                            }
+
+                            <Transections_Tbody {...{
+                                menuId, setMenuId,
                                 check,
                                 handleCheck,
-                                copyView, setCopyView,
-                                moveView, setMoveView,
-                                oppositeView, setOppositeView,
-                                categoryView, setCategoryView,
-                                paymentView, setPaymentView,
-                                contactView, setContactView,
-
+                                handleDetails,
+                                deleteView, setDeleteView,
+                                updateView, setUpdateView
                             }} />
-                            :
-                            <Transections_TheadMain {...{
-                                check,
-                                handleCheck
-                            }} />
-                        }
-
-                        <Transections_Tbody {...{
-                            menuId, setMenuId,
-                            check,
-                            handleCheck,
-                            handleDetails,
-                            deleteView, setDeleteView,
-                            updateView, setUpdateView
-                        }} />
-                    </table>
+                        </table>
+                        :
+                        <Transections_NoFound />
+                    }
                 </div>
+
                 {view &&
                     <Entry_Add {...{
                         type: entryType,

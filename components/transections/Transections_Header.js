@@ -11,8 +11,10 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import { HiOutlineUsers } from 'react-icons/hi2';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { MdOutlineFileDownload, MdOutlineGridOn, MdPictureAsPdf } from 'react-icons/md';
+import {useSelector} from 'react-redux'
 
 const Transections_Header = () => {
+    const {currentBusiness,currentBook}  = useSelector(state=>state.book)
     const router = useRouter()
     return (
         <div

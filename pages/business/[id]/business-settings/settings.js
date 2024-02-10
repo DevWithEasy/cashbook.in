@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import UserLayout from '../../../../components/UserLayout';
-import BusinessLayout from '../../../../components/BusinessLayout';
 import { FaExchangeAlt } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
-import BusinessDelete from '../../../../components/business/BusinessDelete';
-import BusinessOwnerChange from '../../../../components/business/BusinessOwnerChange';
 import { useRouter } from 'next/router';
+import {UserLayout,BusinessLayout, Business_OwnerChange, Business_Delete} from '../../../../components/Index'
 
 const settings = () => {
     const router = useRouter()
@@ -67,13 +64,13 @@ const settings = () => {
                     </div>
                 </div>
                 {deleteView &&
-                    <BusinessDelete {...{
+                    <Business_Delete {...{
                         view : deleteView,
                         setView : setDeleteView
                     }}/>
                 }
                 {ownerChangeView &&
-                    <BusinessOwnerChange {...{
+                    <Business_OwnerChange {...{
                         view : ownerChangeView,
                         setView : setOwnerChangeView
                     }}/>
