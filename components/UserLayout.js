@@ -11,8 +11,14 @@ import { Business_Add, Header } from './Index';
 const UserLayout = ({ path, children }) => {
     const dispatch = useDispatch()
     const { businesses, currentBusiness } = useSelector(state => state.book)
+    const { isAuth } = useSelector(state => state.auth)
     const router = useRouter()
     const [view, setView] = useState(false)
+
+    if(!isAuth) {
+        router.push('/signin')
+    }
+    
     const handleRoute=(business)=>{
         router.push(`/business/${business?._id}/cashbooks`)
         dispatch(addCurrentBusiness(business))

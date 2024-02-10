@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { login } from '../../store/slice/authSlice';
 import { notificationOK } from '../../utils/toastNotification';
 
-const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleView, success, setSuccess, loading,setLoading }) => {
+const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleView, success, setSuccess, loading, setLoading }) => {
     const router = useRouter()
     const dispatch = useDispatch()
     const [otp, setOtp] = useState('')
@@ -15,7 +15,8 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
     const handleChangeOTP = (e) => {
         setOtp(e.target.value)
     }
-    const handleVerify = async () => {
+    const handleVerify = async (e) => {
+        e.preventDefault()
         const mail = localStorage.getItem('cb_email') || email
         setLoading(!loading)
         try {
@@ -23,7 +24,7 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
 
             if (res.data.success) {
 
-                const {message,data} = res.data
+                const { message, data } = res.data
 
                 setLoading(!loading)
                 dispatch(login(data))
@@ -33,7 +34,7 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
                 localStorage.removeItem('cb_email')
 
                 notificationOK(message)
-                
+
             }
         } catch (error) {
             console.log(error)
@@ -65,7 +66,8 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
                 className='space-y-3'
             >
                 {!success ?
-                    <div
+                    <form
+                        onSubmit={handleLogin}
                         className='space-y-0.5'
                     >
                         <input
@@ -86,7 +88,6 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
                             className='pt-3'
                         >
                             <button
-                                onClick={handleLogin}
                                 className={`w-full p-3 rounded ${email.length > 0 ? 'bg-[#4863D4] text-white' : 'bg-gray-100 text-gray-300 cursor-not-allowed'}`}
                                 disabled={email.length > 0 ? false : true}
                             >
@@ -98,9 +99,10 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
                             </button>
                         </div>
 
-                    </div>
+                    </form>
                     :
-                    <div
+                    <form
+                        onSubmit={handleVerify}
                         className='space-y-0.5'
                     >
                         <p
@@ -119,7 +121,6 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
                             className='pt-3'
                         >
                             <button
-                                onClick={handleVerify}
                                 className={`w-full p-3 rounded ${otp.length == 6 ? 'bg-[#4863D4] text-white' : 'bg-gray-100 text-gray-300 cursor-not-allowed'}`}
                                 disabled={otp.length == 6 ? false : true}
                             >
@@ -131,7 +132,7 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
                             </button>
                         </div>
 
-                    </div>
+                    </form>
 
                 }
 

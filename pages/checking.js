@@ -2,37 +2,43 @@ import React, { useEffect, useState } from 'react';
 import { ImSpinner9 } from "react-icons/im";
 import {isMobile} from 'react-device-detect'
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
+import { addBooks, addBusinesses } from '../store/slice/bookSlice';
 
 const Checking = () => {
-    const user = useSelector(state => state.auth.user)
+    const dispatch = useDispatch()
+    const {isAuth,user} = useSelector(state => state.auth)
     const router = useRouter()
-    const [loading, setLoading] = useState(false)
+
+    if (!isAuth) {
+        return router.push('/signin')
+    }
 
     const handleChecking = async () => {
-        setLoading(!loading)
         try {
             const res = await axios.post(`/api/user/checking?id=${user._id}`)
 
             if (res.data.success) {
                 
-                const {data,businessId} = res.data
+                const {businessId} = res.data
+                const {user,businesses,books} = res.data.data
 
-                setLoading(!loading)
+                dispatch(addBusinesses(businesses))
+                dispatch(addBooks(books))
+                
 
-                if(data.name.length > 0 && businessId !== null){
+                if(user.name.length > 0 && businessId !== null){
                     return router.push(`/business/${businessId}/cashbooks`)
-                }else if (!data.name.length > 0 && businessId === null){
+                }else if (!user.name.length > 0 && businessId === null){
                     return router.push(`/onboarding`)
-                }else if(data.name.length > 0 && businessId === null){
+                }else if(user.name.length > 0 && businessId === null){
                     return router.push(`/add-first-business`)
                 }
 
             }
         } catch (error) {
             console.log(error)
-            setLoading(!loading)
         }
     }
     useEffect(() => {

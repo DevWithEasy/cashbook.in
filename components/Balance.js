@@ -16,7 +16,7 @@ const Balance = ({ entries }) => {
                         <p className='text-sm text-gray-600'>
                             Cash In
                         </p>
-                        <p className='font-xl font-bold'>{credit - debit}/-</p>
+                        <p className='font-2xl font-semibold'>{credit - debit}/-</p>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@ const Balance = ({ entries }) => {
                         <p className='text-sm text-gray-600'>
                             Cash Out
                         </p>
-                        <p className='font-xl font-bold'>{credit - debit}/-</p>
+                        <p className='font-2xl font-semibold'>{credit - debit}/-</p>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@ const Balance = ({ entries }) => {
                         <p className='text-sm text-gray-600'>
                             Net Balance
                         </p>
-                        <p className='font-xl font-bold'>{credit - debit}/-</p>
+                        <p className='font-2xl font-semibold'>{credit - debit}/-</p>
                     </div>
                 </div>
             </div>

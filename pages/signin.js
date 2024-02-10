@@ -35,7 +35,8 @@ const Signup = () => {
         }
     }
 
-    const handleLogin = async () => {
+    const handleLogin = async (e) => {
+        e.preventDefault()
         setLoading(!loading)
         try {
             const res = await axios.post(`/api/user/send_otp?email=${email}`)

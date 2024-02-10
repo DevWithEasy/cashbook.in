@@ -31,6 +31,7 @@ import Transections_Header from "./transections/Transections_Header";
 import Transections_Pagination from "./transections/Transections_Pagination";
 import Transections_Search from "./transections/Transections_Search";
 import Transections_SortBy from "./transections/Transections_SortBy";
+import Transections_Tbody from "./transections/Transections_Tbody";
 import Transections_Tbody_Tr from "./transections/Transections_Tbody_Tr";
 import Transections_TheadAction from "./transections/Transections_TheadAction";
 import Transections_TheadAction_Change from "./transections/Transections_TheadAction_Change";
@@ -38,4 +39,4 @@ import Transections_TheadAction_MoveCopy from "./transections/Transections_Thead
 import Transections_TheadMain from "./transections/Transections_TheadMain";
 
 
-export {Header,Loading,UserLayout,Balance, Cashbooks_Book, Cashbooks_Contact, Cashbooks_Header, Cashbooks_NoBook, Cashbooks_Search,Book_Add,Book_Duplicate,Book_Move,Book_Update,Business_Add,Business_OwnerChange,Business_AddTeamMember,Business_Delete,Business_RolePermission,Entry_Action,Entry_Add,Entry_Delete,Entry_Details,Entry_Update,Entry_Move,Entry_Opposite,Entry_Duplicate,Entry_Category,Entry_Contact,Entry_Payment,Transections_TheadMain,Transections_TheadAction,Transections_TheadAction_Change,Transections_TheadAction_MoveCopy,Transections_Header,Transections_SortBy,Transections_Search,Transections_Pagination,Transections_Tbody_Tr };
+export {Header,Loading,UserLayout,Balance, Cashbooks_Book, Cashbooks_Contact, Cashbooks_Header, Cashbooks_NoBook, Cashbooks_Search,Book_Add,Book_Duplicate,Book_Move,Book_Update,Business_Add,Business_OwnerChange,Business_AddTeamMember,Business_Delete,Business_RolePermission,Entry_Action,Entry_Add,Entry_Delete,Entry_Details,Entry_Update,Entry_Move,Entry_Opposite,Entry_Duplicate,Entry_Category,Entry_Contact,Entry_Payment,Transections_TheadMain,Transections_TheadAction,Transections_TheadAction_Change,Transections_TheadAction_MoveCopy,Transections_Header,Transections_SortBy,Transections_Search,Transections_Pagination,Transections_Tbody,Transections_Tbody_Tr };

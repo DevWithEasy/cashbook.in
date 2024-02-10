@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Balance, Entry_Add, Entry_Category, Entry_Contact, Entry_Delete, Entry_Details, Entry_Duplicate, Entry_Move, Entry_Opposite, Entry_Payment, Entry_Update, Transections_Header, Transections_Pagination, Transections_Search, Transections_SortBy, Transections_Tbody_Tr, Transections_TheadAction, Transections_TheadMain, UserLayout } from '../../../../../components/Index';
+import { Balance, Entry_Add, Entry_Category, Entry_Contact, Entry_Delete, Entry_Details, Entry_Duplicate, Entry_Move, Entry_Opposite, Entry_Payment, Entry_Update, Transections_Header, Transections_Pagination, Transections_Search, Transections_SortBy, Transections_Tbody, Transections_Tbody_Tr, Transections_TheadAction, Transections_TheadMain, UserLayout } from '../../../../../components/Index';
 
 const Transactions = () => {
     const [menuId, setMenuId] = useState(null)
@@ -82,16 +82,14 @@ const Transactions = () => {
                             }} />
                         }
 
-                        <tbody>
-                            <Transections_Tbody_Tr {...{
-                                menuId, setMenuId,
-                                check,
-                                handleCheck,
-                                handleDetails,
-                                deleteView, setDeleteView,
-                                updateView, setUpdateView
-                            }} />
-                        </tbody>
+                        <Transections_Tbody {...{
+                            menuId, setMenuId,
+                            check,
+                            handleCheck,
+                            handleDetails,
+                            deleteView, setDeleteView,
+                            updateView, setUpdateView
+                        }} />
                     </table>
                 </div>
                 {view &&
