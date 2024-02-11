@@ -3,7 +3,7 @@ import { GoPlus } from 'react-icons/go';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { RiArrowDownSFill } from 'react-icons/ri';
 
-const Entry_Add_Payment = ({paymentView, setPaymentView}) => {
+const Entry_Add_Payment = ({paymentAddView, setPaymentAddView,paymentView, setPaymentView}) => {
     return (
         <div
             className='w-1/2 space-y-1'
@@ -46,6 +46,7 @@ const Entry_Add_Payment = ({paymentView, setPaymentView}) => {
                             className='h-10 px-2'
                         >
                             <button
+                            onClick={()=>setPaymentAddView(!paymentAddView)}
                                 className='w-full flex justify-center items-center space-x-2 p-2 text-sm bg-gray-100 rounded'
                             >
                                 <GoPlus

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import UserLayout from '../../../../../../components/UserLayout';
 import BookSettingLayout from '../../../../../../components/BookSettingLayout';
 import { IoPersonAddSharp } from 'react-icons/io5';
@@ -7,12 +7,14 @@ import Image from 'next/image'
 import user_image from '../../../../../../public/image/profile.png'
 import { useSelector } from "react-redux";
 import { useRouter } from 'next/router';
+import { Book_AddMember } from '../../../../../../components/Index';
 
 const members = () => {
     const user = useSelector(state => state.auth.user)
     const router = useRouter()
     const {pathname} = router
     const path = pathname.split('/').pop()
+    const [view,setView] = useState(false)
     return (
         <UserLayout>
             <BookSettingLayout {...{path}}>
@@ -25,7 +27,9 @@ const members = () => {
                                 cashflow together
                             </p>
                         </div>
-                        <button className="px-4 py-2 flex items-center space-x-2 bg-[#4863D4] text-white rounded active:ring-2">
+                        <button 
+                        onClick={()=>setView(!view)}
+                        className="px-4 py-2 flex items-center space-x-2 bg-[#4863D4] text-white rounded active:ring-2">
                             <IoPersonAddSharp />
                             <span>Add team member</span>
                         </button>
@@ -67,6 +71,11 @@ const members = () => {
                             </div>
                         </div>
                     </div>
+                    {view &&
+                        <Book_AddMember {...{
+                            view,setView
+                        }}/>
+                    }
                 </div>
             </BookSettingLayout>
         </UserLayout>

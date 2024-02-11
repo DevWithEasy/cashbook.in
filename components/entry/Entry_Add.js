@@ -10,7 +10,7 @@ import { IoSettingsOutline } from "react-icons/io5";
 import { RiArrowDownSFill } from "react-icons/ri";
 import { GoPlus } from "react-icons/go";
 import moment from 'moment'
-import { Category_Add } from '../Index';
+import { Category_Add, Payment_Add } from '../Index';
 import Entry_Add_Hour from '../entry-helper/Entry_Add_Hour';
 import Entry_Add_Minute from '../entry-helper/Entry_Add_Minute';
 import Entry_Add_AMPM from '../entry-helper/Entry_Add_AMPM';
@@ -23,6 +23,7 @@ const Entry_Add = ({ type, setType, view, setView }) => {
     const [categoryView, setCategoryView] = useState(false)
     const [paymentView, setPaymentView] = useState(false)
     const [addView, setAddView] = useState(false)
+    const [paymentAddView, setPaymentAddView] = useState(false)
     const [date, setDate] = useState(moment().format('YYYY-MM-DD'))
     const [hour, setHour] = useState(moment().format('hh'))
     const [minute, setMinute] = useState(moment().format('mm'))
@@ -111,9 +112,9 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                                     <div
                                         className='space-x-2'
                                     >
-                                        <Entry_Add_Hour {...{hour,setHour}}/>
-                                        <Entry_Add_Minute {...{minute, setMinute}}/>
-                                        <Entry_Add_AMPM {...{ampm, setAmPm}}/>
+                                        <Entry_Add_Hour {...{ hour, setHour }} />
+                                        <Entry_Add_Minute {...{ minute, setMinute }} />
+                                        <Entry_Add_AMPM {...{ ampm, setAmPm }} />
                                     </div>
                                 }
 
@@ -143,9 +144,9 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                         <div
                             className='flex justify-between space-x-5'
                         >
-                            <Entry_Add_Category {...{addView, setAddView,categoryView, setCategoryView}}/>
+                            <Entry_Add_Category {...{ addView, setAddView, categoryView, setCategoryView }} />
 
-                            <Entry_Add_Payment {...{paymentView, setPaymentView}}/>
+                            <Entry_Add_Payment {...{ paymentAddView, setPaymentAddView, paymentView, setPaymentView }} />
 
                         </div>
                     </div>
@@ -168,6 +169,13 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                         <Category_Add {...{
                             view: addView,
                             setView: setAddView
+                        }} />
+                    }
+
+                    {paymentAddView &&
+                        <Payment_Add {...{
+                            view: paymentAddView,
+                            setView: setPaymentAddView
                         }} />
                     }
                 </DrawerContent>

@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { MdAdd, MdLabel, MdOutlineContentCopy } from 'react-icons/md';
-import { BookSettingLayout, Category_Add, Category_Delete, Category_Update, UserLayout } from '../../../../../../../components/Index';
+import { BookSettingLayout, Category_Add, Category_Delete, Category_Update, Payment_Add, Payment_Delete, Payment_Import, Payment_Update, UserLayout } from '../../../../../../../components/Index';
 import { CiMenuKebab } from 'react-icons/ci';
 import {
     Menu,
@@ -24,6 +24,7 @@ const Payment = () => {
     const [addView, setAddView] = useState(false)
     const [updateView, setUpdateView] = useState(false)
     const [deleteView, setDeleteView] = useState(false)
+    const [importView, setImportView] = useState(false)
 
     return (
         <UserLayout>
@@ -93,7 +94,7 @@ const Payment = () => {
                                 <span>Add New Payment Mode</span>
                             </button>
                             <button
-                                onClick={() => setAddView(!addView)}
+                                onClick={() => setImportView(!importView)}
                                 className='w-full px-8 py-2 flex items-center space-x-2 text-[#4863D4] border hover:border-[#4863D4] focus:ring-2 rounded'
                             >
                                 <MdOutlineContentCopy size={20} />
@@ -117,12 +118,14 @@ const Payment = () => {
                                         </MenuButton>
                                         <MenuList>
                                             <button
-                                            className='w-full p-2 text-left hover:bg-slate-100'
+                                                onClick={()=>setUpdateView(!updateView)}
+                                                className='w-full p-2 text-left hover:bg-slate-100'
                                             >
                                                 Rename
                                             </button>
                                             <button
-                                            className='w-full p-2 text-left hover:bg-slate-100'
+                                                onClick={()=>setDeleteView(!deleteView)}
+                                                className='w-full p-2 text-left hover:bg-slate-100'
                                             >
                                                 Delete
                                             </button>
@@ -135,21 +138,27 @@ const Payment = () => {
                     </div>
                 </div>
                 {addView &&
-                    <Category_Add {...{
+                    <Payment_Add {...{
                         view: addView,
                         setView: setAddView
                     }} />
                 }
                 {updateView &&
-                    <Category_Update {...{
+                    <Payment_Update {...{
                         view: updateView,
                         setView: setUpdateView
                     }} />
                 }
                 {deleteView &&
-                    <Category_Delete {...{
+                    <Payment_Delete {...{
                         view: deleteView,
                         setView: setDeleteView
+                    }} />
+                }
+                {importView &&
+                    <Payment_Import {...{
+                        view: importView,
+                        setView: setImportView
                     }} />
                 }
             </BookSettingLayout>

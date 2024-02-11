@@ -2,8 +2,8 @@ import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { AiOutlinePlus } from 'react-icons/ai';
 import { IoArrowBackOutline } from 'react-icons/io5';
-import { MdLabel } from 'react-icons/md';
-import { BookSettingLayout, Category_Add, Category_Delete, Category_Update, UserLayout } from '../../../../../../../components/Index';
+import { MdLabel, MdOutlineContentCopy } from 'react-icons/md';
+import { BookSettingLayout, Category_Add, Category_Delete, Category_Import, Category_Update, UserLayout } from '../../../../../../../components/Index';
 
 const Category = () => {
     const router = useRouter()
@@ -13,6 +13,7 @@ const Category = () => {
     const [addView, setAddView] = useState(false)
     const [updateView, setUpdateView] = useState(false)
     const [deleteView, setDeleteView] = useState(false)
+    const [importView, setImportView] = useState(false)
 
     return (
         <UserLayout>
@@ -84,7 +85,7 @@ const Category = () => {
                             </p>
                         </div>
                         <div
-                            className='w-full pt-5'
+                            className='w-full pt-5 pb-10 space-y-3'
                         >
                             <button
                                 onClick={() => setAddView(!addView)}
@@ -92,6 +93,13 @@ const Category = () => {
                             >
                                 <AiOutlinePlus />
                                 <span>Add New category</span>
+                            </button>
+                            <button
+                                onClick={() => setImportView(!importView)}
+                                className='w-full px-8 py-2 flex justify-center items-center space-x-2 border hover:border-[#4863D4] text-[#4863D4] focus:ring-2 rounded'
+                            >
+                                <MdOutlineContentCopy />
+                                <span>Import From Other Books</span>
                             </button>
                         </div>
                     </div>
@@ -112,6 +120,12 @@ const Category = () => {
                     <Category_Delete {...{
                         view: deleteView,
                         setView: setDeleteView
+                    }} />
+                }
+                {importView &&
+                    <Category_Import {...{
+                        view: importView,
+                        setView: setImportView
                     }} />
                 }
             </BookSettingLayout>

@@ -17,7 +17,7 @@ const fields = () => {
                     >
                     <div
                         onClick={()=>router.push(`/business/businessid/cashbooks/bookid/settings/fields/contact`)}
-                        className='p-6 flex justify-between items-center border rounded cursor-pointer'
+                        className='p-6 flex justify-between items-center hover:bg-gray-50 border rounded cursor-pointer'
                     >
                         <div>
                             <p
@@ -39,7 +39,7 @@ const fields = () => {
                     </div>
                     <div
                     onClick={()=>router.push(`/business/businessid/cashbooks/bookid/settings/fields/category`)}
-                        className='p-6 flex justify-between items-center border rounded cursor-pointer'
+                        className='p-6 flex justify-between items-center hover:bg-gray-50 border rounded cursor-pointer'
                     >
                         <div>
                             <p
@@ -61,7 +61,7 @@ const fields = () => {
                     </div>
                     <div
                     onClick={()=>router.push(`/business/businessid/cashbooks/bookid/settings/fields/payment`)}
-                        className='p-6 flex justify-between items-center border rounded cursor-pointer'
+                        className='p-6 flex justify-between items-center hover:bg-gray-50 border rounded cursor-pointer'
                     >
                         <div>
                             <p

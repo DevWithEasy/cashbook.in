@@ -4,7 +4,8 @@ import { BiCloudUpload } from 'react-icons/bi';
 import { ImUsers } from 'react-icons/im';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { MdAdd, MdOutlineContentCopy } from 'react-icons/md';
-import { BookSettingLayout, Category_Add, Category_Delete, Category_Update, UserLayout } from '../../../../../../../components/Index';
+import { BookSettingLayout, Contact_Add, Contact_Delete, Contact_Import, Contact_Update, UserLayout } from '../../../../../../../components/Index';
+import toast from 'react-hot-toast'
 
 const Contact = () => {
     const router = useRouter()
@@ -14,6 +15,7 @@ const Contact = () => {
     const [addView, setAddView] = useState(false)
     const [updateView, setUpdateView] = useState(false)
     const [deleteView, setDeleteView] = useState(false)
+    const [importView, setImportView] = useState(false)
 
     return (
         <UserLayout>
@@ -75,6 +77,7 @@ const Contact = () => {
                         <p className='text-base font-medium text-gray-500'>Add New Contact</p>
                         <div className='grid grid-cols-3 gap-x-5'>
                             <div
+                                onClick={()=>toast.error('Premium Feature')}
                                 className='p-4 flex flex-col justify-center items-center space-y-3 text-[#127F41] border rounded cursor-pointer'
                             >
                                 <BiCloudUpload
@@ -84,6 +87,7 @@ const Contact = () => {
                                 <p className='text-sm font-semibold'>Import From CSV</p>
                             </div>
                             <div
+                                onClick={()=>setImportView(!importView)}
                                 className='p-4 flex flex-col justify-center items-center space-y-3 text-[#4863D4] border rounded cursor-pointer'
                             >
                                 <MdOutlineContentCopy
@@ -93,6 +97,7 @@ const Contact = () => {
                                 <p className='text-sm font-semibold'>Import From Book</p>
                             </div>
                             <div
+                                onClick={()=>setAddView(!addView)}
                                 className='p-4 flex flex-col justify-center items-center space-y-3 text-[#4863D4] border rounded cursor-pointer'
                             >
                                 <MdAdd
@@ -126,21 +131,27 @@ const Contact = () => {
                     </div>
                 </div>
                 {addView &&
-                    <Category_Add {...{
+                    <Contact_Add {...{
                         view: addView,
                         setView: setAddView
                     }} />
                 }
                 {updateView &&
-                    <Category_Update {...{
+                    <Contact_Update {...{
                         view: updateView,
                         setView: setUpdateView
                     }} />
                 }
                 {deleteView &&
-                    <Category_Delete {...{
+                    <Contact_Delete {...{
                         view: deleteView,
                         setView: setDeleteView
+                    }} />
+                }
+                                {importView &&
+                    <Contact_Import {...{
+                        view: importView,
+                        setView: setImportView
                     }} />
                 }
             </BookSettingLayout>
