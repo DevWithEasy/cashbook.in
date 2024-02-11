@@ -3,7 +3,7 @@ import { GoPlus } from 'react-icons/go';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { RiArrowDownSFill } from 'react-icons/ri';
 
-const Entry_Add_Payment = ({ paymentAddView, setPaymentAddView, paymentView, setPaymentView }) => {
+const Entry_Add_Contact = ({contactAddView,setContactAddView,contactView,setContactView}) => {
     return (
         <div
             className='w-1/2 space-y-1'
@@ -11,7 +11,7 @@ const Entry_Add_Payment = ({ paymentAddView, setPaymentAddView, paymentView, set
             <div
                 className='flex justify-between items-center'
             >
-                <span className='text-sm'>Paymment</span>
+                <span className='text-sm'>Contact</span>
                 <IoSettingsOutline
                     size={15}
                     className='text-[#4863D4] cursor-pointer'
@@ -21,17 +21,17 @@ const Entry_Add_Payment = ({ paymentAddView, setPaymentAddView, paymentView, set
                 className='relative rounded'
             >
                 <input
-                    onClick={() => setPaymentView(!paymentView)}
+                    onClick={() => setContactView(!contactView)}
                     placeholder='Search or Select'
                     className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                 />
                 <button
-                    onClick={() => setPaymentView(!paymentView)}
+                    onClick={() => setContactView(!contactView)}
                     className='absolute right-0 px-3 py-2.5 border-l'
                 >
                     <RiArrowDownSFill size={20} />
                 </button>
-                {paymentView &&
+                {contactView &&
                     <div
                         className='absolute z-50 w-full h-[240px] mt-1 flex flex-col justify-between bg-white border rounded'
                     >
@@ -46,13 +46,13 @@ const Entry_Add_Payment = ({ paymentAddView, setPaymentAddView, paymentView, set
                             className='h-10 px-2'
                         >
                             <button
-                                onClick={() => setPaymentAddView(!paymentAddView)}
+                            onClick={()=>setContactAddView(!contactAddView)}
                                 className='w-full flex justify-center items-center space-x-2 p-2 text-sm bg-gray-100 rounded'
                             >
                                 <GoPlus
                                     className='text-[#4863D4]'
                                 />
-                                <span>Add New Payment</span>
+                                <span>Add New Contact</span>
                             </button>
                         </div>
                     </div>
@@ -62,4 +62,4 @@ const Entry_Add_Payment = ({ paymentAddView, setPaymentAddView, paymentView, set
     );
 };
 
-export default Entry_Add_Payment;
+export default Entry_Add_Contact;

@@ -31,6 +31,12 @@ const bookSlice = createSlice({
         addCurrentBooks: (state, action) => {
             state.currentBooks = action.payload
         },
+        reAddCurrentBooks: (state, action) => {
+            
+            const findBooks = state.books.filter(book=>book.business !== action.payload.id)
+
+            state.books = [...findBooks,...action.payload.data]
+        },
         addCurrentBook: (state, action) => {
             state.currentBook = action.payload
         },
@@ -38,7 +44,7 @@ const bookSlice = createSlice({
             state.books = [action.payload, ...state.books]
         },
         removeBook: (state, action) => {
-            state.books = state.books.filter(book => book.id != action.payload)
+            state.books = state.books.filter(book => book._id != action.payload)
             state.currentBook = {}
         },
         renameBook: (state, action) => {
@@ -71,5 +77,5 @@ const bookSlice = createSlice({
 
     }
 })
-export const {refresh,addBusinesses,addCurrentBusiness,addBusiness, addBooks,addCurrentBooks, addCurrentBook, addBook, removeBook, renameBook, addEntries, addEntry, removeEntry, updatePrevEntry, logoutReset } = bookSlice.actions
+export const {refresh,addBusinesses,addCurrentBusiness,addBusiness, addBooks,addCurrentBooks,reAddCurrentBooks, addCurrentBook, addBook, removeBook, renameBook, addEntries, addEntry, removeEntry, updatePrevEntry, logoutReset } = bookSlice.actions
 export default bookSlice.reducer

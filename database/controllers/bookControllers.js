@@ -1,13 +1,13 @@
 import Book from "../model/Book"
+import Entry from "../model/Entry"
 
-export const getBook = async(req,res)=>{
+export const getBooks = async(req,res)=>{
     try {
-        const book = await Book.findOne({"_id" : req.query.id})
-        const entries = await Post.find({book: book._id}).sort({createdAt: -1})
+        const books = await Book.find({"business" : req.query.id})
         res.status(200).json({
-            success : "success",
+            success : true,
             status:200,
-            data : {...book._doc,entries}
+            data : books
         })
     } catch (err) {
         res.status(500).json({
@@ -63,12 +63,13 @@ export const updateBook = async(req,res)=>{
 
 export const deleteBook = async(req,res)=>{
     try {
-        await Post.deleteMany({"book" : (req.query.id)})
+        await Entry.deleteMany({"book" : (req.query.id)})
         await Book.deleteOne({"_id" : req.query.id})
-        res.status(200).json({
+
+        return res.status(200).json({
             success : "success",
             status:200,
-            data: {id : req.query.id},
+            data: {},
             message : "Successfully deleted."
         })
     } catch (error) {

@@ -1,4 +1,4 @@
-import { deleteBook, getBook, updateBook } from "../../../database/controllers/bookControllers";
+import { deleteBook, getBooks, updateBook } from "../../../database/controllers/bookControllers";
 import initDatabase from "../../../database/initDatabase";
 import authentication from "../../../utils/authentication";
 
@@ -6,10 +6,7 @@ function handler(req, res) {
   initDatabase()
   switch (req.method) {
     case 'GET':
-      getBook(req, res)
-      break;
-    case 'POST':
-      getBook(req, res)
+      getBooks(req, res)
       break;
     case 'DELETE':
       deleteBook(req, res)

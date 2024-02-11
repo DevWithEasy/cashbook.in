@@ -1,14 +1,15 @@
 import initDatabase from "../../../../database/initDatabase";
-import Post from "../../../../database/model/Post";
+import Entry from "../../../../database/model/Entry";
 
 export default async function handler(req, res){
     initDatabase()
     try{
-        const posts = await Post.find({"book" : req.query.id}).sort({createdAt : -1})
-        res.status(200).json({
+        const entries = await Entry.find({"book" : req.query.id}).sort({createdAt : -1})
+        
+        return res.status(200).json({
             success : true,
             status:200,
-            data : posts,
+            data : entries,
             message:"Successfully created"
         })
     }catch(err){

@@ -1,11 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { Balance, Entry_Add, Entry_Category, Entry_Contact, Entry_Delete, Entry_Details, Entry_Duplicate, Entry_Move, Entry_Opposite, Entry_Payment, Entry_Update, Transections_Header, Transections_NoFound, Transections_Pagination, Transections_Search, Transections_SortBy, Transections_Tbody, Transections_TheadAction, Transections_TheadMain, UserLayout } from '../../../../../components/Index';
 import { useRouter } from 'next/router';
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import Head from 'next/head'
+import { addEntries } from '../../../../../store/slice/bookSlice';
+import axios from 'axios'
 
 const Transactions = () => {
-    const { entries } = useSelector(state => state.book)
+    const { entries, currentBook } = useSelector(state => state.book)
     const router = useRouter()
+    const {bookid} = router.query
+    const dispatch = useDispatch()
+    const [loading,setLoading] = useState(false)
     const [menuId, setMenuId] = useState(null)
     const [check, setCheck] = useState(false)
     const [selected, setSelected] = useState([])
@@ -43,28 +49,38 @@ const Transactions = () => {
         setDetailsView(!deleteView)
     }
 
-    const getTransections=async()=>{
+    const getTransections = async (id) => {
+        setLoading(!loading)
         try {
-            const res = await Axios.get(`/api/entry`,{
-                headers : {
+            const res = await axios.get(`/api/entry?id=${id}`, {
+                headers: {
                     "cb-access-token": localStorage.getItem("cb_access_token")
                 }
             })
+            if(res.data.success) {
+                console.log(res.data)
+                setLoading(!loading)
+                dispatch(addEntries(res.data.data))
+            }
         } catch (error) {
             console.log(error)
+            setLoading(!loading)
         }
     }
 
     useEffect(() => {
-        
-    },[])
+        bookid && getTransections(bookid)
+    }, [bookid])
 
-    
     return (
         <UserLayout>
             <div
                 className='px-8 space-y-5'
             >
+                <Head>
+                    <title>{currentBook?.name}'s Transactions - CashBook</title>
+                </Head>
+
                 <Transections_Header />
 
                 <Transections_SortBy {...{
@@ -74,9 +90,9 @@ const Transactions = () => {
 
                 <Transections_Search {...{ handleView }} />
 
-                
+
                 {entries?.length > 0 &&
-                    <Balance/>
+                    <Balance />
                 }
 
                 {entries?.length > 0 &&

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { createBook } from '../../libs/allBookAction';
-import { addBook, refresh } from '../../store/slice/bookSlice';
+import {  deleteBook } from '../../libs/allBookAction';
+import { addBook, refresh, removeBook } from '../../store/slice/bookSlice';
 import React, { useState } from 'react'
 import {
   Modal,
@@ -10,12 +10,15 @@ import {
 import { TiInfo } from 'react-icons/ti';
 import { MdDeleteOutline } from 'react-icons/md';
 import { RxCross2 } from 'react-icons/rx';
+import { useRouter } from 'next/router';
 
 export default function Book_Delete({ view, setView }) {
-  const { currentBusiness } = useSelector(state => state.book)
+  const { currentBook } = useSelector(state => state.book)
   const [name, setName] = useState("")
   const dispatch = useDispatch()
+  const router = useRouter()
   const [loading, setLoading] = useState(false)
+  
   return (
     <>
       <Modal
@@ -54,7 +57,7 @@ export default function Book_Delete({ view, setView }) {
             >
               <label className='space-x-1 text-sm text-gray-500'>
                 <span>Please type</span>
-                <span className='font-bold'>Robiul Awal</span>
+                <span className='font-bold'>{currentBook?.name}</span>
                 <span>to confirm</span>
               </label>
               <input
@@ -77,16 +80,17 @@ export default function Book_Delete({ view, setView }) {
             </button>
 
             <button
-              onClick={(e) => createBook(
-                currentBusiness?._id,
+              onClick={(e) => deleteBook(
                 name,
+                currentBook,
+                router,
                 setLoading,
                 dispatch,
-                addBook,
+                removeBook,
                 refresh,
                 setView
               )}
-              className={`px-8 py-3 flex items-center space-x-3 border rounded ${!name === 'Robiul Awal' ? 'text-[#C93B3B]' : 'bg-[#C93B3B] text-white'}`}
+              className={`px-8 py-3 flex items-center space-x-3 border rounded text-[#C93B3B]`}
 
             >
               <MdDeleteOutline size={20}/>

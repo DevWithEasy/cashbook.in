@@ -1,10 +1,11 @@
 import axios from "axios"
 import { notificationNOT, notificationOK } from "../utils/toastNotification"
 
-export const createEntry = async(id,value,setValue,type,setLoading,dispatch,action,onClose)=>{
+export const createEntry = async(data)=>{
+    const {id,value,setValue,type,setLoading,dispatch,action} = data
     try {
         setLoading(true)
-        const res = await axios.post(`/api/entry/add`,value,{
+        const res = await axios.post(`/api/transections/add`,value,{
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -29,10 +30,11 @@ export const createEntry = async(id,value,setValue,type,setLoading,dispatch,acti
     }
 }
 
-export const createEntryOther = async(id,value,setValue,type,setLoading,dispatch,action)=>{
+export const createEntryOther = async(data)=>{
+    const {id,value,setValue,type,setLoading,dispatch,action} = data
     try {
         setLoading(true)
-        const res = await axios.post(`/api/entry/add`,value,{
+        const res = await axios.post(`/api/transections/add`,value,{
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -58,7 +60,7 @@ export const createEntryOther = async(id,value,setValue,type,setLoading,dispatch
 export const deleteEntry = async(id,setLoading,dispatch,action,onClose)=>{
     try {
         setLoading(true)
-        const res = await axios.delete(`/api/entry/${id}`)
+        const res = await axios.delete(`/api/transections/${id}`)
         if(res.data.status === 200){
             setLoading(false)
             notificationOK(res.data.message)
@@ -74,7 +76,7 @@ export const deleteEntry = async(id,setLoading,dispatch,action,onClose)=>{
 export const updateEntry = async(id,value,setLoading,dispatch,action,onClose)=>{
     try {
         setLoading(true)
-        const res = await axios.put(`/api/entry/${id}`,value)
+        const res = await axios.put(`/api/transections/${id}`,value)
         if(res.data.status === 200){
             setLoading(false)
             notificationOK(res.data.message)
@@ -88,7 +90,7 @@ export const updateEntry = async(id,value,setLoading,dispatch,action,onClose)=>{
 }
 export const entryDetails = async(id,setDetails)=>{
     try {
-        const res = await axios.get(`/api/entry/${id}`)
+        const res = await axios.get(`/api/transections/${id}`)
         if(res.data.data){
             setDetails(res.data.data)
         }

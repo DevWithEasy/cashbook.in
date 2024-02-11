@@ -33,7 +33,6 @@ export default function Book_Add({ view, setView }) {
               className='px-4 py-1 border rounded'
             >X</button>
           </div>
-
           <div
             className='px-6 pt-3 pb-10 space-y-1'
           >
@@ -61,7 +60,7 @@ export default function Book_Add({ view, setView }) {
               className='px-8 py-3 bg-[#4863D4] text-white rounded'
 
             >
-              {loading ? <Spinner /> : 'Save'}
+              {loading ? 'Saving...' : 'Save'}
             </button>
           </div>
         </ModalContent>

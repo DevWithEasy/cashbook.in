@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
 
-const categorySchema = mongoose.Schema({
+const paymentSchema = mongoose.Schema({
     name:{
         type:String,
         required:true
@@ -17,5 +17,5 @@ const categorySchema = mongoose.Schema({
     timestamps:true
 })
 
-const Category = mongoose.models.Category || mongoose.model('Category',categorySchema)
-export default Category
+const Payment = mongoose.models.Payment || mongoose.model('Payment',paymentSchema)
+export default Payment

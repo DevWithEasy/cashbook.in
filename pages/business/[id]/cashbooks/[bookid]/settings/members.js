@@ -1,23 +1,27 @@
 import React, { useState } from 'react';
-import UserLayout from '../../../../../../components/UserLayout';
-import BookSettingLayout from '../../../../../../components/BookSettingLayout';
 import { IoPersonAddSharp } from 'react-icons/io5';
 import { IoIosArrowForward } from 'react-icons/io';
 import Image from 'next/image'
 import user_image from '../../../../../../public/image/profile.png'
 import { useSelector } from "react-redux";
 import { useRouter } from 'next/router';
-import { Book_AddMember } from '../../../../../../components/Index';
+import {BookSettingLayout,UserLayout, Book_AddMember } from '../../../../../../components/Index';
+import Head from 'next/head'
 
 const members = () => {
     const user = useSelector(state => state.auth.user)
+    const {currentBook} = useSelector(state => state.book)
     const router = useRouter()
     const {pathname} = router
     const path = pathname.split('/').pop()
     const [view,setView] = useState(false)
+
     return (
         <UserLayout>
             <BookSettingLayout {...{path}}>
+                <Head>
+                    <title>Members - {currentBook?.name} - CashBook</title>
+                </Head>
                 <div className="w-8/12">
                     <div className="p-4 flex justify-between items-center border rounded">
                         <div className="w-7/12">

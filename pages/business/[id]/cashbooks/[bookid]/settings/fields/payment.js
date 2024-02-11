@@ -1,22 +1,19 @@
-import { useRouter } from 'next/router';
-import React, { useState } from 'react';
-import { AiOutlinePlus } from 'react-icons/ai';
-import { IoArrowBackOutline } from 'react-icons/io5';
-import { MdAdd, MdLabel, MdOutlineContentCopy } from 'react-icons/md';
-import { BookSettingLayout, Category_Add, Category_Delete, Category_Update, Payment_Add, Payment_Delete, Payment_Import, Payment_Update, UserLayout } from '../../../../../../../components/Index';
-import { CiMenuKebab } from 'react-icons/ci';
 import {
     Menu,
     MenuButton,
-    MenuList,
-    MenuItem,
-    MenuItemOption,
-    MenuGroup,
-    MenuOptionGroup,
-    MenuDivider,
-} from '@chakra-ui/react'
+    MenuList
+} from '@chakra-ui/react';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { CiMenuKebab } from 'react-icons/ci';
+import { IoArrowBackOutline } from 'react-icons/io5';
+import { MdAdd, MdOutlineContentCopy } from 'react-icons/md';
+import { useSelector } from 'react-redux';
+import { BookSettingLayout, Payment_Add, Payment_Delete, Payment_Import, Payment_Update, UserLayout } from '../../../../../../../components/Index';
 
 const Payment = () => {
+    const { currentBook, currentBusiness } = useSelector(state => state.book)
     const router = useRouter()
     const { pathname } = router
     const path = pathname.split('/')[(pathname.split('/').length - 2)]
@@ -29,6 +26,9 @@ const Payment = () => {
     return (
         <UserLayout>
             <BookSettingLayout {...{ path }}>
+                <Head>
+                    <title>Payment Field - {currentBook?.name} - CashBook</title>
+                </Head>
                 <div
                     className='w-8/12 space-y-5'
                 >
@@ -118,13 +118,13 @@ const Payment = () => {
                                         </MenuButton>
                                         <MenuList>
                                             <button
-                                                onClick={()=>setUpdateView(!updateView)}
+                                                onClick={() => setUpdateView(!updateView)}
                                                 className='w-full p-2 text-left hover:bg-slate-100'
                                             >
                                                 Rename
                                             </button>
                                             <button
-                                                onClick={()=>setDeleteView(!deleteView)}
+                                                onClick={() => setDeleteView(!deleteView)}
                                                 className='w-full p-2 text-left hover:bg-slate-100'
                                             >
                                                 Delete

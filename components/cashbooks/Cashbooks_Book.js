@@ -1,15 +1,26 @@
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { ImUsers } from 'react-icons/im';
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { MdBook, MdOutlineContentCopy, MdOutlineEdit, MdOutlineTurnRight } from 'react-icons/md';
 import moment from 'moment'
+import { addCurrentBook } from '../../store/slice/bookSlice';
 
 const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDuplicateView,moveView,setMoveView}) => {
-    const { currentBusiness } = useSelector(state => state.book)
+    const { currentBusiness,books } = useSelector(state => state.book)
     const router = useRouter()
+    const dispatch = useDispatch()
     const [menu, setMenu] = useState(false)
     const days = moment().diff(moment(book?.updatedAt),'days')
+
+    const handleRoute=()=>{
+        const findBook = books.find(b=>b._id === book._id)
+
+        dispatch(addCurrentBook(findBook))
+
+        router.push(`/business/${currentBusiness?._id}/cashbooks/${book?._id}/transactions`)
+    }
+
     return (
         <div
                 onMouseOver={() => setMenu(true)}
@@ -17,7 +28,7 @@ const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDu
                 className='relative p-4 flex justify-between items-center space-x-5 border-b hover:bg-gray-100 cursor-pointer'
             >
                 <div
-                    onClick={() => router.push(`/business/${currentBusiness?._id}/cashbooks/${book?._id}/transactions`)}
+                    onClick={handleRoute}
                     className='w-1/2 flex items-center space-x-3'
                 >
                     <div>
@@ -85,7 +96,7 @@ const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDu
                         >
                             <ImUsers
                                 size={22}
-                                onClick={() => router.push(`/business/businessid/cashbooks/bookid/settings/members`)}
+                                onClick={() => router.push(`/business/${currentBusiness?._id}/cashbooks/${book?._id}/settings/members`)}
                                 className='text-[#4863D4] cursor-pointer'
                             />
                             <span

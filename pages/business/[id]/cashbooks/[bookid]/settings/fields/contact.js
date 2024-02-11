@@ -1,13 +1,16 @@
+import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
+import toast from 'react-hot-toast';
 import { BiCloudUpload } from 'react-icons/bi';
 import { ImUsers } from 'react-icons/im';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { MdAdd, MdOutlineContentCopy } from 'react-icons/md';
+import { useSelector } from 'react-redux';
 import { BookSettingLayout, Contact_Add, Contact_Delete, Contact_Import, Contact_Update, UserLayout } from '../../../../../../../components/Index';
-import toast from 'react-hot-toast'
 
 const Contact = () => {
+    const { currentBook, currentBusiness } = useSelector(state => state.book)
     const router = useRouter()
     const { pathname } = router
     const path = pathname.split('/')[(pathname.split('/').length - 2)]
@@ -20,6 +23,9 @@ const Contact = () => {
     return (
         <UserLayout>
             <BookSettingLayout {...{ path }}>
+                <Head>
+                    <title>Contact Field - {currentBook?.name} - CashBook</title>
+                </Head>
                 <div
                     className='w-8/12 space-y-5'
                 >
@@ -77,7 +83,7 @@ const Contact = () => {
                         <p className='text-base font-medium text-gray-500'>Add New Contact</p>
                         <div className='grid grid-cols-3 gap-x-5'>
                             <div
-                                onClick={()=>toast.error('Premium Feature')}
+                                onClick={() => toast.error('Premium Feature')}
                                 className='p-4 flex flex-col justify-center items-center space-y-3 text-[#127F41] border rounded cursor-pointer'
                             >
                                 <BiCloudUpload
@@ -87,7 +93,7 @@ const Contact = () => {
                                 <p className='text-sm font-semibold'>Import From CSV</p>
                             </div>
                             <div
-                                onClick={()=>setImportView(!importView)}
+                                onClick={() => setImportView(!importView)}
                                 className='p-4 flex flex-col justify-center items-center space-y-3 text-[#4863D4] border rounded cursor-pointer'
                             >
                                 <MdOutlineContentCopy
@@ -97,7 +103,7 @@ const Contact = () => {
                                 <p className='text-sm font-semibold'>Import From Book</p>
                             </div>
                             <div
-                                onClick={()=>setAddView(!addView)}
+                                onClick={() => setAddView(!addView)}
                                 className='p-4 flex flex-col justify-center items-center space-y-3 text-[#4863D4] border rounded cursor-pointer'
                             >
                                 <MdAdd
@@ -148,7 +154,7 @@ const Contact = () => {
                         setView: setDeleteView
                     }} />
                 }
-                                {importView &&
+                {importView &&
                     <Contact_Import {...{
                         view: importView,
                         setView: setImportView

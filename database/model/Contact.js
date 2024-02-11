@@ -1,7 +1,11 @@
 import mongoose from 'mongoose';
 
-const categorySchema = mongoose.Schema({
+const contactSchema = mongoose.Schema({
     name:{
+        type:String,
+        required:true
+    },
+    phone:{
         type:String,
         required:true
     },
@@ -17,5 +21,5 @@ const categorySchema = mongoose.Schema({
     timestamps:true
 })
 
-const Category = mongoose.models.Category || mongoose.model('Category',categorySchema)
-export default Category
+const Contact = mongoose.models.Contact || mongoose.model('Contact',contactSchema)
+export default Contact

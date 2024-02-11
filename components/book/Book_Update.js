@@ -2,19 +2,18 @@ import {
   Modal,
   ModalContent,
   ModalOverlay,
-  Spinner
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { updateBook } from '../../libs/allBookAction';
-import { refresh, renameBook } from '../../store/slice/bookSlice';
+import { addCurrentBook, refresh, renameBook } from '../../store/slice/bookSlice';
 import handleInput from '../../utils/handleInput';
 
-const Book_Update = ({ id, view, setView }) => {
-  const {books,currentBusiness} = useSelector(state => state.book)
+const Book_Update = ({view, setView, isCurrent }) => {
+  const { currentBook } = useSelector(state => state.book)
   const [loading, setLoading] = useState(false)
-  const [value, setValue] = useState(books.find(book => book._id === id))
+  const [value, setValue] = useState(currentBook)
   const dispatch = useDispatch()
   return (
     <>
@@ -43,7 +42,7 @@ const Book_Update = ({ id, view, setView }) => {
             <input
               name='name'
               value={value?.name}
-              onChange={(e) => handleInput(e,value,setValue)}
+              onChange={(e) => handleInput(e, value, setValue)}
               className='w-full px-4 py-2 rounded border focus:outline-[#4863D4]'
               autoFocus={true}
             />
@@ -53,13 +52,15 @@ const Book_Update = ({ id, view, setView }) => {
           >
             <button
               onClick={(e) => updateBook(
-                id,
+                currentBook._id,
                 value?.name,
                 setLoading,
                 dispatch,
                 renameBook,
                 refresh,
-                setView
+                setView,
+                isCurrent,
+                addCurrentBook
               )}
               className='px-8 py-3 bg-[#4863D4] text-white rounded'
 

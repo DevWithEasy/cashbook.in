@@ -3,7 +3,8 @@ import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Book_Add, Book_Duplicate, Book_Move, Book_Update, Cashbooks_Book, Cashbooks_Contact, Cashbooks_Header, Cashbooks_NoBook, Cashbooks_Search, UserLayout } from '../../../components/Index';
-import { addCurrentBooks, addCurrentBusiness } from '../../../store/slice/bookSlice';
+import { addBooks, addCurrentBooks, addCurrentBusiness, reAddCurrentBooks } from '../../../store/slice/bookSlice';
+import { getBooks } from '../../../libs/allBookAction';
 
 const Cashbooks = () => {
     const { businesses,currentBusiness,currentBooks, books,random } = useSelector(state => state.book)
@@ -19,12 +20,14 @@ const Cashbooks = () => {
     const [moveView, setMoveView] = useState(false)
     const [id, setId] = useState(null)
 
-    const getBusinessBooks = () => {
+    const getBusinessBooks = async() => {
         const findBusiness = businesses.find(business => business._id === router.query.id)
         dispatch(addCurrentBusiness(findBusiness))
 
         const findbooks = books.filter(book => book.business == router.query.id)
         dispatch(addCurrentBooks(findbooks))
+
+        getBooks(router.query.id,dispatch,reAddCurrentBooks)
     }
 
     useEffect(() => {
@@ -82,9 +85,9 @@ const Cashbooks = () => {
                     }
                     {updateView &&
                         <Book_Update {...{
-                            id,
                             view: updateView,
-                            setView: setUpdateView
+                            setView: setUpdateView,
+                            isCurrent : false
                         }} />
                     }
                     {duplicateView &&

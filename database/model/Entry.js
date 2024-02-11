@@ -17,10 +17,14 @@ const entrySchema = mongoose.Schema({
         type : String
     },
     category :{
-        type : String
+        type:mongoose.Types.ObjectId,
+        ref:'Category',
+        default : ''
     },
     payment :{
-        type : String
+        type:mongoose.Types.ObjectId,
+        ref:'Payment',
+        default : ''
     },
     entryType :{
         type : String,

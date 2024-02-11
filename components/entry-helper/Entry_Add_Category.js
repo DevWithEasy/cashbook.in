@@ -3,7 +3,7 @@ import { GoPlus } from 'react-icons/go';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { RiArrowDownSFill } from 'react-icons/ri';
 
-const Entry_Add_Category = ({addView, setAddView,categoryView, setCategoryView}) => {
+const Entry_Add_Category = ({ addView, setAddView, categoryView, setCategoryView }) => {
     return (
         <div
             className='w-1/2 space-y-1'
@@ -33,7 +33,7 @@ const Entry_Add_Category = ({addView, setAddView,categoryView, setCategoryView})
                 </button>
                 {categoryView &&
                     <div
-                        className='absolute w-full h-[240px] mt-1 flex flex-col justify-between border rounded'
+                        className='absolute z-50 w-full h-[240px] mt-1 flex flex-col justify-between bg-white border rounded'
                     >
                         <div
                             className='h-[200px] p-2 overflow-y-auto'

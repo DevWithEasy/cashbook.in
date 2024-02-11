@@ -24,7 +24,7 @@ const Transections_Header = () => {
                         className='w-1/2 flex items-center space-x-3'
                     >
                         <IoMdArrowRoundBack
-                            onClick={() => router.push(`/business/businessid/cashbooks/`)}
+                            onClick={() => router.push(`/business/${currentBusiness._id}/cashbooks/`)}
                             size={22}
                             className='mt-1 cursor-pointer'
                         />
@@ -40,7 +40,7 @@ const Transections_Header = () => {
                                 className='relative group'
                             >
                                 <IoSettingsOutline
-                                    onClick={() => router.push(`/business/businessId/cashbooks/bookId/settings/fields`)}
+                                    onClick={() => router.push(`/business/${currentBusiness._id}/cashbooks/${currentBook._id}/settings/fields`)}
                                     size={22}
                                     className='text-[#4863D4] cursor-pointer'
                                 />
@@ -55,7 +55,7 @@ const Transections_Header = () => {
                                 className='relative group'
                             >
                                 <HiOutlineUsers
-                                    onClick={() => router.push(`/business/businessId/cashbooks/bookId/settings/members`)}
+                                    onClick={() => router.push(`/business/${currentBusiness._id}/cashbooks/${currentBook._id}/settings/members`)}
                                     size={22}
                                     className='text-[#4863D4] cursor-pointer'
                                 />
@@ -77,7 +77,7 @@ const Transections_Header = () => {
                             className='px-6 py-2 flex items-center space-x-2 text-[#4863D4]'
                         >
                             <AiOutlineCloudUpload size={20} />
-                            <span>Add Buk Entries</span>
+                            <span>Add Bulk Entries</span>
                         </button>
                         <Menu>
                             <MenuButton

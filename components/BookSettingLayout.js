@@ -3,8 +3,10 @@ import { IoMdArrowRoundBack } from "react-icons/io";
 import { MdOutlineEdit, MdOutlineContentCopy, MdDeleteOutline } from "react-icons/md";
 import { Book_Update, Book_Duplicate, Book_Delete } from '../components/Index'
 import { useRouter } from 'next/router';
+import {useSelector} from 'react-redux'
 
 const BookSettingLayout = ({ path, children }) => {
+    const {currentBusiness,currentBook}  = useSelector(state=>state.book)
     const router = useRouter()
     const [updateView, setUpdateView] = useState(false)
     const [duplicateView, setDuplicateView] = useState(false)
@@ -32,14 +34,14 @@ const BookSettingLayout = ({ path, children }) => {
                     className='w-1/2 flex items-center space-x-3'
                 >
                     <IoMdArrowRoundBack
-                        onClick={() => router.push(`/business/businessid/cashbooks/`)}
+                        onClick={() => router.push(`/business/${currentBusiness._id}/cashbooks/`)}
                         size={25}
                         className='mt-1 cursor-pointer'
                     />
                     <p
                         className='text-2xl'
                     >
-                        Settings <span className='text-sm'>(Name)</span>
+                        Settings <span className='text-sm'>({currentBook?.name})</span>
                     </p>
                 </div>
                 <div
@@ -78,7 +80,7 @@ const BookSettingLayout = ({ path, children }) => {
                         sidebars.map((topic, i) =>
                             <div
                                 key={i}
-                                onClick={() => router.push(`/business/businessid/cashbooks/bookid/settings/${topic.path}`)}
+                                onClick={() => router.push(`/business/${currentBusiness._id}/cashbooks/${currentBook._id}/settings/${topic.path}`)}
                                 className='py-3 pr-3 border-b'
                             >
                                 <div
@@ -104,7 +106,8 @@ const BookSettingLayout = ({ path, children }) => {
                 {updateView &&
                     <Book_Update {...{
                         view: updateView,
-                        setView: setUpdateView
+                        setView: setUpdateView,
+                        isCurrent: true
                     }} />
                 }
 
