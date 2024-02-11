@@ -9,11 +9,15 @@ const contactSchema = mongoose.Schema({
         type:String,
         required:true
     },
+    type:{
+        type:String,
+        required:true
+    },
     user:{
         type:mongoose.Types.ObjectId,
         ref:'User'
     },
-    bookId:{
+    book:{
         type:mongoose.Types.ObjectId,
         ref:'Book'
     }

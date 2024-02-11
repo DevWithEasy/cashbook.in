@@ -1,25 +1,23 @@
-import { createCategory, deleteCategory, getCategories, updateCategory } from "../../../database/controllers/categoryControllers";
+import { createPayment, deletePayment, getPayments, updatePayment } from "../../../database/controllers/paymentControllers";
 import initDatabase from "../../../database/initDatabase";
-import authentication from "../../../utils/authentication";
 
-function handler(req, res) {
+export default function handler(req, res) {
     initDatabase()
     switch (req.method) {
         case 'GET':
-            getCategories(req, res)
+            getPayments(req, res)
             break;
         case 'POST':
-            createCategory(req, res)
+            createPayment(req, res)
             break;
         case 'DELETE':
-            deleteCategory(req, res)
+            deletePayment(req, res)
             break;
         case 'PUT':
-            updateCategory(req, res)
+            updatePayment(req, res)
             break;
             defaults:
             res.setHeader("Allow", ['GET', 'POST', 'PUT', 'DELETE'])
             res.status(405).end(`Method ${req.method} Not Allow`)
     }
 }
-export default authentication(handler);

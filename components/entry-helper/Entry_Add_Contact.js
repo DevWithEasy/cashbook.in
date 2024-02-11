@@ -3,7 +3,7 @@ import { GoPlus } from 'react-icons/go';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { RiArrowDownSFill } from 'react-icons/ri';
 
-const Entry_Add_Contact = ({contactAddView,setContactAddView,contactView,setContactView}) => {
+const Entry_Add_Contact = ({contact, setContact,contactAddView,setContactAddView,contactView,setContactView}) => {
     return (
         <div
             className='w-1/2 space-y-1'

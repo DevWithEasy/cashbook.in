@@ -10,7 +10,7 @@ const handler = nc({
   },
 })
   .get((req, res) => {
-    res.send("Hello world");
+    res.send("Hello world"); 
   })
 
 export default handler;

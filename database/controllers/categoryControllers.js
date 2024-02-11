@@ -1,6 +1,6 @@
 import Book from "../model/Book"
 
-export const getCategory = async(req,res)=>{
+export const getCategories = async(req,res)=>{
     try {
         const book = await Book.findOne({"_id" : req.query.id})
         const entries = await Post.find({book: book._id}).sort({createdAt: -1})

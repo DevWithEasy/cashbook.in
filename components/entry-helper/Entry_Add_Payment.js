@@ -3,7 +3,7 @@ import { GoPlus } from 'react-icons/go';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { RiArrowDownSFill } from 'react-icons/ri';
 
-const Entry_Add_Payment = ({ paymentAddView, setPaymentAddView, paymentView, setPaymentView }) => {
+const Entry_Add_Payment = ({payment, setPayment, paymentAddView, setPaymentAddView, paymentView, setPaymentView }) => {
     return (
         <div
             className='w-1/2 space-y-1'
@@ -39,8 +39,7 @@ const Entry_Add_Payment = ({ paymentAddView, setPaymentAddView, paymentView, set
                             className='h-[200px] p-2 overflow-y-auto'
                         >
                             <p className='text-sm text0gray-600 text-center'>Suggestions</p>
-
-
+                            
                         </div>
                         <div
                             className='h-10 px-2'

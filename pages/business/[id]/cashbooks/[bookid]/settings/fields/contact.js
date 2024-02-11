@@ -8,9 +8,14 @@ import { IoArrowBackOutline } from 'react-icons/io5';
 import { MdAdd, MdOutlineContentCopy } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { BookSettingLayout, Contact_Add, Contact_Delete, Contact_Import, Contact_Update, UserLayout } from '../../../../../../../components/Index';
+import { useEffect } from 'react';
+import { getData } from '../../../../../../../libs/API_CCP_Crud';
+import { useDispatch } from 'react-redux';
+import { addCCPs } from '../../../../../../../store/slice/bookSlice';
 
 const Contact = () => {
-    const { currentBook, currentBusiness } = useSelector(state => state.book)
+    const { currentBook, ccp } = useSelector(state => state.book)
+    const dispatch = useDispatch()
     const router = useRouter()
     const { pathname } = router
     const path = pathname.split('/')[(pathname.split('/').length - 2)]
@@ -19,7 +24,15 @@ const Contact = () => {
     const [updateView, setUpdateView] = useState(false)
     const [deleteView, setDeleteView] = useState(false)
     const [importView, setImportView] = useState(false)
-
+    
+    useEffect(()=>{
+        getData({
+            url : `/api/contact?id=${currentBook._id}`,
+            dispatch,
+            action : addCCPs
+        })
+    },[])
+    console.log(ccp)
     return (
         <UserLayout>
             <BookSettingLayout {...{ path }}>
@@ -117,7 +130,7 @@ const Contact = () => {
                     <div
                         className='space-y-3 pb-10'
                     >
-                        <p className='text-base font-medium text-gray-500'>Contacts from this book (0)</p>
+                        <p className='text-base font-medium text-gray-500'>Contacts from this book ({ccp.length})</p>
                         <div
                             className={`w-8/12 mx-auto pt-5 flex flex-col justify-center items-center space-y-5 ${!isNoti && 'pointer-events-none grayscale'}`}
                         >

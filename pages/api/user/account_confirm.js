@@ -3,6 +3,7 @@ import User from "../../../database/model/User";
 import Business from "../../../database/model/Business";
 import authentication from "../../../utils/authentication";
 import Book from "../../../database/model/Book";
+import Payment from "../../../database/model/Payment";
 
 async function handler(req, res) {
     initDatabase()
@@ -37,7 +38,17 @@ async function handler(req, res) {
             business : business._id
         })
 
-        await newBook.save()
+        const book = await newBook.save()
+
+        const payments = ['Cash','Online']
+        payments.forEach(async(payment)=>{
+            const newPayment = new Payment({
+                name : payment,
+                book : book._id,
+                user : req.user.id
+            })
+            await newPayment.save()
+        })
 
         return res.status(200).json({
                 success : true,

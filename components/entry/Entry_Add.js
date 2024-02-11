@@ -16,6 +16,7 @@ import Entry_Add_Payment from '../entry-helper/Entry_Add_Payment';
 import { createEntry, createEntryOther } from '../../libs/allEntryAction';
 import Entry_Add_Header from '../entry-helper/Entry_Add_Header';
 import Entry_Add_Type from '../entry-helper/Entry_Add_Type';
+import handleInput from '../../utils/handleInput';
 
 
 const Entry_Add = ({ type, setType, view, setView }) => {
@@ -39,10 +40,10 @@ const Entry_Add = ({ type, setType, view, setView }) => {
         amount: 0,
         remark: '',
     })
-    const [] = useState('')
-    const [] = useState('')
-    const [] = useState('')
-    const [] = useState('')
+    const [contact, setContact] = useState('')
+    const [category, setCategory] = useState('')
+    const [payment, setPayment] = useState('')
+
     return (
         <>
             <Drawer
@@ -106,21 +107,25 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                         >
                             <label className='block text-sm'>Amount</label>
                             <input
+                                name='amount'
                                 type='number'
                                 placeholder='eg - 1000'
+                                onChange={(e)=>handleInput(e,value,setValue)}
                                 autoFocus
                                 className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                             />
                         </div>
 
-                        <Entry_Add_Contact {...{ contactAddView, setContactAddView, contactView, setContactView }} />
+                        <Entry_Add_Contact {...{ contact, setContact,contactAddView, setContactAddView, contactView, setContactView }} />
 
                         <div
                             className='space-y-1'
                         >
                             <label className='block text-sm'>Remark</label>
                             <input
+                                name='remark'
                                 type='text'
+                                onChange={(e)=>handleInput(e,value,setValue)}
                                 placeholder='eg - Enter Detail (Name, Bill No, Item, Quantity etc)'
                                 className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                             />
@@ -129,9 +134,9 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                         <div
                             className='flex justify-between space-x-5'
                         >
-                            <Entry_Add_Category {...{ addView, setAddView, categoryView, setCategoryView }} />
+                            <Entry_Add_Category {...{category, setCategory, addView, setAddView, categoryView, setCategoryView }} />
 
-                            <Entry_Add_Payment {...{ paymentAddView, setPaymentAddView, paymentView, setPaymentView }} />
+                            <Entry_Add_Payment {...{ payment, setPayment,paymentAddView, setPaymentAddView, paymentView, setPaymentView }} />
 
                         </div>
                     </div>
@@ -140,6 +145,14 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                     >
                         <button
                             onClick={() => createEntry({
+                                value : {
+                                    ...value,
+                                    type,
+                                    category,
+                                    payment,
+                                    contact,
+                                    createdAt : dateObj
+                                },
 
                             })}
                             className='px-8 py-3 text-[#4863D4] border rounded'

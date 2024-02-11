@@ -10,6 +10,7 @@ const bookSlice = createSlice({
         currentBook: {},
         book: {},
         entries: [],
+        ccp : [],
         random : 0
     },
     reducers: {
@@ -68,6 +69,22 @@ const bookSlice = createSlice({
             const entries = [action.payload, ...findEntries]
             state.currentBook = { ...state.currentBook, entries }
         },
+        addCCPs: (state, action) => {
+            state.ccp = action.payload
+        },
+        addCCP: (state, action) => {
+            const entries = [action.payload, ...state.ccp]
+            state.ccp = entries
+        },
+        removeCCP: (state, action) => {
+            const entries = state.currentBook.entries.filter(entry => entry._id !== action.payload)
+            state.currentBook = { ...state.currentBook, entries }
+        },
+        updateCCP: (state, action) => {
+            const findEntries = state.currentBook.entries.filter(entry => entry._id !== action.payload._id)
+            const entries = [action.payload, ...findEntries]
+            state.currentBook = { ...state.currentBook, entries }
+        },
         logoutReset: (state, action) => {
             state.books = []
             state.currentBook = {}
@@ -77,5 +94,5 @@ const bookSlice = createSlice({
 
     }
 })
-export const {refresh,addBusinesses,addCurrentBusiness,addBusiness, addBooks,addCurrentBooks,reAddCurrentBooks, addCurrentBook, addBook, removeBook, renameBook, addEntries, addEntry, removeEntry, updatePrevEntry, logoutReset } = bookSlice.actions
+export const {refresh,addBusinesses,addCurrentBusiness,addBusiness, addBooks,addCurrentBooks,reAddCurrentBooks, addCurrentBook, addBook, removeBook, renameBook, addEntries, addEntry, removeEntry, updatePrevEntry,addCCPs,addCCP,updateCCP,removeCCP, logoutReset } = bookSlice.actions
 export default bookSlice.reducer

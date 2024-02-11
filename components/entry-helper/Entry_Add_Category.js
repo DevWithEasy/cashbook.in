@@ -3,7 +3,7 @@ import { GoPlus } from 'react-icons/go';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { RiArrowDownSFill } from 'react-icons/ri';
 
-const Entry_Add_Category = ({ addView, setAddView, categoryView, setCategoryView }) => {
+const Entry_Add_Category = ({ category, setCategory,addView, setAddView, categoryView, setCategoryView }) => {
     return (
         <div
             className='w-1/2 space-y-1'

@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from "react-redux";
-import { createBook } from "../../libs/allBookAction";
-import { addBook, refresh } from "../../store/slice/bookSlice";
+import {  addCCP, refresh } from "../../store/slice/bookSlice";
 import React, { useState } from "react";
 import { Modal, ModalOverlay, ModalContent, Spinner } from "@chakra-ui/react";
+import { createData } from "../../libs/API_CCP_Crud";
 
 export default function Contact_Add({ view, setView }) {
   const { currentBook } = useSelector((state) => state.book);
@@ -80,15 +80,19 @@ export default function Contact_Add({ view, setView }) {
           <div className="px-6 py-4 flex justify-end border-t">
             <button
               onClick={(e) =>
-                createBook(
-                  currentBook?._id,
-                  name,
+                createData({
+                  url : `/api/contact?id=${currentBook._id}`,
+                  value : {
+                    name,
+                    phone,
+                    type
+                  },
+                  action : addCCP,
                   setLoading,
                   dispatch,
-                  addBook,
                   refresh,
                   setView
-                )
+                })
               }
               className="px-8 py-3 bg-[#4863D4] text-white rounded"
             >

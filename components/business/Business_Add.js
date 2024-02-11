@@ -49,7 +49,7 @@ export default function Business_Add({ view, setView }) {
   return (
     <>
       <div
-        className='fixed top-0 h-screen w-full flex justify-end bg-slate-500/50'
+        className='fixed top-0 h-screen w-full flex justify-end bg-slate-900/50'
       >
         <motion.div
           initial={{
@@ -91,6 +91,7 @@ export default function Business_Add({ view, setView }) {
                 placeholder='Added Business Name'
                 onChange={(e) => handleInput(e, value, setValue)}
                 className='w-1/2 p-2 border rounded focus:outline-[#4863D4]'
+                autoFocus={true}
               />
             </div>
             <div
