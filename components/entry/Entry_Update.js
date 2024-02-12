@@ -21,8 +21,9 @@ import {useDispatch,useSelector} from 'react-redux'
 import { addEntry } from '../../store/slice/bookSlice';
 
 
-const Entry_Update = ({ type, setType, view, setView }) => {
+const Entry_Update = ({id,view, setView }) => {
     const {currentBook,entries} = useSelector(state=>state.book)
+    const entry = entries.find(e=>e._id === id)
     const dispatch = useDispatch()
     const [timeView, setTimeView] = useState(false)
     const [categoryView, setCategoryView] = useState(false)
@@ -48,6 +49,7 @@ const Entry_Update = ({ type, setType, view, setView }) => {
     const [contact, setContact] = useState({})
     const [category, setCategory] = useState({})
     const [payment, setPayment] = useState({})
+    const [type,setType] = useState()
 
     return (
         <>

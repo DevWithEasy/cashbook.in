@@ -1,4 +1,5 @@
 import Entry from "../model/Entry"
+import History from "../model/History"
 
 export const createEntry= async(req,res)=>{
     try {
@@ -36,10 +37,17 @@ export const createEntry= async(req,res)=>{
 export const getEntryDetails= async(req,res)=>{
     try {
         const entry = await  Entry.findOne({"_id" : req.query.id})
+        .populate('contact')
+        .populate('category')
+        .populate('payment')
+        const histories = await History.find({entry : req.query.id})
         res.status(200).json({
             success: true,
             status: 200,
-            data: entry,
+            data: {
+                entry,
+                histories
+            },
             message: "Entry updated successfully"
         })
     } catch (err) {

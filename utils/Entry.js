@@ -22,7 +22,7 @@ class Entry{
     generatedEntry(){
         let stock = 0
         const newEntries = []
-        this.entries.forEach(entry=>{
+        this.entries?.forEach(entry=>{
             stock = entry.entryType === 'cash_in' ? stock + entry.amount : stock - entry.amount
             newEntries.unshift({
                 ...entry,
