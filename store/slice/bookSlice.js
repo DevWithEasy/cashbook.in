@@ -56,17 +56,13 @@ const bookSlice = createSlice({
 
         },
         addEntry: (state, action) => {
-            const entries = [action.payload, ...state.currentBook.entries]
-            state.currentBook = { ...state.currentBook, entries }
+            state.entries = [action.payload, ...state.entries]
         },
         removeEntry: (state, action) => {
-            const entries = state.currentBook.entries.filter(entry => entry._id !== action.payload)
-            state.currentBook = { ...state.currentBook, entries }
+            state.entries = state.entries.filter(entry => entry._id != action.payload)
         },
-        updatePrevEntry: (state, action) => {
-            const findEntries = state.currentBook.entries.filter(entry => entry._id !== action.payload._id)
-            const entries = [action.payload, ...findEntries]
-            state.currentBook = { ...state.currentBook, entries }
+        updateEntry: (state, action) => {
+            state.entries = state.entries.map(entry => entry._id === action.payload._id ? action.payload : entry)
         },
         addCCPs: (state, action) => {
             state.ccp = action.payload
@@ -90,5 +86,5 @@ const bookSlice = createSlice({
 
     }
 })
-export const {refresh,addBusinesses,addCurrentBusiness,addBusiness, addBooks,addCurrentBooks,reAddCurrentBooks, addCurrentBook, addBook, removeBook, renameBook, addEntries, addEntry, removeEntry, updatePrevEntry,addCCPs,addCCP,updateCCP,removeCCP, logoutReset } = bookSlice.actions
+export const {refresh,addBusinesses,addCurrentBusiness,addBusiness, addBooks,addCurrentBooks,reAddCurrentBooks, addCurrentBook, addBook, removeBook, renameBook, addEntries, addEntry, removeEntry, updateEntry,addCCPs,addCCP,updateCCP,removeCCP, logoutReset } = bookSlice.actions
 export default bookSlice.reducer

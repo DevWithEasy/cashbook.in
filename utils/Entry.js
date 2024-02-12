@@ -1,34 +1,17 @@
 class Entry{
     constructor(entries){
-        this.entries = [
-            {
-                amount : 10,
-                entryType : 'CashIn'
-            },
-            {
-                amount : 10,
-                entryType : 'CashOut'
-            },
-            {
-                amount : 10,
-                entryType : 'CashIn'
-            },
-            {
-                amount : 10,
-                entryType : 'CashOut'
-            }
-        ]
+        this.entries = entries
     }
 
     cashIn(){
         return this.entries
-        .filter(entry=> entry.entryType === 'CashIn')
+        .filter(entry=> entry.entryType === 'cash_in')
         .reduce((acc,cur)=> acc + cur.amount,0)
     }
 
     cashOut(){
         return this.entries
-        .filter(entry=> entry.entryType === 'CashOut')
+        .filter(entry=> entry.entryType === 'cash_out')
         .reduce((acc,cur)=> acc + cur.amount,0)
     }
 
@@ -39,13 +22,13 @@ class Entry{
     generatedEntry(){
         let stock = 0
         const newEntries = []
-
         this.entries.forEach(entry=>{
-            stock = entry.entryType === 'CashIn' ? stock + entry.amount : stock - entry.amount
-            newEntries.push({
+            stock = entry.entryType === 'cash_in' ? stock + entry.amount : stock - entry.amount
+            newEntries.unshift({
                 ...entry,
                 stock : stock
             })
+            console.log(stock)
         })
         return newEntries
     }

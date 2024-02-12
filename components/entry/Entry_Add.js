@@ -17,9 +17,13 @@ import { createEntry, createEntryOther } from '../../libs/allEntryAction';
 import Entry_Add_Header from '../entry-helper/Entry_Add_Header';
 import Entry_Add_Type from '../entry-helper/Entry_Add_Type';
 import handleInput from '../../utils/handleInput';
+import {useDispatch,useSelector} from 'react-redux'
+import { addEntry } from '../../store/slice/bookSlice';
 
 
 const Entry_Add = ({ type, setType, view, setView }) => {
+    const {currentBook} = useSelector(state=>state.book)
+    const dispatch = useDispatch()
     const [timeView, setTimeView] = useState(false)
     const [categoryView, setCategoryView] = useState(false)
     const [paymentView, setPaymentView] = useState(false)
@@ -27,6 +31,7 @@ const Entry_Add = ({ type, setType, view, setView }) => {
     const [paymentAddView, setPaymentAddView] = useState(false)
     const [contactView, setContactView] = useState(false)
     const [contactAddView, setContactAddView] = useState(false)
+    const [loading,setLoading] = useState(false)
 
     //time handling
     const [date, setDate] = useState(moment().format('YYYY-MM-DD'))
@@ -40,16 +45,16 @@ const Entry_Add = ({ type, setType, view, setView }) => {
         amount: 0,
         remark: '',
     })
-    const [contact, setContact] = useState('')
-    const [category, setCategory] = useState('')
-    const [payment, setPayment] = useState('')
+    const [contact, setContact] = useState({})
+    const [category, setCategory] = useState({})
+    const [payment, setPayment] = useState({})
 
     return (
         <>
             <Drawer
                 isOpen={view}
                 placement='right'
-                size='md'
+                size='lg'
             >
                 <DrawerOverlay />
                 <DrawerContent>
@@ -141,23 +146,27 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                         </div>
                     </div>
                     <div
-                        className='h-20 px-6 flex justify-end items-center space-x-5 text-sm border-t'
+                        className='h-20 px-6 flex justify-end items-center space-x-5 border-t'
                     >
                         <button
                             onClick={() => createEntry({
+                                id : currentBook?._id,
                                 value : {
                                     ...value,
                                     type,
-                                    category,
-                                    payment,
-                                    contact,
+                                    category : category?._id || '',
+                                    payment : payment?._id || '',
+                                    contact : contact?._id || '',
                                     createdAt : dateObj
                                 },
-
+                                action : addEntry,
+                                dispatch,
+                                setView,
+                                setLoading
                             })}
                             className='px-8 py-3 text-[#4863D4] border rounded'
                         >
-                            Save
+                            {loading ? 'Saving...' : 'Save'}
                         </button>
                         <button
                             onClick={() => createEntryOther({

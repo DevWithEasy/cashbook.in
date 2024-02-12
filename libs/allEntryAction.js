@@ -2,26 +2,19 @@ import axios from "axios"
 import { notificationNOT, notificationOK } from "../utils/toastNotification"
 
 export const createEntry = async(data)=>{
-    const {id,value,setValue,type,setLoading,dispatch,action} = data
+    const {id,value,setLoading,dispatch,action,setView} = data
     try {
         setLoading(true)
-        const res = await axios.post(`/api/transections/add`,value,{
+        const res = await axios.post(`/api/transections/${id}`,value,{
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
         })
-        if(res.data.data){
+        if(res.data.success){
             setLoading(false)
             notificationOK(res.data.message)
             dispatch(action(res.data.data))
-            setValue({
-                book : id,
-                amount : '',
-                entryType : type,
-                remark : '',
-                history : []
-            })
-            onClose()
+            setView(false)
         }
     } catch (err) {
         console.log(err)

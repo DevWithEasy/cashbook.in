@@ -2,7 +2,8 @@ import React from 'react';
 import { MdDeleteOutline, MdOutlineCheckBox, MdOutlineCheckBoxOutlineBlank } from 'react-icons/md';
 import { RiEdit2Line } from 'react-icons/ri';
 
-const Transections_Tbody_Tr = ({menuId,setMenuId,check,handleCheck,handleDetails,deleteView,setDeleteView,updateView,setUpdateView}) => {
+const Transections_Tbody_Tr = ({entry,menuId,setMenuId,check,handleCheck,handleDetails,deleteView,setDeleteView,updateView,setUpdateView}) => {
+    // console.log(entry)
     return (
         <tr
             onMouseEnter={() => setMenuId()}
@@ -38,7 +39,7 @@ const Transections_Tbody_Tr = ({menuId,setMenuId,check,handleCheck,handleDetails
                 onClick={handleDetails}
                 className='px-4 py-2'
             >
-                Robiul Awal
+                {entry.remark}
             </td>
             <td
                 onClick={handleDetails}
@@ -62,13 +63,13 @@ const Transections_Tbody_Tr = ({menuId,setMenuId,check,handleCheck,handleDetails
                 onClick={handleDetails}
                 className='px-4 py-2 text-right'
             >
-                1000
+                {entry.amount}
             </td>
             <td
                 onClick={handleDetails}
                 className='px-4 py-2 text-right'
             >
-                1000
+                {entry.stock}
             </td>
             <td
                 className='py-4 flex justify-center items-center'

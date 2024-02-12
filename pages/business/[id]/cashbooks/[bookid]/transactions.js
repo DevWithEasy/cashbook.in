@@ -52,7 +52,7 @@ const Transactions = () => {
     const getTransections = async (id) => {
         setLoading(!loading)
         try {
-            const res = await axios.get(`/api/entry?id=${id}`, {
+            const res = await axios.get(`/api/transections/all/${id}`, {
                 headers: {
                     "cb-access-token": localStorage.getItem("cb_access_token")
                 }

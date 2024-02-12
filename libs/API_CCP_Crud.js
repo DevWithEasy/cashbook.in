@@ -24,7 +24,12 @@ export const createData=async(data)=>{
 }
 
 export const getData=async(data)=>{
-    const {url,dispatch,action} = data
+    const {url,dispatch,action,setLoading} = data
+
+    if(setLoading){
+        setLoading(true)
+    }
+
     try {
         const res = await axios.get(url,{
             headers : {
@@ -33,9 +38,15 @@ export const getData=async(data)=>{
         })
         if(res.data.success){
             dispatch(action(res.data.data))
+            if(setLoading){
+                setLoading(false)
+            }
         }
     } catch (error) {
         console.log(error)
+        if(setLoading){
+            setLoading(false)
+        }
     }
 }
 

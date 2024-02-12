@@ -3,11 +3,13 @@ import mongoose from 'mongoose';
 const entrySchema = mongoose.Schema({
     book:{
         type:mongoose.Types.ObjectId,
-        required:"Book"
+        ref:"Book",
+        required : true
     },
     user:{
         type:mongoose.Types.ObjectId,
-        ref:'User'
+        ref:'User',
+        required : true
     },
     amount :{
         type : Number,
@@ -16,38 +18,29 @@ const entrySchema = mongoose.Schema({
     remark : {
         type : String
     },
+    contact :{
+        type:mongoose.Types.ObjectId,
+        ref:'Contact',
+        default : null
+    },
     category :{
         type:mongoose.Types.ObjectId,
         ref:'Category',
-        default : ''
+        default : null
     },
     payment :{
         type:mongoose.Types.ObjectId,
         ref:'Payment',
-        default : ''
+        default : null
     },
     entryType :{
         type : String,
-        enum : ["CashIn","CashOut"]
+        enum : ["cash_in","cash_out"]
     },
     history : [
         {
-            from : {
-                type : Number,
-                required :true
-            },
-            to : {
-                type : Number,
-                required : true
-            },
-            reason : {
-                type : String,
-            },
-            date : {
-                type : Date,
-                default : Date.now()
-            }
-
+            type : mongoose.Types.ObjectId,
+            ref:'Payment',
         }
     ]
 

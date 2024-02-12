@@ -1,12 +1,12 @@
 import React from 'react';
 import { BiPlus, BiMinus } from 'react-icons/bi';
 import { TbEqual } from 'react-icons/tb'
+import {useSelector} from 'react-redux'
+import Entry from '../utils/Entry';
 
-const Balance = ({ entries }) => {
-    // const credit = entries.filter(e=>e.entryType === "Credit").reduce((a,i)=>a+parseInt(i.amount),0)
-    // const debit = entries.filter(e=>e.entryType === "Debit").reduce((a,i)=>a+parseInt(i.amount),0)
-    const credit = 15000
-    const debit = 2000
+const Balance = () => {
+    const {entries} = useSelector(state=>state.book)
+    const balance = new Entry(entries)
     return (
         <div className='border p-4 rounded sm:flex sm:justify-between sm:items-center mb-2 space-y-3 sm:space-y-0'>
             <div className="flex items-center w-4/12">
@@ -16,7 +16,7 @@ const Balance = ({ entries }) => {
                         <p className='text-sm text-gray-600'>
                             Cash In
                         </p>
-                        <p className='font-2xl font-semibold'>{credit - debit}/-</p>
+                        <p className='font-2xl font-semibold'>{balance.cashIn()}/-</p>
                     </div>
                 </div>
             </div>
@@ -28,7 +28,7 @@ const Balance = ({ entries }) => {
                         <p className='text-sm text-gray-600'>
                             Cash Out
                         </p>
-                        <p className='font-2xl font-semibold'>{credit - debit}/-</p>
+                        <p className='font-2xl font-semibold'>{balance.cashOut()}/-</p>
                     </div>
                 </div>
             </div>
@@ -39,7 +39,7 @@ const Balance = ({ entries }) => {
                         <p className='text-sm text-gray-600'>
                             Net Balance
                         </p>
-                        <p className='font-2xl font-semibold'>{credit - debit}/-</p>
+                        <p className='font-2xl font-semibold'>{balance.balance()}/-</p>
                     </div>
                 </div>
             </div>

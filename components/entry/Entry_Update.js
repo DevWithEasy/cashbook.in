@@ -3,64 +3,71 @@ import {
     DrawerContent,
     DrawerOverlay
 } from '@chakra-ui/react';
+import moment from 'moment';
 import React, { useState } from 'react';
 import { BsClock } from "react-icons/bs";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
-import { IoSettingsOutline } from "react-icons/io5";
-import { RiArrowDownSFill } from "react-icons/ri";
-import { GoPlus } from "react-icons/go";
+import { Category_Add, Contact_Add, Payment_Add } from '../Index';
+import Entry_Add_AMPM from '../entry-helper/Entry_Add_AMPM';
+import Entry_Add_Category from '../entry-helper/Entry_Add_Category';
+import Entry_Add_Contact from '../entry-helper/Entry_Add_Contact';
+import Entry_Add_Hour from '../entry-helper/Entry_Add_Hour';
+import Entry_Add_Minute from '../entry-helper/Entry_Add_Minute';
+import Entry_Add_Payment from '../entry-helper/Entry_Add_Payment';
+import { createEntry, createEntryOther } from '../../libs/allEntryAction';
+import Entry_Add_Header from '../entry-helper/Entry_Add_Header';
+import Entry_Add_Type from '../entry-helper/Entry_Add_Type';
+import handleInput from '../../utils/handleInput';
+import {useDispatch,useSelector} from 'react-redux'
+import { addEntry } from '../../store/slice/bookSlice';
 
 
 const Entry_Update = ({ type, setType, view, setView }) => {
+    const {currentBook,entries} = useSelector(state=>state.book)
+    const dispatch = useDispatch()
     const [timeView, setTimeView] = useState(false)
     const [categoryView, setCategoryView] = useState(false)
     const [paymentView, setPaymentView] = useState(false)
+    const [addView, setAddView] = useState(false)
+    const [paymentAddView, setPaymentAddView] = useState(false)
+    const [contactView, setContactView] = useState(false)
+    const [contactAddView, setContactAddView] = useState(false)
+    const [loading,setLoading] = useState(false)
+
+    //time handling
+    const [date, setDate] = useState(moment().format('YYYY-MM-DD'))
+    const [hour, setHour] = useState(moment().format('hh'))
+    const [minute, setMinute] = useState(moment().format('mm'))
+    const [ampm, setAmPm] = useState(moment().format('A'))
+    const dateTimeString = `${date} ${hour}:${minute} ${ampm}`
+    const dateObj = moment(dateTimeString, 'YYYY/MM/DD hh:mm A').toDate()
+
+    const [value, setValue] = useState({
+        amount: 0,
+        remark: '',
+    })
+    const [contact, setContact] = useState({})
+    const [category, setCategory] = useState({})
+    const [payment, setPayment] = useState({})
 
     return (
         <>
             <Drawer
                 isOpen={view}
                 placement='right'
-                size='md'
+                size='lg'
             >
                 <DrawerOverlay />
                 <DrawerContent>
                     <div
                         className='h-16 border-b'
                     >
-                        <div
-                            className='px-6 py-4 flex justify-between items-center'
-                        >
-                            <p className={`space-x-1 text-xl ${type == 'cash_out' && 'text-[#c93b3b]'}`}>
-                                <span>Add Cash</span>
-                                <span>{type === 'cash_in' ? 'In Entry' : 'Out Entry'}</span>
-                            </p>
-                            <button
-                                onClick={() => setView(!view)}
-                                className='px-4 py-1 border rounded'
-                            >X</button>
-                        </div>
-
+                        <Entry_Add_Header {...{ type, view, setView }} />
                     </div>
                     <div
                         className='h-[calc(100vh-144px)] p-6 space-y-5 overflow-y-auto'
                     >
-                        <div
-                            className='flex items-center space-x-3 text-xs'
-                        >
-                            <button
-                                onClick={() => setType('cash_in')}
-                                className={`px-4 py-2 border rounded-full ${type == 'cash_in' && 'bg-[#01865F] text-white'}`}
-                            >
-                                Cash In
-                            </button>
-                            <button
-                                onClick={() => setType('cash_out')}
-                                className={`px-4 py-2 border rounded-full ${type == 'cash_out' && 'bg-[#c93b3b] text-white'}`}
-                            >
-                                Cash Out
-                            </button>
-                        </div>
+                        <Entry_Add_Type {...{ type, setType }} />
+
                         <div
                             className='flex justify-between items-center'
                         >
@@ -70,6 +77,8 @@ const Entry_Update = ({ type, setType, view, setView }) => {
                                 <label className='block text-sm'>Date</label>
                                 <input
                                     type="date"
+                                    value={date}
+                                    onChange={(e) => setDate(e.target.value)}
                                     className='px-4 py-2 rounded border focus:outline-[#4863D4]'
                                 />
                             </div>
@@ -83,221 +92,112 @@ const Entry_Update = ({ type, setType, view, setView }) => {
                                         className='px-6 py-2 flex items-center space-x-2 rounded border'
                                     >
                                         <BsClock />
-                                        <span>12:30 PM</span>
+                                        <span>{`${hour}:${minute}:${ampm}`}</span>
                                     </button>
                                     :
                                     <div
                                         className='space-x-2'
                                     >
-                                        <select
-                                            className='px-4 py-2 border rounded focus:outline-[#4863D4]'
-                                        >
-                                            {
-                                                new Array(12).fill(0).map((_, i) =>
-                                                    <option
-                                                        key={i}
-                                                        value={i + 1}
-                                                        className='flex items-center space-x-2'
-                                                    >
-                                                        <span>{i + 2}</span>
-                                                        <span >
-                                                            <MdOutlineKeyboardArrowDown />
-                                                        </span>
-                                                    </option>
-                                                )
-                                            }
-                                        </select>
-                                        <select
-                                            className='px-4 py-2 border rounded focus:outline-[#4863D4]'
-                                        >
-                                            {
-                                                new Array(59).fill(0).map((_, i) =>
-                                                    <option
-                                                        key={i}
-                                                        value={i}
-                                                        className='flex items-center space-x-2'
-                                                    >
-                                                        <span>{i}</span>
-                                                        <span >
-                                                            <MdOutlineKeyboardArrowDown />
-                                                        </span>
-                                                    </option>
-                                                )
-                                            }
-                                        </select>
-                                        <select
-                                            className='px-4 py-2 border rounded focus:outline-[#4863D4]'
-                                        >
-                                            <option
-                                                className='flex items-center space-x-2'
-                                                value='AM'
-                                            >
-                                                <span>AM</span>
-                                                <span >
-                                                    <MdOutlineKeyboardArrowDown />
-                                                </span>
-                                            </option>
-                                            <option
-                                                className='flex items-center space-x-2'
-                                                value='PM'
-                                            >
-                                                <span>PM</span>
-                                                <span >
-                                                    <MdOutlineKeyboardArrowDown />
-                                                </span>
-                                            </option>
-                                        </select>
+                                        <Entry_Add_Hour {...{ hour, setHour }} />
+                                        <Entry_Add_Minute {...{ minute, setMinute }} />
+                                        <Entry_Add_AMPM {...{ ampm, setAmPm }} />
                                     </div>
                                 }
 
                             </div>
                         </div>
+
                         <div
                             className='space-y-1'
                         >
                             <label className='block text-sm'>Amount</label>
                             <input
+                                name='amount'
                                 type='number'
                                 placeholder='eg - 1000'
+                                onChange={(e)=>handleInput(e,value,setValue)}
                                 autoFocus
                                 className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                             />
                         </div>
+
+                        <Entry_Add_Contact {...{ contact, setContact,contactAddView, setContactAddView, contactView, setContactView }} />
+
                         <div
                             className='space-y-1'
                         >
                             <label className='block text-sm'>Remark</label>
                             <input
+                                name='remark'
                                 type='text'
+                                onChange={(e)=>handleInput(e,value,setValue)}
                                 placeholder='eg - Enter Detail (Name, Bill No, Item, Quantity etc)'
                                 className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                             />
                         </div>
+
                         <div
                             className='flex justify-between space-x-5'
                         >
-                            <div
-                                className='w-1/2 space-y-1'
-                            >
-                                <div
-                                    className='flex justify-between items-center'
-                                >
-                                    <span className='text-sm'>Category</span>
-                                    <IoSettingsOutline
-                                        size={15}
-                                        className='text-[#4863D4] cursor-pointer'
-                                    />
-                                </div>
-                                <div
-                                    className='relative rounded'
-                                >
-                                    <input
-                                        onFocus={() => setCategoryView(!categoryView)}
-                                        placeholder='Search or Select'
-                                        className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
-                                    />
-                                    <button
-                                        onClick={() => setCategoryView(!categoryView)}
-                                        className='absolute right-0 px-3 py-2.5 border-l'
-                                    >
-                                        <RiArrowDownSFill size={20} />
-                                    </button>
-                                    {categoryView &&
-                                        <div
-                                            className='absolute w-full h-[300px] mt-1 flex flex-col justify-between border rounded'
-                                        >
-                                            <div
-                                                className='h-[260px] p-2 overflow-y-auto'
-                                            >
-                                                <p className='text-sm text0gray-600 text-center'>Suggestions</p>
+                            <Entry_Add_Category {...{category, setCategory, addView, setAddView, categoryView, setCategoryView }} />
 
+                            <Entry_Add_Payment {...{ payment, setPayment,paymentAddView, setPaymentAddView, paymentView, setPaymentView }} />
 
-                                            </div>
-                                            <div
-                                                className='h-10 px-2'
-                                            >
-                                                <button
-                                                    className='w-full flex justify-center items-center space-x-2 p-2 text-sm bg-gray-100 rounded'
-                                                >
-                                                    <GoPlus
-                                                        className='text-[#4863D4]'
-                                                    />
-                                                    <span>Add New Category</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
-                            <div
-                                className='w-1/2 space-y-1'
-                            >
-                                <div
-                                    className='flex justify-between items-center'
-                                >
-                                    <span className='text-sm'>Paymment</span>
-                                    <IoSettingsOutline
-                                        size={15}
-                                        className='text-[#4863D4] cursor-pointer'
-                                    />
-                                </div>
-                                <div
-                                    className='relative rounded'
-                                >
-                                    <input
-                                        onClick={() => setPaymentView(!paymentView)}
-                                        placeholder='Search or Select'
-                                        className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
-                                    />
-                                    <button
-                                        onClick={() => setPaymentView(!paymentView)}
-                                        className='absolute right-0 px-3 py-2.5 border-l'
-                                    >
-                                        <RiArrowDownSFill size={20} />
-                                    </button>
-                                    {paymentView &&
-                                        <div
-                                            className='absolute w-full h-[300px] mt-1 flex flex-col justify-between border rounded'
-                                        >
-                                            <div
-                                                className='h-[260px] p-2 overflow-y-auto'
-                                            >
-                                                <p className='text-sm text0gray-600 text-center'>Suggestions</p>
-
-
-                                            </div>
-                                            <div
-                                                className='h-10 px-2'
-                                            >
-                                                <button
-                                                    className='w-full flex justify-center items-center space-x-2 p-2 text-sm bg-gray-100 rounded'
-                                                >
-                                                    <GoPlus
-                                                        className='text-[#4863D4]'
-                                                    />
-                                                    <span>Add New Payment</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    }
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div
-                        className='h-20 px-6 flex justify-end items-center space-x-5 text-sm border-t'
+                        className='h-20 px-6 flex justify-end items-center space-x-5 border-t'
                     >
                         <button
+                            onClick={() => createEntry({
+                                id : currentBook?._id,
+                                value : {
+                                    ...value,
+                                    type,
+                                    category : category?._id || '',
+                                    payment : payment?._id || '',
+                                    contact : contact?._id || '',
+                                    createdAt : dateObj
+                                },
+                                action : addEntry,
+                                dispatch,
+                                setView,
+                                setLoading
+                            })}
                             className='px-8 py-3 text-[#4863D4] border rounded'
                         >
-                            Save
+                            {loading ? 'Saving...' : 'Save'}
                         </button>
                         <button
+                            onClick={() => createEntryOther({
+
+                            })}
                             className='px-4 py-3 bg-[#4863D4] text-white rounded'
                         >
                             Save & Add New
                         </button>
                     </div>
+
+                    {addView &&
+                        <Category_Add {...{
+                            view: addView,
+                            setView: setAddView
+                        }} />
+                    }
+
+                    {paymentAddView &&
+                        <Payment_Add {...{
+                            view: paymentAddView,
+                            setView: setPaymentAddView
+                        }} />
+                    }
+
+                    {contactAddView &&
+                        <Contact_Add {...{
+                            view: contactAddView,
+                            setView: setContactAddView
+                        }} />
+                    }
                 </DrawerContent>
             </Drawer>
         </>

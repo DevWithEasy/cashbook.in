@@ -4,7 +4,7 @@ import Entry from "../../../../database/model/Entry";
 export default async function handler(req, res){
     initDatabase()
     try{
-        const entries = await Entry.find({"book" : req.query.id}).sort({createdAt : -1})
+        const entries = await Entry.find({"book" : req.query.id})
         
         return res.status(200).json({
             success : true,
