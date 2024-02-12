@@ -12,6 +12,12 @@ import { useEffect } from 'react';
 import { getData } from '../../../../../../../libs/API_CCP_Crud';
 import { useDispatch } from 'react-redux';
 import { addCCPs } from '../../../../../../../store/slice/bookSlice';
+import {
+    Menu,
+    MenuButton,
+    MenuList
+} from '@chakra-ui/react';
+import { CiMenuKebab } from 'react-icons/ci';
 
 const Contact = () => {
     const { currentBook, ccp } = useSelector(state => state.book)
@@ -24,15 +30,16 @@ const Contact = () => {
     const [updateView, setUpdateView] = useState(false)
     const [deleteView, setDeleteView] = useState(false)
     const [importView, setImportView] = useState(false)
-    
-    useEffect(()=>{
+    const [id,setId] = useState()
+
+    useEffect(() => {
         getData({
-            url : `/api/contact?id=${currentBook._id}`,
+            url: `/api/contact?id=${currentBook._id}`,
             dispatch,
-            action : addCCPs
+            action: addCCPs
         })
-    },[])
-    console.log(ccp)
+    }, [])
+    
     return (
         <UserLayout>
             <BookSettingLayout {...{ path }}>
@@ -130,23 +137,79 @@ const Contact = () => {
                     <div
                         className='space-y-3 pb-10'
                     >
-                        <p className='text-base font-medium text-gray-500'>Contacts from this book ({ccp.length})</p>
-                        <div
-                            className={`w-8/12 mx-auto pt-5 flex flex-col justify-center items-center space-y-5 ${!isNoti && 'pointer-events-none grayscale'}`}
-                        >
-                            <ImUsers
-                                size={60}
-                                className='p-4 bg-[#ebeefb] text-[#4863D4] rounded-full'
-                            />
+                        <p className='text-base font-medium text-gray-500'>Contacts from this book ({ccp?.length})</p>
+
+                        {ccp?.length > 0 ?
                             <div
-                                className='w-full text-center'
+                                className='space-y-2'
                             >
-                                <p className='font-semibold'>No Contacts Found</p>
-                                <p className='text-gray-500 text-sm Add new or import from other books'>
-                                    Import from CSV or other books or Add New Manually
-                                </p>
+                                {
+                                    ccp.map(contact=>
+                                        <div
+                                    className='pl-4 py-2 flex justify-between items-center border rounded'
+                                >
+                                    <div
+                                        className='flex space-x-3'
+                                    >
+                                        <div
+                                            className='h-10 w-10 flex justify-center items-center text-2xl bg-[#EEE8E5] text-[#5A1B02] font-bold rounded-full'
+                                        >
+                                            <span>{contact?.name?.split('')[0]}</span>
+                                        </div>
+                                        <div>
+                                            <p className='text-sm font-semibold'>{contact?.name}</p>
+                                            <p className='text-sm text-gray-500'>{contact?.phone} - {contact?.type}</p>
+                                        </div>
+                                    </div>
+                                    <Menu>
+                                        <MenuButton>
+                                            <button className='px-4'><CiMenuKebab /></button>
+                                        </MenuButton>
+                                        <MenuList>
+                                            <button
+                                                onClick={() => {
+                                                    setUpdateView(!updateView)
+                                                    setId(contact?._id)
+                                                }}
+                                                className='w-full p-2 text-left hover:bg-slate-100'
+                                            >
+                                                Rename
+                                            </button>
+                                            <button
+                                                onClick={() => {
+                                                    setDeleteView(!deleteView)
+                                                    setId(contact?._id)
+                                                }}
+                                                className='w-full p-2 text-left hover:bg-slate-100'
+                                            >
+                                                Delete
+                                            </button>
+                                        </MenuList>
+                                    </Menu>
+
+                                </div>    
+                                    )
+                                }
                             </div>
-                        </div>
+                            :
+                            <div
+                                className={`w-8/12 mx-auto pt-5 flex flex-col justify-center items-center space-y-5 ${!isNoti && 'pointer-events-none grayscale'}`}
+                            >
+                                <ImUsers
+                                    size={60}
+                                    className='p-4 bg-[#ebeefb] text-[#4863D4] rounded-full'
+                                />
+                                <div
+                                    className='w-full text-center'
+                                >
+                                    <p className='font-semibold'>No Contacts Found</p>
+                                    <p className='text-gray-500 text-sm Add new or import from other books'>
+                                        Import from CSV or other books or Add New Manually
+                                    </p>
+                                </div>
+                            </div>
+
+                        }
                     </div>
                 </div>
                 {addView &&
@@ -157,12 +220,14 @@ const Contact = () => {
                 }
                 {updateView &&
                     <Contact_Update {...{
+                        id,
                         view: updateView,
                         setView: setUpdateView
                     }} />
                 }
                 {deleteView &&
                     <Contact_Delete {...{
+                        id,
                         view: deleteView,
                         setView: setDeleteView
                     }} />

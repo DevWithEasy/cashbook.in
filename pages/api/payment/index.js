@@ -1,7 +1,8 @@
 import { createPayment, deletePayment, getPayments, updatePayment } from "../../../database/controllers/paymentControllers";
 import initDatabase from "../../../database/initDatabase";
+import authentication from "../../../utils/authentication";
 
-export default function handler(req, res) {
+function handler(req, res) {
     initDatabase()
     switch (req.method) {
         case 'GET':
@@ -21,3 +22,5 @@ export default function handler(req, res) {
             res.status(405).end(`Method ${req.method} Not Allow`)
     }
 }
+
+export default authentication(handler)

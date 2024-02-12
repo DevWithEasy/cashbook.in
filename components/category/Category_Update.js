@@ -5,14 +5,14 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { updateBook } from '../../libs/allBookAction';
-import { refresh, renameBook } from '../../store/slice/bookSlice';
+import { updateData } from '../../libs/API_CCP_Crud';
+import { refresh, updateCCP } from '../../store/slice/bookSlice';
 import handleInput from '../../utils/handleInput';
 
 const Category_Update = ({ id, view, setView }) => {
-  const {books,currentBusiness} = useSelector(state => state.book)
+  const {ccp} = useSelector(state => state.book)
   const [loading, setLoading] = useState(false)
-  const [value, setValue] = useState(books.find(book => book._id === id))
+  const [value, setValue] = useState(ccp.find(c => c._id === id))
   const dispatch = useDispatch()
   return (
     <>
@@ -50,14 +50,16 @@ const Category_Update = ({ id, view, setView }) => {
             className='px-6 py-4 flex justify-end border-t'
           >
             <button
-              onClick={(e) => updateBook(
-                id,
-                value?.name,
-                setLoading,
-                dispatch,
-                renameBook,
-                refresh,
-                setView
+              onClick={(e) => updateData(
+                {
+                  url : `/api/category?id=${id}`,
+                  value,
+                  action : updateCCP,
+                  dispatch,
+                  setLoading,
+                  refresh,
+                  setView
+                }
               )}
               className='px-8 py-3 bg-[#4863D4] text-white rounded'
 

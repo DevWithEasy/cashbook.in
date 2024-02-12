@@ -49,7 +49,6 @@ const bookSlice = createSlice({
             state.currentBook = {}
         },
         renameBook: (state, action) => {
-            console.log(action.payload)
             state.books = state.books.map(book => book._id === action.payload._id ? action.payload : book)
         },
         addEntries: (state, action) => {
@@ -77,13 +76,10 @@ const bookSlice = createSlice({
             state.ccp = entries
         },
         removeCCP: (state, action) => {
-            const entries = state.currentBook.entries.filter(entry => entry._id !== action.payload)
-            state.currentBook = { ...state.currentBook, entries }
+            state.ccp = state.ccp.filter(c => c._id != action.payload)
         },
         updateCCP: (state, action) => {
-            const findEntries = state.currentBook.entries.filter(entry => entry._id !== action.payload._id)
-            const entries = [action.payload, ...findEntries]
-            state.currentBook = { ...state.currentBook, entries }
+            state.ccp = state.ccp.map(c => c._id === action.payload._id ? action.payload : c)
         },
         logoutReset: (state, action) => {
             state.books = []

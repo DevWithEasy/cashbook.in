@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { createBook } from '../../libs/allBookAction';
-import { addBook, refresh } from '../../store/slice/bookSlice';
+import { createData } from '../../libs/API_CCP_Crud';
+import { addCCP, refresh } from '../../store/slice/bookSlice';
 import React, { useState } from 'react'
 import {
   Modal,
@@ -48,15 +48,17 @@ export default function Payment_Add({ view, setView }) {
             className='px-6 py-4 flex justify-end border-t'
           >
             <button
-              onClick={(e) => createBook(
-                currentBook?._id,
-                name,
-                setLoading,
+              onClick={(e) => createData({
+                url : `/api/payment?id=${currentBook._id}`,
+                value : {
+                  name
+                },
+                action : addCCP,
                 dispatch,
-                addBook,
+                setLoading,
                 refresh,
                 setView
-              )}
+              })}
               className='px-8 py-3 bg-[#4863D4] text-white rounded'
 
             >

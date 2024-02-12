@@ -1,19 +1,17 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { createBook } from '../../libs/allBookAction';
-import { addBook, refresh } from '../../store/slice/bookSlice';
-import React, { useState } from 'react'
 import {
     Modal,
-    ModalOverlay,
     ModalContent,
-} from '@chakra-ui/react'
-import { TiInfo } from 'react-icons/ti';
+    ModalOverlay,
+} from '@chakra-ui/react';
+import React, { useState } from 'react';
 import { MdDeleteOutline } from 'react-icons/md';
 import { RxCross2 } from 'react-icons/rx';
+import { TiInfo } from 'react-icons/ti';
+import { useDispatch } from 'react-redux';
+import { deleteData } from '../../libs/API_CCP_Crud';
+import { refresh, removeCCP } from '../../store/slice/bookSlice';
 
-export default function Payment_Delete({ view, setView }) {
-    const { currentBusiness } = useSelector(state => state.book)
-    const [name, setName] = useState("")
+export default function Payment_Delete({id, view, setView }) {
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
     return (
@@ -68,14 +66,16 @@ export default function Payment_Delete({ view, setView }) {
                         </button>
 
                         <button
-                            onClick={(e) => createBook(
-                                currentBusiness?._id,
-                                name,
-                                setLoading,
-                                dispatch,
-                                addBook,
-                                refresh,
-                                setView
+                            onClick={() => deleteData(
+                                {
+                                    id,
+                                    url : `/api/payment?id=${id}`,
+                                    action : removeCCP,
+                                    dispatch,
+                                    setLoading,
+                                    refresh,
+                                    setView
+                                }
                             )}
                             className={`px-8 py-3 flex items-center space-x-3 border rounded ${!name === 'Robiul Awal' ? 'text-[#C93B3B]' : 'bg-[#C93B3B] text-white'}`}
 

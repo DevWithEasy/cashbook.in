@@ -5,16 +5,19 @@ import {
 } from '@chakra-ui/react';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { CiMenuKebab } from 'react-icons/ci';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import { MdAdd, MdOutlineContentCopy } from 'react-icons/md';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { BookSettingLayout, Payment_Add, Payment_Delete, Payment_Import, Payment_Update, UserLayout } from '../../../../../../../components/Index';
+import { getData } from '../../../../../../../libs/API_CCP_Crud';
+import { addCCPs } from '../../../../../../../store/slice/bookSlice';
 
 const Payment = () => {
-    const { currentBook, currentBusiness } = useSelector(state => state.book)
+    const { ccp, currentBook } = useSelector(state => state.book)
     const router = useRouter()
+    const dispatch = useDispatch()
     const { pathname } = router
     const path = pathname.split('/')[(pathname.split('/').length - 2)]
     const [isNoti, setNoti] = useState(true)
@@ -22,7 +25,16 @@ const Payment = () => {
     const [updateView, setUpdateView] = useState(false)
     const [deleteView, setDeleteView] = useState(false)
     const [importView, setImportView] = useState(false)
+    const [id, setId] = useState()
 
+    useEffect(() => {
+        getData({
+            url: `/api/payment?id=${currentBook._id}`,
+            dispatch,
+            action: addCCPs
+        })
+    }, [])
+    
     return (
         <UserLayout>
             <BookSettingLayout {...{ path }}>
@@ -84,7 +96,7 @@ const Payment = () => {
                         className={`space-y-5 ${!isNoti && 'pointer-events-none grayscale'}`}
                     >
                         <div
-                            className='w-full pt-5 space-y-3 font-semibold'
+                            className='w-full pt-5 space-y-3'
                         >
                             <button
                                 onClick={() => setAddView(!addView)}
@@ -104,35 +116,46 @@ const Payment = () => {
                         <div
                             className='space-y-3 pb-10'
                         >
-                            <p className='text-base font-medium text-gray-500'>Payment Modes from this book (2)</p>
+                            <p className='text-base font-medium text-gray-500'>Payment Modes from this book ({ccp?.length})</p>
                             <div
-                                className=''
+                                className='space-y-2'
                             >
-                                <div
-                                    className='pl-4 py-2 flex justify-between items-center border rounded'
-                                >
-                                    <span>Cash</span>
-                                    <Menu>
-                                        <MenuButton>
-                                            <button className='px-4'><CiMenuKebab /></button>
-                                        </MenuButton>
-                                        <MenuList>
-                                            <button
-                                                onClick={() => setUpdateView(!updateView)}
-                                                className='w-full p-2 text-left hover:bg-slate-100'
-                                            >
-                                                Rename
-                                            </button>
-                                            <button
-                                                onClick={() => setDeleteView(!deleteView)}
-                                                className='w-full p-2 text-left hover:bg-slate-100'
-                                            >
-                                                Delete
-                                            </button>
-                                        </MenuList>
-                                    </Menu>
+                                {
+                                    ccp.map(payment =>
+                                        <div
+                                            key={payment._id}
+                                            className='pl-4 py-2 flex justify-between items-center border rounded'
+                                        >
+                                            <span>{payment?.name}</span>
+                                            <Menu>
+                                                <MenuButton>
+                                                    <div className='px-4'><CiMenuKebab /></div>
+                                                </MenuButton>
+                                                <MenuList>
+                                                    <button
+                                                        onClick={() => {
+                                                            setUpdateView(!updateView)
+                                                            setId(payment?._id)
+                                                        }}
+                                                        className='w-full p-2 text-left hover:bg-slate-100'
+                                                    >
+                                                        Rename
+                                                    </button>
+                                                    <button
+                                                        onClick={() => {
+                                                            setDeleteView(!deleteView)
+                                                            setId(payment?._id)
+                                                        }}
+                                                        className='w-full p-2 text-left hover:bg-slate-100'
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </MenuList>
+                                            </Menu>
 
-                                </div>
+                                        </div>
+                                    )
+                                }
                             </div>
                         </div>
                     </div>
@@ -145,12 +168,14 @@ const Payment = () => {
                 }
                 {updateView &&
                     <Payment_Update {...{
+                        id,
                         view: updateView,
                         setView: setUpdateView
                     }} />
                 }
                 {deleteView &&
                     <Payment_Delete {...{
+                        id,
                         view: deleteView,
                         setView: setDeleteView
                     }} />

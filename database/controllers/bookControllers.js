@@ -1,5 +1,7 @@
 import Book from "../model/Book"
+import Contact from "../model/Contact"
 import Entry from "../model/Entry"
+import Payment from "../model/Payment"
 
 export const getBooks = async(req,res)=>{
     try {
@@ -63,6 +65,8 @@ export const updateBook = async(req,res)=>{
 
 export const deleteBook = async(req,res)=>{
     try {
+        await Contact.deleteMany({"book" : (req.query.id)})
+        await Payment.deleteMany({"book" : (req.query.id)})
         await Entry.deleteMany({"book" : (req.query.id)})
         await Book.deleteOne({"_id" : req.query.id})
 

@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { createBook } from '../../libs/allBookAction';
-import { addBook, refresh } from '../../store/slice/bookSlice';
+import { addBook, refresh, removeCCP } from '../../store/slice/bookSlice';
 import React, { useState } from 'react'
 import {
     Modal,
@@ -10,10 +10,9 @@ import {
 import { TiInfo } from 'react-icons/ti';
 import { MdDeleteOutline } from 'react-icons/md';
 import { RxCross2 } from 'react-icons/rx';
+import { deleteData } from '../../libs/API_CCP_Crud';
 
-export default function Contact_Delete({ view, setView }) {
-    const { currentBusiness } = useSelector(state => state.book)
-    const [name, setName] = useState("")
+export default function Contact_Delete({ id, view, setView }) {
     const dispatch = useDispatch()
     const [loading, setLoading] = useState(false)
     return (
@@ -52,7 +51,7 @@ export default function Contact_Delete({ view, setView }) {
                         <div
                             className='space-y-1'
                         >
-                            
+
                         </div>
                     </div>
                     <div
@@ -68,14 +67,15 @@ export default function Contact_Delete({ view, setView }) {
                         </button>
 
                         <button
-                            onClick={(e) => createBook(
-                                currentBusiness?._id,
-                                name,
-                                setLoading,
-                                dispatch,
-                                addBook,
-                                refresh,
-                                setView
+                            onClick={(e) => deleteData(
+                                {
+                                    id,
+                                    url: `/api/contact?id=${id}`,
+                                    action: removeCCP,
+                                    dispatch,
+                                    setLoading,
+                                    setView
+                                }
                             )}
                             className={`px-8 py-3 flex items-center space-x-3 border rounded ${!name === 'Robiul Awal' ? 'text-[#C93B3B]' : 'bg-[#C93B3B] text-white'}`}
 

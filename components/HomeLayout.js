@@ -52,7 +52,11 @@ const HomeLayout = ({ children }) => {
                 </div>
                 <div className="flex items-center space-x-4 text-base font-medium">
                     {links.map((link, i) => (
-                        <Link key={i} href={link.path}>
+                        <Link 
+                            key={i} 
+                            href={link.path}
+                            className="p-2"
+                        >
                             {link.title}
                         </Link>
                     ))}

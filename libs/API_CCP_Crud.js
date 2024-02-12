@@ -40,37 +40,44 @@ export const getData=async(data)=>{
 }
 
 export const updateData=async(data)=>{
-    const {url,value,setView} = data
+    const {url,value,dispatch,action,refresh,setLoading,setView} = data
+    setLoading(true)
     try {
-        const res = await axios.post(url,value,{
+        const res = await axios.put(url,value,{
             headers : {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
         })
         if(res.data.success){
-            if(setView){
-                setView(false)
-            }
+            setLoading(false)
+            notificationOK(res.data.message)
+            dispatch(action(res.data.data))
+            setView(false)
         }
     } catch (error) {
         console.log(error)
+        setLoading(false)
     }
 }
 
 export const deleteData=async(data)=>{
-    const {url,value,setView} = data
+    const {id,url,dispatch,action,setLoading,setView} = data
+    setLoading(true)
     try {
-        const res = await axios.post(url,value,{
+        const res = await axios.delete(url,{
             headers : {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
         })
         if(res.data.success){
-            if(setView){
-                setView(false)
-            }
+            setLoading(false)
+            notificationOK(res.data.message)
+            dispatch(action(id))
+            setView(false)
         }
     } catch (error) {
         console.log(error)
+        setLoading(false)
+        
     }
 }

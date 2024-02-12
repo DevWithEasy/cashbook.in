@@ -71,10 +71,10 @@ const BookSettingLayout = ({ path, children }) => {
                 </div>
             </div>
             <div
-                className='h-[calc(100vh-118px)] flex justify-between'
+                className='flex justify-between'
             >
                 <div
-                    className='w-3/12 pl-4 border-r'
+                    className='w-3/12 pl-4'
                 >
                     {
                         sidebars.map((topic, i) =>
@@ -98,7 +98,7 @@ const BookSettingLayout = ({ path, children }) => {
                     }
                 </div>
                 <div
-                    className='w-9/12 px-6 py-4'
+                    className='w-9/12 px-6 py-4 border-l'
                 >
                     {children}
                 </div>

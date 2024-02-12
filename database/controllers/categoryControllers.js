@@ -1,81 +1,86 @@
-import Book from "../model/Book"
+import Category from "../model/Category"
 
 export const getCategories = async(req,res)=>{
     try {
-        const book = await Book.findOne({"_id" : req.query.id})
-        const entries = await Post.find({book: book._id}).sort({createdAt: -1})
+        const categories = await Category.find({ book: req.query.id })
         res.status(200).json({
-            success : "success",
-            status:200,
-            data : {...book._doc,entries}
+            success: true,
+            status: 200,
+            data: categories
         })
-    } catch (err) {
+    } catch (error) {
         res.status(500).json({
-            success : false,
-            status:500,
-            message:err.message
+            success: false,
+            status: 500,
+            message: error.message
         })
     }
 }
 
 export const createCategory = async(req,res)=>{
     try {
-        const book = await Book.findOne({"_id" : req.query.id})
-        const entries = await Post.find({book: book._id}).sort({createdAt: -1})
-        res.status(200).json({
-            success : "success",
-            status:200,
-            data : {...book._doc,entries}
+        const newCategory = new Category({
+            name: req.body.name,
+            user: req.user.id,
+            book: req.query.id
         })
-    } catch (err) {
+
+        const category = await newCategory.save()
+
+        res.status(200).json({
+            success: true,
+            status: 200,
+            data: category,
+            message: 'Category created.'
+        })
+    } catch (error) {
         res.status(500).json({
-            success : false,
-            status:500,
-            message:err.message
+            success: false,
+            status: 500,
+            message: error.message
         })
     }
 }
 
 export const updateCategory = async(req,res)=>{
     try {
-        const book = await Book.findByIdAndUpdate(req.query.id,
-        {
-            name : req.body.name
+        const category = await Category.findByIdAndUpdate(req.query.id, {
+            $set: {
+                name : req.body.name,
+            }
         },
-        {
-            new : true
-        }
+            { new: true }
         )
+
         return res.status(200).json({
-            success : "success",
-            status:200,
-            data : book,
-            message : "Successfully updated."
+            success: true,
+            status: 200,
+            data: category,
+            message: 'Category updated.'
         })
     } catch (error) {
         return res.status(500).json({
-            success : false,
-            status:500,
-            message:error.message
+            success: false,
+            status: 500,
+            message: error.message
         })
     }
 }
 
 export const deleteCategory = async(req,res)=>{
     try {
-        await Post.deleteMany({"book" : (req.query.id)})
-        await Book.deleteOne({"_id" : req.query.id})
-        res.status(200).json({
-            success : "success",
-            status:200,
-            data: {id : req.query.id},
-            message : "Successfully deleted."
+        await Category.findByIdAndDelete(req.query.id)
+        return res.status(200).json({
+            success: true,
+            status: 200,
+            data: {},
+            message : 'Category deleted.'
         })
     } catch (error) {
-        res.status(500).json({
-            success : false,
-            status:500,
-            message:err.message
+        return res.status(500).json({
+            success: false,
+            status: 500,
+            message: error.message
         })
     }
 }
