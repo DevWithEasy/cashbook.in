@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Balance, Entry_Add, Entry_Category, Entry_Contact, Entry_Delete, Entry_Details, Entry_Duplicate, Entry_Move, Entry_Opposite, Entry_Payment, Entry_Update, Transections_Header, Transections_NoFound, Transections_Pagination, Transections_Search, Transections_SortBy, Transections_Tbody, Transections_TheadAction, Transections_TheadMain, UserLayout } from '../../../../../components/Index';
+import { Balance, Entry_Add, Entry_Category, Entry_Contact, Entry_Delete, Entry_Details, Entry_Duplicate, Entry_Move, Entry_Opposite, Entry_Payment, Entry_Update, Loading, Transections_Header, Transections_NoFound, Transections_Pagination, Transections_Search, Transections_SortBy, Transections_Tbody, Transections_TheadAction, Transections_TheadMain, UserLayout } from '../../../../../components/Index';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux'
 import Head from 'next/head'
@@ -9,9 +9,9 @@ import axios from 'axios'
 const Transactions = () => {
     const { entries, currentBook } = useSelector(state => state.book)
     const router = useRouter()
-    const {bookid} = router.query
+    const { bookid } = router.query
     const dispatch = useDispatch()
-    const [loading,setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
     const [menuId, setMenuId] = useState(null)
     const [check, setCheck] = useState(false)
     const [selected, setSelected] = useState([])
@@ -57,8 +57,7 @@ const Transactions = () => {
                     "cb-access-token": localStorage.getItem("cb_access_token")
                 }
             })
-            if(res.data.success) {
-                console.log(res.data)
+            if (res.data.success) {
                 setLoading(!loading)
                 dispatch(addEntries(res.data.data))
             }

@@ -7,12 +7,10 @@ import {
   ModalOverlay,
   ModalContent,
 } from '@chakra-ui/react'
-import { TiInfo } from 'react-icons/ti';
-import { MdDeleteOutline } from 'react-icons/md';
-import { RxCross2 } from 'react-icons/rx';
+import { RxDotFilled } from 'react-icons/rx';
 import { useRouter } from 'next/router';
 
-export default function Book_Delete({ view, setView }) {
+export default function Entry_Duplicate_Confirm({fromBook,toBook, view, setView }) {
   const { currentBook } = useSelector(state => state.book)
   const [name, setName] = useState("")
   const dispatch = useDispatch()
@@ -28,11 +26,11 @@ export default function Book_Delete({ view, setView }) {
 
       >
         <ModalOverlay />
-        <ModalContent className='mx-2'>
+        <ModalContent>
           <div
             className='px-6 py-4 flex justify-between items-center border-b'
           >
-            <p className='text-xl'>Delete Book</p>
+            <p className='text-xl'>Copy & Paste 1 Entry</p>
             <button
               onClick={() => setView(!view)}
               className='px-4 py-1 border rounded'
@@ -42,41 +40,29 @@ export default function Book_Delete({ view, setView }) {
           <div
             className='p-6 pb-10 space-y-3'
           >
-            <div
-              className='p-2 flex items-center space-x-3 bg-[#F8EFE7] text-[#BD610D] border border-[#BD610D] rounded'
+            <p>Are you sure?</p>
+            <p
+              className='flex items-center space-x-2'
             >
-              <TiInfo
-                size={35}
-              />
-              <p className='text-sm'>
-                Are you sure? You will lose all entries of this book permanently.
-              </p>
-            </div>
-            <div
-              className='space-y-1'
+              <RxDotFilled size={25} className='text-gray-500'/>
+              <span>Same entry will get added in <b>`{fromBook?.name}`</b></span>
+            </p>
+            <p
+              className='flex items-center space-x-2'
             >
-              <label className='space-x-1 text-sm text-gray-500'>
-                <span>Please type</span>
-                <span className='font-bold'>{currentBook?.name}</span>
-                <span>to confirm</span>
-              </label>
-              <input
-                onChange={(e) => setName(e.target.value)}
-                className='w-full px-4 py-2 rounded border focus:outline-[#4863D4]'
-                autoFocus={true}
-              />
-            </div>
+              <RxDotFilled size={25} className='text-gray-500'/>
+              <span>This will change the net balance of <b>`{fromBook?.name}`</b></span>
+            </p>
           </div>
           <div
             className='px-6 py-4 flex justify-end space-x-5 border-t'
           >
             <button
               onClick={(e) => setView(!view)}
-              className='px-8 py-3 flex items-center space-x-3 text-[#4863D4] border rounded'
+              className='px-8 py-3 text-[#4863D4] border rounded'
 
             >
-              <RxCross2 size={20}/>
-              <span>Cancel</span>
+              Cancel
             </button>
 
             <button
@@ -90,11 +76,10 @@ export default function Book_Delete({ view, setView }) {
                 refresh,
                 setView
               )}
-              className={`px-8 py-3 flex items-center space-x-3 border rounded text-[#C93B3B]`}
+              className={`px-8 py-3 border rounded bg-[#4863D4] text-white`}
 
             >
-              <MdDeleteOutline size={20}/>
-              <span>{loading ? 'Deleting...' : 'Delete'}</span>
+              {loading ? 'Copying...' : 'Yes, Copy & Paste'}
             </button>
           </div>
         </ModalContent>

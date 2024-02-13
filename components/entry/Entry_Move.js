@@ -6,8 +6,9 @@ import {
 import React, { useState } from 'react';
 import { IoMdArrowRoundForward } from "react-icons/io";
 import { useSelector } from 'react-redux'
-import { Book_Add } from '../Index';
+import { Book_Add, Entry_Move_Confirm } from '../Index';
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from 'react-icons/md';
+import moment from 'moment';
 
 const Entry_Move = ({ id, view, setView }) => {
     const { entries, currentBook, books } = useSelector(state => state.book)
@@ -15,8 +16,10 @@ const Entry_Move = ({ id, view, setView }) => {
     const entry = entries.find(entry => entry._id === id)
     const [book, setBook] = useState(avialabeBook.length > 0 ? avialabeBook[0] : {})
     const [addBookView, setAddBookView] = useState(false)
+    const [confirmView, setConfirmView] = useState(false)
 
     console.log(avialabeBook, entry)
+
     return (
         <>
             <Drawer
@@ -36,7 +39,7 @@ const Entry_Move = ({ id, view, setView }) => {
                         >X</button>
                     </div>
                     <div
-                        className='h-[calc(100vh-208px)] p-6 overflow-y-auto'
+                        className='h-[calc(100vh-208px)] p-6 space-y-3 overflow-y-auto'
                     >
                         <div
                             className='space-y-2'
@@ -57,15 +60,24 @@ const Entry_Move = ({ id, view, setView }) => {
                                     avialabeBook.map(b =>
                                         <div
                                             key={b._id}
-                                            onClick={()=>setBook(b)}
-                                            className={`py-2  flex items-center space-x-3 ${book?._id === b._id ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                                            onClick={() => setBook(b)}
+                                            className={`py-2 flex space-x-3 border-b ${book?._id === b._id ? 'cursor-not-allowed' : 'cursor-pointer'}`}
                                         >
                                             {book?._id === b._id ?
-                                                <MdRadioButtonChecked size={25} className='text-[#4863D4]'/>
+                                                <MdRadioButtonChecked size={25} className='text-[#4863D4]' />
                                                 :
                                                 <MdRadioButtonUnchecked size={25} />
                                             }
-                                            <p className=''>{b?.name}</p>
+                                            <div
+                                                className='space-y-1'
+                                            >
+                                                <p className=''>{b?.name}</p>
+                                                <p className='text-sm text-gray-500'>
+                                                    <span>Created on : {moment(b?.createdAt).fromNow()}</span>
+                                                    <span> | </span>
+                                                    <span>{book?.members?.length + 1} Members</span>
+                                                </p>
+                                            </div>
                                         </div>
                                     )
                                 }
@@ -107,11 +119,13 @@ const Entry_Move = ({ id, view, setView }) => {
                         className='h-20 px-6 flex justify-end items-center space-x-5'
                     >
                         <button
+                            onClick={() => setView(!view)}
                             className='px-6 py-3 text-[#4863D4] border rounded'
                         >
                             Cancel
                         </button>
                         <button
+                            onClick={() => setConfirmView(!confirmView)}
                             className={`px-8 py-3 border rounded ${book?.name ? 'bg-[#4863D4] text-white' : 'bg-gray-100 text-gray-600 cursor-not-allowed'}`}
                             disabled={book?.name ? false : true}
                         >
@@ -123,6 +137,13 @@ const Entry_Move = ({ id, view, setView }) => {
                         <Book_Add {...{
                             view: addBookView,
                             setView: setAddBookView
+                        }} />
+                    }
+                    {confirmView &&
+                        <Entry_Move_Confirm {...{
+                            book,
+                            view: confirmView,
+                            setView: setConfirmView
                         }} />
                     }
                 </DrawerContent>
