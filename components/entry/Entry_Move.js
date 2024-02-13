@@ -3,13 +3,20 @@ import {
     DrawerContent,
     DrawerOverlay
 } from '@chakra-ui/react';
-import React from 'react';
-import { BsBuildings } from "react-icons/bs";
-import { ImSpinner9 } from "react-icons/im";
-import { MdInfo } from "react-icons/md";
+import React, { useState } from 'react';
+import { IoMdArrowRoundForward } from "react-icons/io";
+import { useSelector } from 'react-redux'
+import { Book_Add } from '../Index';
+import { MdRadioButtonChecked, MdRadioButtonUnchecked } from 'react-icons/md';
 
-const Entry_Move = ({ view, setView }) => {
+const Entry_Move = ({ id, view, setView }) => {
+    const { entries, currentBook, books } = useSelector(state => state.book)
+    const avialabeBook = books.filter(book => book._id !== currentBook._id)
+    const entry = entries.find(entry => entry._id === id)
+    const [book, setBook] = useState(avialabeBook.length > 0 ? avialabeBook[0] : {})
+    const [addBookView, setAddBookView] = useState(false)
 
+    console.log(avialabeBook, entry)
     return (
         <>
             <Drawer
@@ -20,64 +27,104 @@ const Entry_Move = ({ view, setView }) => {
                 <DrawerOverlay />
                 <DrawerContent>
                     <div
-                        className='h-28'
+                        className='h-16 px-6 py-4 flex justify-between items-center border-b'
+                    >
+                        <p className='text-xl'>Move Book</p>
+                        <button
+                            onClick={() => setView(!view)}
+                            className='px-4 py-1 border rounded'
+                        >X</button>
+                    </div>
+                    <div
+                        className='h-[calc(100vh-208px)] p-6 overflow-y-auto'
                     >
                         <div
-                            className='px-6 py-4 flex justify-between items-center border-b'
+                            className='space-y-2'
                         >
-                            <p className='text-xl'>Move Book</p>
-                            <button
-                                onClick={() => setView(!view)}
-                                className='px-4 py-1 border rounded'
-                            >X</button>
-                        </div>
-                        <div
-                            className='p-4 flex items-center space-x-3 bg-[#EEEDFA]'
-                        >
-                            <MdInfo
-                                size={20}
-                                className='text-[#4863D4]'
+                            <p>Select a book where you want to move this entry
+
+                            </p>
+                            <input
+                                placeholder='Enter New Book Name'
+                                className='w-full p-2 border rounded focus:outline-[#4863D4]'
                             />
-                            <p
-                                className='text-sm'
+                        </div>
+                        {avialabeBook?.length > 0 ?
+                            <div
+                                className='space-y-2'
                             >
-                                Move the the another business.It not avilable in this business
+                                {
+                                    avialabeBook.map(b =>
+                                        <div
+                                            key={b._id}
+                                            onClick={()=>setBook(b)}
+                                            className={`py-2  flex items-center space-x-3 ${book?._id === b._id ? 'cursor-not-allowed' : 'cursor-pointer'}`}
+                                        >
+                                            {book?._id === b._id ?
+                                                <MdRadioButtonChecked size={25} className='text-[#4863D4]'/>
+                                                :
+                                                <MdRadioButtonUnchecked size={25} />
+                                            }
+                                            <p className=''>{b?.name}</p>
+                                        </div>
+                                    )
+                                }
+                            </div>
+                            :
+                            <div
+                                className='pt-10 flex flex-col justify-center items-center space-y-3'
+                            >
+                                <p className='text-sm text-gray-500 text-center'>No books found for this action</p>
+                                <button
+                                    onClick={() => setAddBookView(!addBookView)}
+                                    className='px-6 py-2 text-[#4863D4] hover:bg-gray-50 border rounded'
+                                >
+                                    Create New Book
+                                </button>
+                            </div>
+                        }
+                    </div>
+                    <div
+                        className='h-16 px-6 py-4 flex justify-between items-center text-sm bg-gray-100'
+                    >
+                        <div
+                            className='w-full'
+                        >
+                            <p className='text-gray-500'>Moving From</p>
+                            <p>{currentBook?.name}</p>
+                        </div>
+                        <IoMdArrowRoundForward size={40} />
+                        <div
+                            className='w-full pl-4'
+                        >
+                            <p className='text-gray-500'>Moving From</p>
+                            <p>
+                                {book?.name ? book?.name : 'Please select a valid book'}
                             </p>
                         </div>
                     </div>
                     <div
-                        className='h-[calc(100vh-192px)] p-6 space-y-5 overflow-y-auto'
+                        className='h-20 px-6 flex justify-end items-center space-x-5'
                     >
-                        <div
-                            className='flex justify-between items-center'
+                        <button
+                            className='px-6 py-3 text-[#4863D4] border rounded'
                         >
-                            <p>Please Select with you want to move</p>
-                            <div
-                                className='px-2 py-1 flex items-center space-x-2 border rounded'
-                            >
-                                <ImSpinner9
-                                    size={20}
-                                    className='animate-spin'
-                                />
-                                <span className='animate-pulse'>Moving ...</span>
-                            </div>
-                        </div>
-
-                        <div
-                            className='px-4 py-2 flex items-center space-x-3 text-sm bg-[#EEEDFA] hover:bg-[#e2dffc] border rounded cursor-pointer'
+                            Cancel
+                        </button>
+                        <button
+                            className={`px-8 py-3 border rounded ${book?.name ? 'bg-[#4863D4] text-white' : 'bg-gray-100 text-gray-600 cursor-not-allowed'}`}
+                            disabled={book?.name ? false : true}
                         >
-                            <BsBuildings
-                                size={20}
-                                className='text-[#4863D4]'
-                            />
-                            <span>Book Name</span>
-                        </div>
+                            Move
+                        </button>
                     </div>
-                    <div
-                        className='h-20'
-                    >
 
-                    </div>
+                    {addBookView &&
+                        <Book_Add {...{
+                            view: addBookView,
+                            setView: setAddBookView
+                        }} />
+                    }
                 </DrawerContent>
             </Drawer>
         </>
