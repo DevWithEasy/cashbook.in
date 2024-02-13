@@ -1,22 +1,27 @@
 import Entry from "../model/Entry"
 import History from "../model/History"
 
-export const createEntry= async(req,res)=>{
+export const createEntry = async (req, res) => {
     try {
-        
+
         const newEntry = new Entry({
-            user : req.user.id,
-            book : req.query.id,
+            user: req.user.id,
+            book: req.query.id,
             amount: req.body.amount,
-            remark : req.body.remark,
-            entryType : req.body.type,
-            contact : req.body.contact || null,
-            category : req.body.category || null,
-            payment : req.body.payment || null,
-            createdAt : req.body.createdAt,
+            remark: req.body.remark,
+            entryType: req.body.type,
+            contact: req.body.contact || null,
+            category: req.body.category || null,
+            payment: req.body.payment || null,
+            createdAt: req.body.createdAt,
         })
 
-        const entry = await newEntry.save()
+        await newEntry.save()
+
+        const entry = await Entry.findById(newEntry._id)
+        .populate('payment')
+        .populate('category')
+        .populate('contact')
 
         res.status(200).json({
             success: true,
@@ -27,76 +32,90 @@ export const createEntry= async(req,res)=>{
     } catch (err) {
         console.log(err)
         res.status(500).json({
-            success : false,
-            status:500,
-            message:err.message
+            success: false,
+            status: 500,
+            message: err.message
         })
     }
 }
 
-export const getEntryDetails= async(req,res)=>{
+export const getEntryDetails = async (req, res) => {
     try {
-        const entry = await  Entry.findOne({"_id" : req.query.id})
-        .populate('contact')
-        .populate('category')
-        .populate('payment')
-        const histories = await History.find({entry : req.query.id})
+        const entry = await Entry.findOne({ "_id": req.query.id })
+            .populate('contact','name')
+            .populate('category','name')
+            .populate('payment','name')
+            .populate('user', 'name')
+        const histories = await History.find({ entry: req.query.id })
         res.status(200).json({
             success: true,
             status: 200,
             data: {
-                entry,
+                ...entry._doc,
                 histories
             },
             message: "Entry updated successfully"
         })
     } catch (err) {
         res.status(500).json({
-            success : false,
-            status:500,
-            message:err.message
+            success: false,
+            status: 500,
+            message: err.message
         })
     }
 }
 
-export const updateEntry= async(req,res)=>{
+export const updateEntry = async (req, res) => {
     try {
-        const entry = await  Entry.findOne({"_id" : req.query.id})
-        const createHistory = {
-            from : entry.amount,
-            to : parseInt(req.body.amount),
-            reason: req.body.reason
-        }
-        await Entry.updateOne({"_id" : req.query.id},{
-            $set : {
-                "amount" : req.body.amount,
-                "entryType" : req.body.entryType,
-                "remark" : req.body.remark
-            },
-            $push :{
-                "history" : createHistory
-            }
-        })
-        const newPost = await  Entry.findOne({"_id" : req.query.id})
+        const findEntry = await Entry.findOne({ "_id": req.query.id })
 
-        res.status(200).json({
+        const newHistory = new History({
+            entry: req.query.id,
+            from: findEntry.amount,
+            to: req.body.amount,
+            remark: req.body.reason
+        })
+
+        await Entry.findByIdAndUpdate(req.query.id, {
+            $set: {
+                amount: req.body.amount,
+                entryType: req.body.type,
+                remark: req.body.remark,
+                contact: req.body.contact || null,
+                category: req.body.category || null,
+                payment: req.body.payment || null,
+            }
+        },
+            { new: true }
+        )
+
+        await newHistory.save()
+
+        const entry = await Entry.findOne({ "_id": req.query.id })
+        .populate('payment')
+        .populate('category')
+        .populate('contact')
+
+        return res.status(200).json({
             success: true,
             status: 200,
-            data: newPost,
+            data: entry,
             message: "Entry updated successfully"
         })
     } catch (err) {
-        res.status(500).json({
-            success : false,
-            status:500,
-            message:err.message
+        return res.status(500).json({
+            success: false,
+            status: 500,
+            message: err.message
         })
     }
 }
 
-export const deleteEntry= async(req,res)=>{
+export const deleteEntry = async (req, res) => {
     try {
-        await Entry.deleteOne({"_id" : req.query.id})
+        await Entry.deleteOne({ _id: req.query.id })
+        await History.deleteMany({entry : req.query.id})
+
         res.status(200).json({
             success: true,
             status: 200,
@@ -104,9 +123,9 @@ export const deleteEntry= async(req,res)=>{
         })
     } catch (err) {
         res.status(500).json({
-            success : false,
-            status:500,
-            message:err.message
+            success: false,
+            status: 500,
+            message: err.message
         })
     }
 }

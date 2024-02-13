@@ -6,12 +6,9 @@ import {
 import React, { useState } from 'react';
 import { MdOutlineContentCopy, MdOutlineTurnRight } from "react-icons/md";
 import { TbPlusMinus } from "react-icons/tb";
-import { useDispatch } from 'react-redux';
 
-export default function Entry_Action({ view, setView }) {
-    const [name, setName] = useState("")
-    const dispatch = useDispatch()
-    const [loading, setLoading] = useState(false)
+export default function Entry_Action({ view, setView, moveView, setMoveView, copyView, setCopyView, oppositeView, setOppositeView }) {
+
     return (
         <>
             <Modal
@@ -48,7 +45,11 @@ export default function Entry_Action({ view, setView }) {
                                 className=''
                             >
                                 <div
-                                    className='flex items-center p-4 space-x-4 border-b hover:bg-gray-100 rounded-md'
+                                    onClick={() => {
+                                        setView(!view)
+                                        setMoveView(true)
+                                    }}
+                                    className='flex items-center p-4 space-x-4 border-b hover:bg-gray-100 rounded-md cursor-pointer'
                                 >
                                     <MdOutlineTurnRight size={25} />
                                     <div>
@@ -58,7 +59,11 @@ export default function Entry_Action({ view, setView }) {
                                     </div>
                                 </div>
                                 <div
-                                    className='flex items-center p-4 space-x-4 border-b hover:bg-gray-100 rounded-md'
+                                    onClick={() => {
+                                        setView(!view)
+                                        setCopyView(!copyView)
+                                    }}
+                                    className='flex items-center p-4 space-x-4 border-b hover:bg-gray-100 rounded-md cursor-pointer'
                                 >
                                     <MdOutlineContentCopy size={25} />
                                     <div>
@@ -69,7 +74,11 @@ export default function Entry_Action({ view, setView }) {
                                     </div>
                                 </div>
                                 <div
-                                    className='flex items-center p-4 space-x-4 border-b hover:bg-gray-100 rounded-md'
+                                    onClick={() => {
+                                        setView(!view)
+                                        setOppositeView(!oppositeView)
+                                    }}
+                                    className='flex items-center p-4 space-x-4 border-b hover:bg-gray-100 rounded-md cursor-pointer'
                                 >
                                     <TbPlusMinus size={25} />
                                     <div>

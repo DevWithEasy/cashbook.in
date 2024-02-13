@@ -15,7 +15,7 @@ const Entry_Opposite = ({ view, setView }) => {
             <Drawer
                 isOpen={view}
                 placement='right'
-                size='md'
+                size='lg'
             >
                 <DrawerOverlay />
                 <DrawerContent>

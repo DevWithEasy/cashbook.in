@@ -36,13 +36,7 @@ const entrySchema = mongoose.Schema({
     entryType :{
         type : String,
         enum : ["cash_in","cash_out"]
-    },
-    history : [
-        {
-            type : mongoose.Types.ObjectId,
-            ref:'Payment',
-        }
-    ]
+    }
 
 },{
     timestamps:true

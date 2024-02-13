@@ -28,7 +28,6 @@ class Entry{
                 ...entry,
                 stock : stock
             })
-            console.log(stock)
         })
         return newEntries
     }

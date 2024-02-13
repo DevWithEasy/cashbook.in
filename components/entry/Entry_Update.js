@@ -13,12 +13,12 @@ import Entry_Add_Contact from '../entry-helper/Entry_Add_Contact';
 import Entry_Add_Hour from '../entry-helper/Entry_Add_Hour';
 import Entry_Add_Minute from '../entry-helper/Entry_Add_Minute';
 import Entry_Add_Payment from '../entry-helper/Entry_Add_Payment';
-import { createEntry, createEntryOther } from '../../libs/allEntryAction';
+import { updateEntry } from '../../libs/allEntryAction';
 import Entry_Add_Header from '../entry-helper/Entry_Add_Header';
 import Entry_Add_Type from '../entry-helper/Entry_Add_Type';
 import handleInput from '../../utils/handleInput';
 import {useDispatch,useSelector} from 'react-redux'
-import { addEntry } from '../../store/slice/bookSlice';
+import { addEntry, updatePrevEntry } from '../../store/slice/bookSlice';
 
 
 const Entry_Update = ({id,view, setView }) => {
@@ -35,21 +35,21 @@ const Entry_Update = ({id,view, setView }) => {
     const [loading,setLoading] = useState(false)
 
     //time handling
-    const [date, setDate] = useState(moment().format('YYYY-MM-DD'))
-    const [hour, setHour] = useState(moment().format('hh'))
-    const [minute, setMinute] = useState(moment().format('mm'))
-    const [ampm, setAmPm] = useState(moment().format('A'))
+    const [date, setDate] = useState(moment(entry?.createdAt).format('YYYY-MM-DD'))
+    const [hour, setHour] = useState(moment(entry?.createdAt).format('hh'))
+    const [minute, setMinute] = useState(moment(entry?.createdAt).format('mm'))
+    const [ampm, setAmPm] = useState(moment(entry?.createdAt).format('A'))
     const dateTimeString = `${date} ${hour}:${minute} ${ampm}`
     const dateObj = moment(dateTimeString, 'YYYY/MM/DD hh:mm A').toDate()
 
     const [value, setValue] = useState({
-        amount: 0,
-        remark: '',
+        ...entry,
+        reason : ''
     })
-    const [contact, setContact] = useState({})
-    const [category, setCategory] = useState({})
-    const [payment, setPayment] = useState({})
-    const [type,setType] = useState()
+    const [contact, setContact] = useState(entry?.contact)
+    const [category, setCategory] = useState(entry?.category)
+    const [payment, setPayment] = useState(entry?.payment)
+    const [type,setType] = useState(entry?.entryType)
 
     return (
         <>
@@ -116,7 +116,7 @@ const Entry_Update = ({id,view, setView }) => {
                             <input
                                 name='amount'
                                 type='number'
-                                placeholder='eg - 1000'
+                                value={value.amount}
                                 onChange={(e)=>handleInput(e,value,setValue)}
                                 autoFocus
                                 className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
@@ -128,12 +128,27 @@ const Entry_Update = ({id,view, setView }) => {
                         <div
                             className='space-y-1'
                         >
+                            <label className='block text-sm space-x-2'>
+                                <span>Changing Reason</span>
+                                <span className='text-red-600'>(Why you change or update)</span>
+                            </label>
+                            <input
+                                name='reason'
+                                type='text'
+                                value={value.reason}
+                                onChange={(e)=>handleInput(e,value,setValue)}
+                                className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
+                            />
+                        </div>
+                        <div
+                            className='space-y-1'
+                        >
                             <label className='block text-sm'>Remark</label>
                             <input
                                 name='remark'
                                 type='text'
+                                value={value.remark}
                                 onChange={(e)=>handleInput(e,value,setValue)}
-                                placeholder='eg - Enter Detail (Name, Bill No, Item, Quantity etc)'
                                 className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                             />
                         </div>
@@ -151,8 +166,7 @@ const Entry_Update = ({id,view, setView }) => {
                         className='h-20 px-6 flex justify-end items-center space-x-5 border-t'
                     >
                         <button
-                            onClick={() => createEntry({
-                                id : currentBook?._id,
+                            onClick={() => updateEntry({
                                 value : {
                                     ...value,
                                     type,
@@ -161,22 +175,14 @@ const Entry_Update = ({id,view, setView }) => {
                                     contact : contact?._id || '',
                                     createdAt : dateObj
                                 },
-                                action : addEntry,
+                                action : updatePrevEntry,
                                 dispatch,
                                 setView,
                                 setLoading
                             })}
-                            className='px-8 py-3 text-[#4863D4] border rounded'
+                            className='px-8 py-3 bg-[#4863D4] text-white rounded'
                         >
                             {loading ? 'Saving...' : 'Save'}
-                        </button>
-                        <button
-                            onClick={() => createEntryOther({
-
-                            })}
-                            className='px-4 py-3 bg-[#4863D4] text-white rounded'
-                        >
-                            Save & Add New
                         </button>
                     </div>
 

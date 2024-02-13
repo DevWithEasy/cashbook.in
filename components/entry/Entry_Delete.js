@@ -9,14 +9,18 @@ import React, { useState } from 'react';
 import { MdDeleteOutline } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { TiInfo } from "react-icons/ti";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { createBook } from '../../libs/allBookAction';
-import { addBook } from '../../store/slice/bookSlice';
+import { addBook, removeEntry } from '../../store/slice/bookSlice';
+import moment from 'moment';
+import { deleteEntry } from '../../libs/allEntryAction';
 
-export default function Entry_Delete({ view, setView }) {
-  const [name, setName] = useState("")
+export default function Entry_Delete({id, view, setView }) {
+  const {entries} = useSelector(state=>state.book)
+  const entry = entries.find(e=>e._id === id)
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
+  const date = moment(entry?.createdAt).format('DD MMM YYYY')
   return (
     <>
       <Modal
@@ -51,19 +55,27 @@ export default function Entry_Delete({ view, setView }) {
             >
               <p className='text-sm'>Review Details</p>
               <div
-                className='flex space-x-4 p-4 border rounded'
+                className='p-4 space-y-3 border rounded text-sm'
               >
-                <div>
-                  <p className='text-gray-500 text-sm'>Type</p>
-                  <p>Cash In</p>
+                <div
+                  className='flex space-x-4'
+                >
+                  <div>
+                  <p className='text-gray-500'>Type</p>
+                  <p>{entry?.entryType === 'cash_in' ? 'Cash In' : 'Cash Out'}</p>
                 </div>
                 <div>
-                  <p className='text-gray-500 text-sm'>Amount</p>
-                  <p>10000</p>
+                  <p className='text-gray-500'>Amount</p>
+                  <p>{entry?.amount}</p>
                 </div>
                 <div>
-                  <p className='text-gray-500 text-sm'>Date</p>
-                  <p>22 January 2024</p>
+                  <p className='text-gray-500'>Date</p>
+                  <p>{date}</p>
+                </div>
+                </div>
+                <div>
+                  <p className='text-gray-500'>Remark</p>
+                  <p>{entry?.remark}</p>
                 </div>
               </div>
             </div>
@@ -73,20 +85,26 @@ export default function Entry_Delete({ view, setView }) {
             className='border-t space-x-5'
           >
             <button
-              onClick={(e) => createBook(name, setLoading, dispatch, addBook, setView)}
+              onClick={(e) => deleteEntry({
+                id,
+                action : removeEntry,
+                dispatch,
+                setLoading,
+                setView
+              })}
               className='flex items-center space-x-2 px-6 py-3 border text-red-500 rounded'
 
             >
-              <MdDeleteOutline/>
-              <span>Yes, Delete</span>
+              <MdDeleteOutline size={18}/>
+              <span>{loading ? 'Deleting...' : 'Yes, Delete'}</span>
             </button>
 
             <button
-              onClick={(e) => createBook(name, setLoading, dispatch, addBook, setView)}
+              onClick={(e) => setView(!view)}
               className='flex items-center space-x-2  px-6 py-3 border bg-[#4863D4] text-white rounded'
 
             >
-              <RxCross2/>
+              <RxCross2 size={18}/>
               <span>Cancel</span>
             </button>
             

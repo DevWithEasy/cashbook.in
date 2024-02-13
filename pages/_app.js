@@ -11,7 +11,7 @@ function MyApp({ Component, pageProps }) {
     <PersistGate loading={null} persistor={persistor}>
       <ChakraProvider>
         <Head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/logo.png" sizes="any" />
         </Head>
         <Component {...pageProps} />
         <Toaster

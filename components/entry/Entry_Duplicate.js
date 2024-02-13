@@ -48,7 +48,7 @@ const Entry_Duplicate = ({ view, setView }) => {
             <Drawer
                 isOpen={view}
                 placement='right'
-                size='md'
+                size='lg'
             >
                 <DrawerOverlay />
                 <DrawerContent>

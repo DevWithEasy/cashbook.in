@@ -61,7 +61,7 @@ const bookSlice = createSlice({
         removeEntry: (state, action) => {
             state.entries = state.entries.filter(entry => entry._id != action.payload)
         },
-        updateEntry: (state, action) => {
+        updatePrevEntry: (state, action) => {
             state.entries = state.entries.map(entry => entry._id === action.payload._id ? action.payload : entry)
         },
         addCCPs: (state, action) => {
@@ -86,5 +86,5 @@ const bookSlice = createSlice({
 
     }
 })
-export const {refresh,addBusinesses,addCurrentBusiness,addBusiness, addBooks,addCurrentBooks,reAddCurrentBooks, addCurrentBook, addBook, removeBook, renameBook, addEntries, addEntry, removeEntry, updateEntry,addCCPs,addCCP,updateCCP,removeCCP, logoutReset } = bookSlice.actions
+export const {refresh,addBusinesses,addCurrentBusiness,addBusiness, addBooks,addCurrentBooks,reAddCurrentBooks, addCurrentBook, addBook, removeBook, renameBook, addEntries, addEntry, removeEntry, updatePrevEntry,addCCPs,addCCP,updateCCP,removeCCP, logoutReset } = bookSlice.actions
 export default bookSlice.reducer

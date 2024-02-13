@@ -1,15 +1,16 @@
+import moment from 'moment';
 import React from 'react';
 import { MdDeleteOutline, MdOutlineCheckBox, MdOutlineCheckBoxOutlineBlank } from 'react-icons/md';
 import { RiEdit2Line } from 'react-icons/ri';
 
-const Transections_Tbody_Tr = ({entry,menuId,setMenuId,check,handleCheck,handleDetails,deleteView,setDeleteView,updateView,setUpdateView}) => {
-    // console.log(entry)
+const Transections_Tbody_Tr = ({ entry, menuId, setMenuId, check, handleCheck, handleDetails, deleteView, setDeleteView, updateView, setUpdateView }) => {
+    const date = moment(entry.createdAt).format('DD MMM YYYY')
+    const time = moment(entry.updatedAt).format('h:mm A')
+    
     return (
         <tr
-            onMouseEnter={() => setMenuId()}
-            className='hover:bg-[#EBEEFD] cursor-pointer'
-
-
+            onMouseEnter={() => setMenuId(entry?._id)}
+            className='hover:bg-[#EBEEFD] cursor-pointer text-sm'
         >
             <td
                 className='px-4 py-2'
@@ -31,15 +32,33 @@ const Transections_Tbody_Tr = ({entry,menuId,setMenuId,check,handleCheck,handleD
                 onClick={handleDetails}
                 className='px-4 py-2'
             >
-                <span>08 Jan 2024</span>
+                <span>{date}</span>
                 <br />
-                <span className='text-xs'>08:22pm</span>
+                <span className='text-xs'>{time}</span>
             </td>
             <td
                 onClick={handleDetails}
                 className='px-4 py-2'
             >
-                {entry.remark}
+                {entry?.contact &&
+                    <p>
+                        <span className='font-semibold'>({entry?.contact?.name})</span>
+                        <span className='text-gray-500'>({entry?.contact?.type})</span>
+                    </p>
+                }
+                <p>{entry.remark ? entry.remark : '--'}</p>
+            </td>
+            <td
+                onClick={handleDetails}
+                className='px-4 py-2'
+            >
+                {entry?.category?.name}
+            </td>
+            <td
+                onClick={handleDetails}
+                className='px-4 py-2'
+            >
+                {entry?.payment?.name}
             </td>
             <td
                 onClick={handleDetails}
@@ -49,19 +68,7 @@ const Transections_Tbody_Tr = ({entry,menuId,setMenuId,check,handleCheck,handleD
             </td>
             <td
                 onClick={handleDetails}
-                className='px-4 py-2'
-            >
-
-            </td>
-            <td
-                onClick={handleDetails}
-                className='px-4 py-2'
-            >
-
-            </td>
-            <td
-                onClick={handleDetails}
-                className='px-4 py-2 text-right'
+                className={`px-4 py-2 text-right font-semibold ${entry?.entryType === 'cash_in' ? 'text-[#01865F]' : 'text-[#C93B3B]'}`}
             >
                 {entry.amount}
             </td>
@@ -75,7 +82,7 @@ const Transections_Tbody_Tr = ({entry,menuId,setMenuId,check,handleCheck,handleD
                 className='py-4 flex justify-center items-center'
             >
                 <div
-                    className={`flex space-x-3 ${menuId === 1 ? 'visible' : 'invisible'}`}
+                    className={`flex space-x-3 ${menuId === entry?._id ? 'visible' : 'invisible'}`}
                 >
                     <RiEdit2Line
                         size={22}
