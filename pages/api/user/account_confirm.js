@@ -53,7 +53,11 @@ async function handler(req, res) {
         return res.status(200).json({
                 success : true,
                 status:200,
-                data : user,
+                data : {
+                    user : user._doc,
+                    business : business._doc,
+                    book : book._doc
+                },
                 businessId : business._id,
                 message:"Account setup successfully",
             })

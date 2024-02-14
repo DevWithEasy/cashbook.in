@@ -1,7 +1,8 @@
 import React from 'react';
 import { MdOutlineInfo } from "react-icons/md";
 
-const Transections_NoFound = () => {
+const Transections_NoFound = ({loading}) => {
+    console.log(loading)
     return (
         <div
             className='pt-20 flex flex-col justify-center items-center space-y-2 border-t'

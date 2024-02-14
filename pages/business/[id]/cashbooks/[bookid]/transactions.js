@@ -56,7 +56,7 @@ const Transactions = () => {
     }
 
     const getTransections = async (id) => {
-        setLoading(!loading)
+        setLoading(true)
         try {
             const res = await axios.get(`/api/transections/all/${id}`, {
                 headers: {
@@ -64,12 +64,12 @@ const Transactions = () => {
                 }
             })
             if (res.data.success) {
-                setLoading(!loading)
+                setLoading(false)
                 dispatch(addEntries(res.data.data))
             }
         } catch (error) {
             console.log(error)
-            setLoading(!loading)
+            setLoading(false)
         }
     }
 
@@ -79,7 +79,8 @@ const Transactions = () => {
 
     return (
         <UserLayout>
-            <div
+            {!loading ?
+                <div
                 className='px-8 space-y-5'
             >
                 <Head>
@@ -141,7 +142,7 @@ const Transactions = () => {
                             }} />
                         </table>
                         :
-                        <Transections_NoFound />
+                        <Transections_NoFound {...{loading}} />
                     }
                 </div>
 
@@ -225,6 +226,9 @@ const Transactions = () => {
                     }} />
                 }
             </div>
+            :
+            <Loading/>
+            }
 
         </UserLayout>
     );

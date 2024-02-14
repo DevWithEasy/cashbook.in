@@ -1,5 +1,4 @@
-import React, { useState } from 'react';
-import { ImSpinner9 } from 'react-icons/im';
+import React, { useState } from 'react'
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
 import { useDispatch } from 'react-redux';
 import Layout from '../components/Layout';
@@ -8,6 +7,7 @@ import axios from 'axios'
 import handleInput from '../utils/handleInput';
 import { login } from '../store/slice/authSlice';
 import { useRouter } from 'next/router';
+import { addBook, addBusiness } from '../store/slice/bookSlice';
 
 const Onboarding = () => {
     const router = useRouter()
@@ -33,7 +33,9 @@ const Onboarding = () => {
             if(res.data.success){
                 const {data,businessId} = res.data
                 setLoading(!loading)
-                dispatch(login(data))
+                dispatch(login(data.user))
+                dispatch(addBusiness(data.business))
+                dispatch(addBook(data.book))
                 router.push(`/business/${businessId}/cashbooks`)
             }
         } catch (error) {
