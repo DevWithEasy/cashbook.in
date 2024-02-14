@@ -3,10 +3,21 @@ import React from 'react';
 import { MdDeleteOutline, MdOutlineCheckBox, MdOutlineCheckBoxOutlineBlank } from 'react-icons/md';
 import { RiEdit2Line } from 'react-icons/ri';
 
-const Transections_Tbody_Tr = ({ entry, menuId, setMenuId, check, handleCheck, handleDetails, deleteView, setDeleteView, updateView, setUpdateView }) => {
+const Transections_Tbody_Tr = ({ entry, menuId, setMenuId, selected, setSelected, handleDetails, deleteView, setDeleteView, updateView, setUpdateView }) => {
     const date = moment(entry.createdAt).format('DD MMM YYYY')
     const time = moment(entry.updatedAt).format('h:mm A')
-    
+
+    const handleCheck=()=>{
+        const isAdd = selected.includes(entry?._id)
+
+        if(isAdd){
+            const filtered = selected.filter(e=>e !== entry._id)
+            setSelected(filtered)
+        }else{
+            setSelected([...selected,entry?._id])
+        }
+    }
+    console.log(selected)
     return (
         <tr
             onMouseEnter={() => setMenuId(entry?._id)}
@@ -16,7 +27,7 @@ const Transections_Tbody_Tr = ({ entry, menuId, setMenuId, check, handleCheck, h
                 className='px-4 py-2'
             >
 
-                {check ?
+                {selected?.includes(entry?._id) ?
                     <MdOutlineCheckBox
                         size={20}
                         onClick={handleCheck}

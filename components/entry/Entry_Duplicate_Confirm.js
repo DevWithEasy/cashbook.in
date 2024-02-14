@@ -10,7 +10,7 @@ import {
 import { RxDotFilled } from 'react-icons/rx';
 import { useRouter } from 'next/router';
 
-export default function Entry_Duplicate_Confirm({fromBook,toBook, view, setView }) {
+export default function Entry_Duplicate_Confirm({items,fromBook,toBook, view, setView,confirmView,setConfirmView }) {
   const { currentBook } = useSelector(state => state.book)
   const [name, setName] = useState("")
   const dispatch = useDispatch()
@@ -30,7 +30,7 @@ export default function Entry_Duplicate_Confirm({fromBook,toBook, view, setView 
           <div
             className='px-6 py-4 flex justify-between items-center border-b'
           >
-            <p className='text-xl'>Copy & Paste 1 Entry</p>
+            <p className='text-xl'>Copy & Paste {items?.length} Entry</p>
             <button
               onClick={() => setView(!view)}
               className='px-4 py-1 border rounded'

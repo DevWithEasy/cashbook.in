@@ -56,7 +56,7 @@ const bookSlice = createSlice({
 
         },
         addEntry: (state, action) => {
-            state.entries = [action.payload, ...state.entries]
+            state.entries = [...state.entries,action.payload]
         },
         removeEntry: (state, action) => {
             state.entries = state.entries.filter(entry => entry._id != action.payload)

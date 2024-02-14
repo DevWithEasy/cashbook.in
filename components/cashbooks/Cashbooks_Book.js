@@ -11,7 +11,7 @@ const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDu
     const router = useRouter()
     const dispatch = useDispatch()
     const [menu, setMenu] = useState(false)
-    const days = moment().diff(moment(book?.updatedAt),'days')
+    const days = moment(book?.updatedAt).fromNow()
 
     const handleRoute=()=>{
         const findBook = books.find(b=>b._id === book._id)
@@ -44,7 +44,7 @@ const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDu
                         <p
                             className='text-xs text-gray-500'
                         >
-                            Update {days} days ago
+                            Update on {days}
                         </p>
                     </div>
                 </div>

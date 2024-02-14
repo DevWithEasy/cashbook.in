@@ -1,7 +1,7 @@
 import React from 'react';
 import { MdOutlineCheckBox, MdOutlineCheckBoxOutlineBlank } from 'react-icons/md';
 
-const Transections_TheadMain = ({check,handleCheck}) => {
+const Transections_TheadMain = ({selected,handleSelectAll}) => {
     return (
         <thead
             className='text-sm h-12'
@@ -13,15 +13,15 @@ const Transections_TheadMain = ({check,handleCheck}) => {
                     className='p-4'
                 >
 
-                    {check ?
+                    {selected?.length > 0 ?
                         <MdOutlineCheckBox
                             size={20}
-                            onClick={handleCheck}
+                            onClick={handleSelectAll}
                         />
                         :
                         <MdOutlineCheckBoxOutlineBlank
                             size={20}
-                            onClick={handleCheck}
+                            onClick={handleSelectAll}
                         />
                     }
                 </td>

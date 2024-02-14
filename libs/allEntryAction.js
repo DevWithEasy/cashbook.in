@@ -110,3 +110,26 @@ export const entryDetails = async (data) => {
         setLoading(false)
     };
 }
+
+export const moveEntry = async (data) => {
+    const {from,to, value, setLoading, dispatch, action, setView,setConfirmView } = data
+
+    try {
+        setLoading(true)
+        const res = await axios.put(`/api/transections/move?from=${from}&to=${to}`, value, {
+            headers: {
+                "cb-access-token": localStorage.getItem("cb_access_token")
+            }
+        })
+        if (res.data.status === 200) {
+            setLoading(false)
+            notificationOK(res.data.message)
+            dispatch(action(res.data.data))
+            setView(false)
+            setConfirmView(false)
+        }
+    } catch (err) {
+        setLoading(false)
+        notificationNOT(err.message)
+    }
+}

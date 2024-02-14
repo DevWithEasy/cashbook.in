@@ -13,7 +13,7 @@ import {
 import { RxDotFilled } from 'react-icons/rx';
 import { useRouter } from 'next/router';
 
-export default function Entry_Opposite_Confirm({fromBook,toBook, view, setView }) {
+export default function Entry_Opposite_Confirm({items,fromBook,toBook, view, setView,confirmView,setConfirmView }) {
   const { currentBook } = useSelector(state => state.book)
   const [name, setName] = useState("")
   const dispatch = useDispatch()
@@ -36,7 +36,7 @@ export default function Entry_Opposite_Confirm({fromBook,toBook, view, setView }
           <div
             className='h-16 px-6 py-4 flex justify-between items-center border-b'
           >
-            <p className='text-xl'>Copy 1 Opposite Entry</p>
+            <p className='text-xl'>Copy {items?.length} Opposite Entry</p>
             <button
               onClick={() => setView(!view)}
               className='px-4 py-1 border rounded'
@@ -48,10 +48,10 @@ export default function Entry_Opposite_Confirm({fromBook,toBook, view, setView }
           >
             <p>Are you sure?</p>
             <p
-              className='flex items-center space-x-2'
+              className='flex space-x-2'
             >
               <RxDotFilled size={25} className='text-gray-500'/>
-              <span>‘Cash In’ entries will be added as ‘Cash Out’ entries in'New 2' and vice versa</span>
+              <span>‘Cash In’ entries will be added as ‘Cash Out’ entries in '{toBook?.name}' and vice versa</span>
             </p>
             <Image
               src={opposite.src}
@@ -60,10 +60,10 @@ export default function Entry_Opposite_Confirm({fromBook,toBook, view, setView }
               height={164}
             />
             <p
-              className='flex items-center space-x-2'
+              className='flex space-x-2'
             >
               <RxDotFilled size={25} className='text-gray-500'/>
-              <span>This will change the net balance of 'New 2'</span>
+              <span>This will change the net balance of '{toBook?.name}'</span>
             </p>
           </div>
           <div

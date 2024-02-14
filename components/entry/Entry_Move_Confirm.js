@@ -1,18 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux';
-import {  deleteBook } from '../../libs/allBookAction';
-import { refresh, removeBook } from '../../store/slice/bookSlice';
-import React, { useState } from 'react'
 import {
   Modal,
-  ModalOverlay,
   ModalContent,
-} from '@chakra-ui/react'
-import { TiInfo } from 'react-icons/ti';
-import { MdDeleteOutline } from 'react-icons/md';
-import { RxCross2, RxDotFilled } from 'react-icons/rx';
+  ModalOverlay,
+} from '@chakra-ui/react';
 import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { RxDotFilled } from 'react-icons/rx';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteBook } from '../../libs/allBookAction';
+import { refresh, removeBook } from '../../store/slice/bookSlice';
 
-export default function Entry_Move_Confirm({book, view, setView }) {
+export default function Entry_Move_Confirm({items,fromBook,toBook, view, setView,confirmView,setConfirmView }) {
   const { currentBook } = useSelector(state => state.book)
   const [name, setName] = useState("")
   const dispatch = useDispatch()
@@ -32,7 +30,7 @@ export default function Entry_Move_Confirm({book, view, setView }) {
           <div
             className='px-6 py-4 flex justify-between items-center border-b'
           >
-            <p className='text-xl'>Move 1 Entry</p>
+            <p className='text-xl'>Move {items?.length} Entry</p>
             <button
               onClick={() => setView(!view)}
               className='px-4 py-1 border rounded'

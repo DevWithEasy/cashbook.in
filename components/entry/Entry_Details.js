@@ -300,21 +300,21 @@ const Entry_Details = ({ id, view, setView }) => {
                     }
                     {moveView &&
                         <Entry_Move {...{
-                            id,
+                            items : [id],
                             view: moveView,
                             setView: setMoveView
                         }} />
                     }
                     {copyView &&
                         <Entry_Duplicate {...{
-                            id,
+                            items : [id],
                             view: copyView,
                             setView: setCopyView
                         }} />
                     }
                     {oppositeView &&
                         <Entry_Opposite {...{
-                            id,
+                            items : [id],
                             view: oppositeView,
                             setView: setOppositeView
                         }} />

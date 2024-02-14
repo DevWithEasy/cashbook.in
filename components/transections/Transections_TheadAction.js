@@ -2,7 +2,7 @@ import React from 'react';
 import { MdDeleteOutline, MdOutlineCheckBox, MdOutlineCheckBoxOutlineBlank } from 'react-icons/md';
 import {Transections_TheadAction_Change,Transections_TheadAction_MoveCopy} from '../Index';
 
-const Transections_TheadAction = ({ check, handleCheck,copyView, setCopyView,moveView, setMoveView,oppositeView, setOppositeView,categoryView, setCategoryView,paymentView, setPaymentView,contactView, setContactView }) => {
+const Transections_TheadAction = ({ selected, handleSelectAll,copyView, setCopyView,moveView, setMoveView,oppositeView, setOppositeView,categoryView, setCategoryView,paymentView, setPaymentView,contactView, setContactView }) => {
     return (
         <thead
             className='text-sm h-12'
@@ -21,15 +21,15 @@ const Transections_TheadAction = ({ check, handleCheck,copyView, setCopyView,mov
                         <button
                             className='flex items-center space-x-2'
                         >
-                            {check ?
+                            {selected?.length > 0 ?
                                 <MdOutlineCheckBox
                                     size={20}
-                                    onClick={handleCheck}
+                                    onClick={handleSelectAll}
                                 />
                                 :
                                 <MdOutlineCheckBoxOutlineBlank
                                     size={20}
-                                    onClick={handleCheck}
+                                    onClick={handleSelectAll}
                                 />
                             }
                             <span>Select all</span>

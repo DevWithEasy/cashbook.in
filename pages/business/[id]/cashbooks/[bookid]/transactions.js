@@ -35,10 +35,16 @@ const Transactions = () => {
         sort: 'all'
     })
 
-    const handleCheck = () => {
-        setCheck(!check)
-        setSelected([...selected, '123'])
+    const handleSelectAll = () => {
+        if(selected.length === 0){
+            setSelected(entries.map(e=>e._id))
+        }else{
+            setSelected([])
+        }
     }
+    // const handleSelect=(id)=>{
+    //     setCheck()
+    // }
 
     const handleView = (type) => {
         setEntryType(type)
@@ -107,8 +113,8 @@ const Transactions = () => {
                         >
                             {selected.length > 0 ?
                                 <Transections_TheadAction {...{
-                                    check,
-                                    handleCheck,
+                                    selected,
+                                    handleSelectAll,
                                     copyView, setCopyView,
                                     moveView, setMoveView,
                                     oppositeView, setOppositeView,
@@ -119,15 +125,16 @@ const Transactions = () => {
                                 }} />
                                 :
                                 <Transections_TheadMain {...{
-                                    check,
-                                    handleCheck
+                                    selected,
+                                    handleSelectAll,
                                 }} />
                             }
 
                             <Transections_Tbody {...{
                                 menuId, setMenuId,
-                                check,
-                                handleCheck,
+                                selected,
+                                setSelected,
+                                handleSelectAll,
                                 handleDetails,
                                 deleteView, setDeleteView,
                                 updateView, setUpdateView
@@ -172,7 +179,7 @@ const Transactions = () => {
 
                 {moveView &&
                     <Entry_Move {...{
-                        id: menuId,
+                        items: selected,
                         view: moveView,
                         setView: setMoveView
                     }} />
@@ -180,7 +187,7 @@ const Transactions = () => {
 
                 {copyView &&
                     <Entry_Duplicate {...{
-                        id: menuId,
+                        items: selected,
                         view: copyView,
                         setView: setCopyView
                     }} />
@@ -188,7 +195,7 @@ const Transactions = () => {
 
                 {oppositeView &&
                     <Entry_Opposite {...{
-                        id: menuId,
+                        items: selected,
                         view: oppositeView,
                         setView: setOppositeView
                     }} />
