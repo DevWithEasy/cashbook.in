@@ -10,15 +10,13 @@ import { Book_Add, Entry_Move_Confirm } from '../Index';
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from 'react-icons/md';
 import moment from 'moment';
 
-const Entry_Move = ({ items, view, setView }) => {
+const Entry_Move = ({ items,setFirstView, view, setView }) => {
     const { entries, currentBook, books } = useSelector(state => state.book)
     const avialabeBook = books.filter(book => book._id !== currentBook._id)
     const entry = entries.find(entry => entry._id === items[0])
     const [book, setBook] = useState(avialabeBook.length > 0 ? avialabeBook[0] : {})
     const [addBookView, setAddBookView] = useState(false)
     const [confirmView, setConfirmView] = useState(false)
-
-    console.log(avialabeBook, entry)
 
     return (
         <>
@@ -141,11 +139,11 @@ const Entry_Move = ({ items, view, setView }) => {
                     }
                     {confirmView &&
                         <Entry_Move_Confirm {...{
-                            fromBook: currentBook,
-                            toBook : book,
+                            book,
+                            items,
                             view,
                             setView,
-                            confirmView,
+                            setFirstView,
                             setConfirmView
                         }} />
                     }

@@ -10,7 +10,7 @@ import { Book_Add, Entry_Move_Confirm, Entry_Opposite_Confirm } from '../Index';
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from 'react-icons/md';
 import moment from 'moment';
 
-const Entry_Opposite = ({ items, view, setView }) => {
+const Entry_Opposite = ({ items,setFirstView, view, setView }) => {
     const { entries, currentBook, books } = useSelector(state => state.book)
     const avialabeBook = books.filter(book => book._id !== currentBook._id)
     const entry = entries.find(entry => entry._id === items[0])
@@ -146,7 +146,7 @@ const Entry_Opposite = ({ items, view, setView }) => {
                             toBook : book,
                             view,
                             setView,
-                            confirmView,
+                            setFirstView,
                             setConfirmView
                         }} />
                     }

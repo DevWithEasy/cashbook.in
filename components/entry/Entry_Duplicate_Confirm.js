@@ -1,20 +1,14 @@
-import { useDispatch, useSelector } from 'react-redux';
-import {  deleteBook } from '../../libs/allBookAction';
-import { refresh, removeBook } from '../../store/slice/bookSlice';
-import React, { useState } from 'react'
 import {
   Modal,
-  ModalOverlay,
   ModalContent,
-} from '@chakra-ui/react'
+  ModalOverlay,
+} from '@chakra-ui/react';
+import React, { useState } from 'react';
 import { RxDotFilled } from 'react-icons/rx';
-import { useRouter } from 'next/router';
+import { copyEntry } from '../../libs/allEntryAction';
 
-export default function Entry_Duplicate_Confirm({items,fromBook,toBook, view, setView,confirmView,setConfirmView }) {
+export default function Entry_Duplicate_Confirm({items,book, view, setView,setFirstView,setConfirmView }) {
   const { currentBook } = useSelector(state => state.book)
-  const [name, setName] = useState("")
-  const dispatch = useDispatch()
-  const router = useRouter()
   const [loading, setLoading] = useState(false)
   
   return (
@@ -45,13 +39,13 @@ export default function Entry_Duplicate_Confirm({items,fromBook,toBook, view, se
               className='flex items-center space-x-2'
             >
               <RxDotFilled size={25} className='text-gray-500'/>
-              <span>Same entry will get added in <b>`{fromBook?.name}`</b></span>
+              <span>Same entry will get added in <b>`{currentBook?.name}`</b></span>
             </p>
             <p
               className='flex items-center space-x-2'
             >
               <RxDotFilled size={25} className='text-gray-500'/>
-              <span>This will change the net balance of <b>`{fromBook?.name}`</b></span>
+              <span>This will change the net balance of <b>`{currentBook?.name}`</b></span>
             </p>
           </div>
           <div
@@ -66,15 +60,15 @@ export default function Entry_Duplicate_Confirm({items,fromBook,toBook, view, se
             </button>
 
             <button
-              onClick={(e) => deleteBook(
-                name,
-                currentBook,
-                router,
-                setLoading,
-                dispatch,
-                removeBook,
-                refresh,
-                setView
+              onClick={(e) => copyEntry(
+                {
+                  to : book._id,
+                  value : items,
+                  setLoading,
+                  setView,
+                  setFirstView,
+                  setConfirmView
+                }
               )}
               className={`px-8 py-3 border rounded bg-[#4863D4] text-white`}
 

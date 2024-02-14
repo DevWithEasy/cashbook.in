@@ -301,6 +301,7 @@ const Entry_Details = ({ id, view, setView }) => {
                     {moveView &&
                         <Entry_Move {...{
                             items : [id],
+                            setFirstView : setView,
                             view: moveView,
                             setView: setMoveView
                         }} />
@@ -308,6 +309,7 @@ const Entry_Details = ({ id, view, setView }) => {
                     {copyView &&
                         <Entry_Duplicate {...{
                             items : [id],
+                            setFirstView : setView,
                             view: copyView,
                             setView: setCopyView
                         }} />
@@ -315,6 +317,7 @@ const Entry_Details = ({ id, view, setView }) => {
                     {oppositeView &&
                         <Entry_Opposite {...{
                             items : [id],
+                            setFirstView : setView,
                             view: oppositeView,
                             setView: setOppositeView
                         }} />
