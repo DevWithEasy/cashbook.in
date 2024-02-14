@@ -93,6 +93,31 @@ export const deleteEntry = async (data) => {
     }
 }
 
+export const deleteEntryMany = async (data) => {
+    const { to, items, setLoading, dispatch, action, setView } = data
+    try {
+        setLoading(true)
+        const res = await axios.put(`/api/transections/deletemany?to=${to}`,
+            { entries: items },
+            {
+                headers: {
+                    "cb-access-token": localStorage.getItem("cb_access_token")
+                }
+            })
+        if (res.data.status === 200) {
+            setLoading(false)
+            notificationOK(res.data.message)
+            items.forEach(id=>{
+                dispatch(action(id))
+            })
+            setView(false)
+        }
+    } catch (err) {
+        setLoading(false)
+        notificationNOT(err.message)
+    }
+}
+
 export const entryDetails = async (data) => {
     const { id, setEntry, setLoading } = data
     try {
@@ -112,11 +137,11 @@ export const entryDetails = async (data) => {
 }
 
 export const moveEntry = async (data) => {
-    const {to, value, setLoading, dispatch, action, setView,setFirstView,setConfirmView } = data
+    const { to, value, setLoading, dispatch, action, setView, setFirstView, setConfirmView } = data
 
     try {
         setLoading(true)
-        const res = await axios.put(`/api/transections/move?to=${to}`, {entries : value}, {
+        const res = await axios.put(`/api/transections/move?to=${to}`, { entries: value }, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -127,7 +152,7 @@ export const moveEntry = async (data) => {
             setView(false)
             setFirstView(false)
             setConfirmView(false)
-            value.forEach(id=>{
+            value.forEach(id => {
                 dispatch(action(id))
             })
         }
@@ -138,11 +163,11 @@ export const moveEntry = async (data) => {
 }
 
 export const copyEntry = async (data) => {
-    const {to, value, setLoading,setView,setFirstView,setConfirmView } = data
+    const { to, value, setLoading, setView, setFirstView, setConfirmView } = data
 
     try {
         setLoading(true)
-        const res = await axios.put(`/api/transections/copy?to=${to}`, {entries : value}, {
+        const res = await axios.put(`/api/transections/copy?to=${to}`, { entries: value }, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -161,11 +186,11 @@ export const copyEntry = async (data) => {
 }
 
 export const oppositeEntry = async (data) => {
-    const {to, value, setLoading, setView,setFirstView,setConfirmView } = data
+    const { to, value, setLoading, setView, setFirstView, setConfirmView } = data
 
     try {
         setLoading(true)
-        const res = await axios.put(`/api/transections/opposite?to=${to}`, {entries : value}, {
+        const res = await axios.put(`/api/transections/opposite?to=${to}`, { entries: value }, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }

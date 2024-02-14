@@ -11,12 +11,12 @@ import { MdDeleteOutline } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { TiInfo } from "react-icons/ti";
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteEntry } from '../../libs/allEntryAction';
+import { deleteEntry, deleteEntryMany } from '../../libs/allEntryAction';
 import { removeEntry } from '../../store/slice/bookSlice';
 
-export default function Entry_Delete({id, view, setView }) {
-  const {entries} = useSelector(state=>state.book)
-  const entry = entries.find(e=>e._id === id)
+export default function Entry_Delete({items, view, setView }) {
+  const {entries,currentBook} = useSelector(state=>state.book)
+  const entry = entries.find(e=>e._id === items[0])
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
   const date = moment(entry?.createdAt).format('DD MMM YYYY')
@@ -78,14 +78,19 @@ export default function Entry_Delete({id, view, setView }) {
                 </div>
               </div>
             </div>
+            <div>
+              <p>Are you sure?</p>
+              <p>You want to delete 2 entries from ‘{currentBook?.name}’</p>
+            </div>
           </ModalBody>
 
           <ModalFooter
             className='border-t space-x-5'
           >
             <button
-              onClick={(e) => deleteEntry({
-                id,
+              onClick={(e) => deleteEntryMany({
+                to : currentBook._id,
+                items,
                 action : removeEntry,
                 dispatch,
                 setLoading,
