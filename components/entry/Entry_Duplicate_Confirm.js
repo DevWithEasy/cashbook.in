@@ -8,7 +8,6 @@ import { RxDotFilled } from 'react-icons/rx';
 import { copyEntry } from '../../libs/allEntryAction';
 
 export default function Entry_Duplicate_Confirm({items,book, view, setView,setFirstView,setConfirmView }) {
-  const { currentBook } = useSelector(state => state.book)
   const [loading, setLoading] = useState(false)
   
   return (
@@ -39,13 +38,13 @@ export default function Entry_Duplicate_Confirm({items,book, view, setView,setFi
               className='flex items-center space-x-2'
             >
               <RxDotFilled size={25} className='text-gray-500'/>
-              <span>Same entry will get added in <b>`{currentBook?.name}`</b></span>
+              <span>Same entry will get added in <b>`{book?.name}`</b></span>
             </p>
             <p
               className='flex items-center space-x-2'
             >
               <RxDotFilled size={25} className='text-gray-500'/>
-              <span>This will change the net balance of <b>`{currentBook?.name}`</b></span>
+              <span>This will change the net balance of <b>`{book?.name}`</b></span>
             </p>
           </div>
           <div

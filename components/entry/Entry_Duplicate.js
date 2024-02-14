@@ -141,8 +141,8 @@ const Entry_Duplicate = ({ items,setFirstView, view, setView }) => {
                     }
                     {confirmView &&
                         <Entry_Duplicate_Confirm {...{
-                            fromBook: currentBook,
-                            toBook : book,
+                            items,
+                            book,
                             view,
                             setView,
                             setFirstView,

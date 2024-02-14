@@ -41,11 +41,12 @@ export const createEntry = async (req, res) => {
 
 export const getEntryDetails = async (req, res) => {
     try {
-        const entry = await Entry.findOne({ "_id": req.query.id })
+        const entry = await Entry.findById(req.query.id)
             .populate('contact','name')
             .populate('category','name')
             .populate('payment','name')
             .populate('user', 'name')
+
         const histories = await History.find({ entry: req.query.id })
         res.status(200).json({
             success: true,

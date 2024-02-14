@@ -1,20 +1,16 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteBook } from '../../libs/allBookAction';
-import { refresh, removeBook } from '../../store/slice/bookSlice';
-import React, { useState } from 'react'
-import Image from 'next/image'
-import opposite from '../../public/image/opposite.png'
+import Image from 'next/image';
+import React, { useState } from 'react';
+import opposite from '../../public/image/opposite.png';
 
 import {
   Modal,
-  ModalOverlay,
   ModalContent,
-} from '@chakra-ui/react'
+  ModalOverlay,
+} from '@chakra-ui/react';
 import { RxDotFilled } from 'react-icons/rx';
 import { oppositeEntry } from '../../libs/allEntryAction';
 
 export default function Entry_Opposite_Confirm({ items, book, view, setView, setFirstView, setConfirmView }) {
-  const { currentBook } = useSelector(state => state.book)
   const [loading, setLoading] = useState(false)
 
   return (
@@ -88,7 +84,7 @@ export default function Entry_Opposite_Confirm({ items, book, view, setView, set
                 className={`px-8 py-3 border rounded bg-[#4863D4] text-white`}
 
               >
-                {loading ? 'Copying...' : 'Yes, Copy & Paste'}
+                {loading ? 'Please Wait' : 'Yes, Copy Opposite'}
               </button>
             </div>
           </div>

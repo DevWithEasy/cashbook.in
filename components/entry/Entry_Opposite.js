@@ -142,8 +142,7 @@ const Entry_Opposite = ({ items,setFirstView, view, setView }) => {
                     {confirmView &&
                         <Entry_Opposite_Confirm {...{
                             items,
-                            fromBook: currentBook,
-                            toBook : book,
+                            book,
                             view,
                             setView,
                             setFirstView,

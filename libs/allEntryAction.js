@@ -142,7 +142,7 @@ export const copyEntry = async (data) => {
 
     try {
         setLoading(true)
-        const res = await axios.put(`/api/transections/move?to=${to}`, {entries : value}, {
+        const res = await axios.put(`/api/transections/copy?to=${to}`, {entries : value}, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -161,11 +161,11 @@ export const copyEntry = async (data) => {
 }
 
 export const oppositeEntry = async (data) => {
-    const {from,to, value, setLoading, dispatch, action, setView,setFirstView,setConfirmView } = data
+    const {to, value, setLoading, setView,setFirstView,setConfirmView } = data
 
     try {
         setLoading(true)
-        const res = await axios.put(`/api/transections/move?from=${from}&to=${to}`, {entries : value}, {
+        const res = await axios.put(`/api/transections/opposite?to=${to}`, {entries : value}, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -176,9 +176,6 @@ export const oppositeEntry = async (data) => {
             setView(false)
             setFirstView(false)
             setConfirmView(false)
-            value.forEach(id=>{
-                dispatch(action(id))
-            })
         }
     } catch (err) {
         setLoading(false)
