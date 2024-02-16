@@ -9,7 +9,7 @@ import { IoMdArrowRoundForward } from 'react-icons/io';
 import { MdRadioButtonChecked, MdRadioButtonUnchecked } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
 import { moveBook } from '../../libs/allBookAction';
-import { renameBook } from '../../store/slice/bookSlice';
+import { refresh, removeBook, renameBook } from '../../store/slice/bookSlice';
 import { Business_Add } from '../Index';
 
 const Book_Move = ({ id,view, setView }) => {
@@ -129,6 +129,7 @@ const Book_Move = ({ id,view, setView }) => {
                                 id,
                                 to : business?._id,
                                 action : renameBook,
+                                refresh,
                                 dispatch,
                                 setLoading,
                                 setView

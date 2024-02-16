@@ -7,13 +7,16 @@ import { MdBook } from "react-icons/md";
 import { useSelector,useDispatch } from 'react-redux';
 import { addCurrentBusiness } from '../store/slice/bookSlice';
 import { Business_Add, Header } from './Index';
+import BusinessManager from '../utils/BusinessManager';
 
 const UserLayout = ({ path, children }) => {
     const dispatch = useDispatch()
-    const { businesses, currentBusiness } = useSelector(state => state.book)
-    const { isAuth } = useSelector(state => state.auth)
+    const {books, businesses, currentBusiness } = useSelector(state => state.book)
+    const { isAuth,user } = useSelector(state => state.auth)
     const router = useRouter()
     const [view, setView] = useState(false)
+
+    const businessManager = new BusinessManager(user,books, businesses, currentBusiness)
 
     if(!isAuth) {
         router.push('/signin')
@@ -23,6 +26,7 @@ const UserLayout = ({ path, children }) => {
         router.push(`/business/${business?._id}/cashbooks`)
         dispatch(addCurrentBusiness(business))
     }
+
     return (
         <div
             className='h-screen overflow-hidden'
@@ -69,7 +73,9 @@ const UserLayout = ({ path, children }) => {
                                         </p>
                                         <div>
                                             <p className='text-sm'>{business?.name}</p>
-                                            <p className='text-xs'>Role : Owner - 6 Book</p>
+                                            <p className='text-xs'>
+                                                Role : {businessManager.getRole(business)} - {businessManager.totalBook(business)} Book
+                                            </p>
                                         </div>
                                     </div>
                                     {business?._id === currentBusiness?._id &&

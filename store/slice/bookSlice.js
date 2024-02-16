@@ -49,13 +49,10 @@ const bookSlice = createSlice({
             state.currentBook = {}
         },
         renameBook: (state, action) => {
-            console.log(state.books)
             state.books = state.books.map(book => book._id === action.payload._id ? action.payload : book)
-            console.log(action.payload)
         },
         addEntries: (state, action) => {
             state.entries = action.payload
-
         },
         addEntry: (state, action) => {
             state.entries = [...state.entries,action.payload]

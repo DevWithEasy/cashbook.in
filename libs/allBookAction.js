@@ -90,7 +90,7 @@ export const deleteBook = async (name, book, router, setLoading, dispatch, actio
 }
 
 export const moveBook = async (data) => {
-    const {id, to, setLoading, dispatch, action, setView} = data
+    const {id, to, setLoading, dispatch, action,refresh, setView} = data
     try {
         setLoading(true)
         const res = await axios.put(`/api/book/move?id=${id}&to=${to}`, {},{
@@ -99,7 +99,9 @@ export const moveBook = async (data) => {
             }
         })
         if (res.data.status === 200) {
+            console.log(res.data.data)
             setLoading(false)
+            dispatch(refresh())
             dispatch(action(res.data.data))
             setView(false)
         }
