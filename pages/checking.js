@@ -23,6 +23,7 @@ const Checking = () => {
 
                 const { businessId } = res.data
                 const { user, businesses, books } = res.data.data
+                
 
                 dispatch(addBusinesses(businesses))
                 dispatch(addBooks(books))
