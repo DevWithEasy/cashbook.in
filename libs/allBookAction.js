@@ -111,3 +111,25 @@ export const moveBook = async (data) => {
         notificationNOT(err.message)
     }
 }
+
+export const copyBook = async (data) => {
+    const {id, values, setLoading, dispatch, action,refresh, setView} = data
+    try {
+        setLoading(true)
+        const res = await axios.put(`/api/book/copy?id=${id}`, {values},{
+            headers: {
+                "cb-access-token": localStorage.getItem("cb_access_token")
+            }
+        })
+        if (res.data.status === 200) {
+            setLoading(false)
+            // dispatch(refresh())
+            // dispatch(action(res.data.data))
+            // setView(false)
+        }
+    } catch (err) {
+        console.log(err)
+        setLoading(false)
+        notificationNOT(err.message)
+    }
+}

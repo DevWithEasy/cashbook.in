@@ -5,10 +5,14 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { MdCheckBox, MdCheckBoxOutlineBlank, MdInfo } from "react-icons/md";
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
+import { copyBook } from '../../libs/allBookAction';
+import { addBook, refresh } from '../../store/slice/bookSlice';
 
 const Book_Duplicate = ({id, view, setView }) => {
+    const dispatch = useDispatch()
     const {currentBusiness} = useSelector(state=>state.book)
+    const [loading,setLoading] = useState(false)
     const [name,setName] = useState('')
 
     const [steps, setSteps] = useState([
@@ -46,7 +50,7 @@ const Book_Duplicate = ({id, view, setView }) => {
             setSteps([...steps, i])
         }
     }
-
+    
     return (
         <>
             <Drawer
@@ -148,14 +152,26 @@ const Book_Duplicate = ({id, view, setView }) => {
                     >
                         <button
                             onClick={() => setView(!view)}
-                            className='px-6 py-2 bg-gray-200 rounded'
+                            className='px-6 py-3 bg-gray-200 rounded'
                         >
                             Cancel
                         </button>
                         <button
-                            className='px-6 py-2 bg-[#4863D4] text-white rounded'
+                            onClick={()=>copyBook({
+                                id,
+                                values :{
+                                    name,
+                                    fields : steps
+                                },
+                                action : addBook,
+                                setLoading,
+                                dispatch,
+                                refresh,
+                                setView
+                            })}
+                            className='px-6 py-3 bg-[#4863D4] text-white rounded'
                         >
-                            Add New Book
+                            {loading ? 'Copying' : 'Add New Book'}
                         </button>
                     </div>
                 </DrawerContent>
