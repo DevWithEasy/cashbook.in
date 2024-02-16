@@ -94,10 +94,10 @@ export const deleteEntry = async (data) => {
 }
 
 export const deleteEntryMany = async (data) => {
-    const { to, items, setLoading, dispatch, action, setView } = data
+    const { items, setLoading, dispatch, action, setView } = data
     try {
         setLoading(true)
-        const res = await axios.put(`/api/transections/deletemany?to=${to}`,
+        const res = await axios.put(`/api/transections/deletemany`,
             { entries: items },
             {
                 headers: {

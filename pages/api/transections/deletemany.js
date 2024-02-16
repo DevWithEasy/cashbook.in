@@ -6,7 +6,6 @@ import authentication from "../../../utils/authentication"
 async function handler(req, res) {
     initDatabase()
     try {
-        console.log(req.body)
         await Promise.all(
             req.body.entries.map(async (id) => {
 
