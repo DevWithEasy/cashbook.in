@@ -57,6 +57,7 @@ const Transactions = () => {
     }
 
     const getTransections = async (id) => {
+        dispatch(addEntries([]))
         setLoading(true)
         try {
             const res = await axios.get(`/api/transections/all/${id}`, {
