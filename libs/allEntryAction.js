@@ -107,7 +107,7 @@ export const deleteEntryMany = async (data) => {
         if (res.data.status === 200) {
             setLoading(false)
             notificationOK(res.data.message)
-            items.forEach(id=>{
+            items.forEach(id => {
                 dispatch(action(id))
             })
             setView(false)
@@ -203,6 +203,33 @@ export const oppositeEntry = async (data) => {
             setConfirmView(false)
         }
     } catch (err) {
+        setLoading(false)
+        notificationNOT(err.message)
+    }
+}
+
+export const ccpUpdateEntry = async (data) => {
+    const { field, id, items, dispatch, action, setLoading, setView, setFirstView } = data
+
+    try {
+        setLoading(true)
+        const res = await axios.put(`/api/transections/ccp_update?field=${field}&f_id=${id}`, { entries: items }, {
+            headers: {
+                "cb-access-token": localStorage.getItem("cb_access_token")
+            }
+        })
+        if (res.data.status === 200) {
+            const {message,data} = res.data
+            setLoading(false)
+            notificationOK(res.data.message)
+            data.forEach(entry=>{
+                dispatch(action(entry))
+            })
+            setView(false)
+            setFirstView(false)
+        }
+    } catch (err) {
+        console.log(err)
         setLoading(false)
         notificationNOT(err.message)
     }

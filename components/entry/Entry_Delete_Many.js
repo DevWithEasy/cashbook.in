@@ -11,10 +11,10 @@ import { MdDeleteOutline } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { TiInfo } from "react-icons/ti";
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteEntry, deleteEntryMany } from '../../libs/allEntryAction';
+import { deleteEntryMany } from '../../libs/allEntryAction';
 import { removeEntry } from '../../store/slice/bookSlice';
 
-export default function Entry_Delete({items, view, setView }) {
+export default function Entry_Delete_Many({items, view, setView }) {
   const {entries,currentBook} = useSelector(state=>state.book)
   const entry = entries.find(e=>e._id === items[0])
   const dispatch = useDispatch()

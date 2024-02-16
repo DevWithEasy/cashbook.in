@@ -17,7 +17,7 @@ const Transections_Tbody_Tr = ({ entry, menuId, setMenuId, selected, setSelected
             setSelected([...selected,entry?._id])
         }
     }
-    console.log(selected)
+    
     return (
         <tr
             onMouseEnter={() => setMenuId(entry?._id)}

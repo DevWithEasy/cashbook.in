@@ -1,8 +1,8 @@
 import React from 'react';
 import { MdDeleteOutline, MdOutlineCheckBox, MdOutlineCheckBoxOutlineBlank } from 'react-icons/md';
-import {Transections_TheadAction_Change,Transections_TheadAction_MoveCopy} from '../Index';
+import { Transections_TheadAction_Change, Transections_TheadAction_MoveCopy } from '../Index';
 
-const Transections_TheadAction = ({ selected, handleSelectAll,copyView, setCopyView,moveView, setMoveView,oppositeView, setOppositeView,categoryView, setCategoryView,paymentView, setPaymentView,contactView, setContactView }) => {
+const Transections_TheadAction = ({ selected, handleSelectAll, copyView, setCopyView, moveView, setMoveView, oppositeView, setOppositeView, categoryView, setCategoryView, paymentView, setPaymentView, contactView, setContactView, deleteManyView, setDeleteManyView }) => {
     return (
         <thead
             className='text-sm h-12'
@@ -38,6 +38,7 @@ const Transections_TheadAction = ({ selected, handleSelectAll,copyView, setCopyV
                         <span className='text-[#4863D4]'>|</span>
 
                         <button
+                            onClick={() => setDeleteManyView(!deleteManyView)}
                             className='px-2 py-0.5 flex items-center space-x-2 hover:bg-[#e7ebff] rounded'
                         >
                             <MdDeleteOutline
@@ -49,11 +50,11 @@ const Transections_TheadAction = ({ selected, handleSelectAll,copyView, setCopyV
 
                         <span className='text-[#4863D4]'>|</span>
 
-                        <Transections_TheadAction_MoveCopy {...{copyView, setCopyView,moveView, setMoveView,oppositeView, setOppositeView}} />
+                        <Transections_TheadAction_MoveCopy {...{ copyView, setCopyView, moveView, setMoveView, oppositeView, setOppositeView }} />
 
                         <span className='text-[#4863D4]'>|</span>
 
-                        <Transections_TheadAction_Change {...{categoryView, setCategoryView,paymentView, setPaymentView,contactView, setContactView }} />
+                        <Transections_TheadAction_Change {...{ categoryView, setCategoryView, paymentView, setPaymentView, contactView, setContactView }} />
                     </div>
                 </td>
             </tr>
