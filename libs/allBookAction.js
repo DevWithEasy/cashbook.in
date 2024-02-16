@@ -88,3 +88,24 @@ export const deleteBook = async (name, book, router, setLoading, dispatch, actio
         notificationNOT(err.message)
     }
 }
+
+export const moveBook = async (data) => {
+    const {id, to, setLoading, dispatch, action, setView} = data
+    try {
+        setLoading(true)
+        const res = await axios.put(`/api/book/move?id=${id}&to=${to}`, {},{
+            headers: {
+                "cb-access-token": localStorage.getItem("cb_access_token")
+            }
+        })
+        if (res.data.status === 200) {
+            setLoading(false)
+            dispatch(action(res.data.data))
+            setView(false)
+        }
+    } catch (err) {
+        console.log(err)
+        setLoading(false)
+        notificationNOT(err.message)
+    }
+}

@@ -73,7 +73,7 @@ const Entry_Move = ({ items,setFirstView, view, setView }) => {
                                                 <p className='text-sm text-gray-500'>
                                                     <span>Created on : {moment(b?.createdAt).fromNow()}</span>
                                                     <span> | </span>
-                                                    <span>{book?.members?.length + 1} Members</span>
+                                                    <span>{b?.members?.length + 1} Members</span>
                                                 </p>
                                             </div>
                                         </div>

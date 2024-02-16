@@ -46,7 +46,8 @@ export const createBusiness = async(req,res)=>{
         res.status(200).json({
             success : true,
             status:200,
-            data : business
+            data : business,
+            message : 'Business created successfully'
         })
     } catch (err) {
         res.status(500).json({

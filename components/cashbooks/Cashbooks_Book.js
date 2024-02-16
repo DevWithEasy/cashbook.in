@@ -49,14 +49,18 @@ const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDu
                     </div>
                 </div>
                 {!menu ?
-                    <p className='w-1/2 text-right text-[#21B15E]'>{book?.stock}</p>
+                    <p 
+                        className={`w-1/2 text-right ${book?.stock < 0 ? 'text-red-500' : 'text-[#21B15E]'}`}
+                    >
+                        {book?.stock}
+                    </p>
                     :
                     <div
                         onMouseOver={() => setMenu(true)}
                         onMouseOut={() => setMenu(false)}
                         className='absolute right-0 w-1/2 p-4 flex justify-end items-center space-x-4 '
                     >
-                        <p className='text-[#21B15E]'>{book?.stock}</p>
+                        <p className={`${book?.stock < 0 ? 'text-red-500' : 'text-[#21B15E]'}`}>{book?.stock}</p>
                         <button
                             className='relative group'
                         >

@@ -5,8 +5,12 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { MdCheckBox, MdCheckBoxOutlineBlank, MdInfo } from "react-icons/md";
+import { useSelector } from 'react-redux';
 
-const Book_Duplicate = ({ view, setView }) => {
+const Book_Duplicate = ({id, view, setView }) => {
+    const {currentBusiness} = useSelector(state=>state.book)
+    const [name,setName] = useState('')
+
     const [steps, setSteps] = useState([
         'members',
         'category',
@@ -74,7 +78,7 @@ const Book_Duplicate = ({ view, setView }) => {
                             <p
                                 className='text-sm'
                             >
-                                Create new book with same settings as Robbani
+                                Create new book with same settings as {currentBusiness?.name}
                             </p>
                         </div>
                     </div>
@@ -93,6 +97,7 @@ const Book_Duplicate = ({ view, setView }) => {
                                 className='block text-sm'
                             >Enter new book name</label>
                             <input
+                                onChange={(e)=>setName(e.target.value)}
                                 placeholder='Enter New Book Name'
                                 className='w-full p-2 border rounded focus:outline-[#4863D4]'
                             />

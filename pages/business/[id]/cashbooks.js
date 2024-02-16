@@ -92,12 +92,14 @@ const Cashbooks = () => {
                     }
                     {duplicateView &&
                         <Book_Duplicate {...{
+                            id,
                             view: duplicateView,
                             setView: setDuplicateView
                         }} />
                     }
                     {moveView &&
                         <Book_Move {...{
+                            id,
                             view: moveView,
                             setView: setMoveView
                         }} />
