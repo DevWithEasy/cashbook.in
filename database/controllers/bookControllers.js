@@ -6,6 +6,33 @@ import Payment from "../model/Payment"
 export const getBooks = async(req,res)=>{
     try {
         const books = await Book.find({"business" : req.query.id})
+        
+        // books.forEach(async(book)=>{
+        //     const results = await Entry.aggregate([
+        //         {
+        //             $match : {
+        //                 book : book._id
+        //             }
+        //         },
+        //         {
+        //             $group : {
+        //                 _id : '$entryType',
+        //                 total : {
+        //                     $sum : '$amount'
+        //                 }
+        //             }
+        //         },
+        //         {
+        //             $project: {
+        //                 _id: 0,
+        //                 entryType: "$_id",
+        //                 totalAmount: 1
+        //             }
+        //         }
+        //     ])
+        //     console.log(results)
+        // })
+
         res.status(200).json({
             success : true,
             status:200,
