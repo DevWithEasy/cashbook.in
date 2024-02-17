@@ -1,13 +1,17 @@
 import axios from "axios";
-import { signInWithPopup,linkWithPopup} from "firebase/auth";
+import { signInWithPopup} from "firebase/auth";
 import { auth, facebookProvider, googleProvider } from "../utils/firebase";
 import { notificationNOT, notificationOK } from "../utils/toastNotification";
 export async function googleSignIn(router,dispatch,action) {
     try {
         signInWithPopup(auth,googleProvider)
         .then(async function(result){
+            console.log(result.user)
+
             const {displayName,email,photoURL} = result.user;
+            
             const res = await axios.post('/api/user/social/google',{name:displayName,email,url:photoURL})
+
             if(res.data.data){
                 localStorage.setItem('cb_access_token',res.data.token)
                 dispatch(action(res.data.data))
@@ -17,6 +21,7 @@ export async function googleSignIn(router,dispatch,action) {
         })
         .catch(function(error){
             console.log(error)
+            notificationNOT(error.message)
         });
     } catch (error) {
         console.log(error)

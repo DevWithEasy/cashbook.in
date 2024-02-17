@@ -1,6 +1,5 @@
 import initDatabase from "../../../database/initDatabase"
 import Book from "../../../database/model/Book"
-import Entry from "../../../database/model/Entry"
 import authentication from "../../../utils/authentication"
 
 async function handler(req, res) {

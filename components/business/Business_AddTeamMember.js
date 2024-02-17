@@ -7,12 +7,16 @@ import React, { useState } from 'react';
 import { IoMdArrowBack } from "react-icons/io";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
+import axios from 'axios'
 
 
 const Business_AddTeamMember = ({ view, setView }) => {
     const [nextStep, setNextStep] = useState(false)
     const [emailView, setEmailView] = useState(false)
     const [active, setActive] = useState('staff')
+    const [email, setEmail] = useState('')
+    const [loading,setLoading] = useState(false)
+    const [isUser,setIsUser] = useState(false)
 
     const partnerTopics = [
         {
@@ -48,6 +52,19 @@ const Business_AddTeamMember = ({ view, setView }) => {
             ]
         }
     ]
+
+    const handleVerify=async()=>{
+        setLoading(!loading)
+        try {
+            const res = await axios.post(`/api/business/member-verify?email = ${email}`)
+
+            if(res.data.success){
+                
+            }
+        } catch (error) {
+            setLoading(!loading)
+        }
+    }
 
     return (
         <>
@@ -135,6 +152,7 @@ const Business_AddTeamMember = ({ view, setView }) => {
                                         <label className='block text-sm'>Add Email</label>
                                         <input
                                             type='email'
+                                            onChange={(e) => setEmail(e.target.value)}
                                             placeholder='eg - xyz123@gmail.com'
                                             className='w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 ring-[#4863D4]'
                                         />

@@ -11,7 +11,6 @@ const userSchema = mongoose.Schema({
     },
     number:{
         type:String,
-        unique:true,
         default : ''
     },
     image:{
