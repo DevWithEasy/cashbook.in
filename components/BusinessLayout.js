@@ -46,7 +46,7 @@ const BusinessLayout = ({path,children}) => {
                         sidebars.map((topic,i)=>
                         <div
                             key={i}
-                            onClick={()=>router.push(`/business/businessId/business-settings/${topic.path}`)}
+                            onClick={()=>router.push(`/business/${currentBusiness?._id}/business-settings/${topic.path}`)}
                             className='py-3 pr-3 border-b'
                         >
                             <div

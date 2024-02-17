@@ -8,15 +8,21 @@ import { IoMdArrowBack } from "react-icons/io";
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 import axios from 'axios'
+import Business_AddMemberSuccess from './Business_AddMemberSuccess';
+import {useSelector} from 'react-redux'
+import { notificationNOT, notificationOK } from '../../utils/toastNotification';
 
 
 const Business_AddTeamMember = ({ view, setView }) => {
+    const {currentBusiness} = useSelector(state=>state.book)
     const [nextStep, setNextStep] = useState(false)
     const [emailView, setEmailView] = useState(false)
     const [active, setActive] = useState('staff')
     const [email, setEmail] = useState('')
-    const [loading,setLoading] = useState(false)
-    const [isUser,setIsUser] = useState(false)
+    const [loading, setLoading] = useState(false)
+    const [isUser, setIsUser] = useState(false)
+    const [user, setUser] = useState({})
+    const [success, setSuccess] = useState(false)
 
     const partnerTopics = [
         {
@@ -53,16 +59,48 @@ const Business_AddTeamMember = ({ view, setView }) => {
         }
     ]
 
-    const handleVerify=async()=>{
-        setLoading(!loading)
+    const handleVerify = async () => {
+        setLoading(true)
         try {
-            const res = await axios.post(`/api/business/member-verify?email = ${email}`)
+            const res = await axios.post(`/api/business/member-verify?email=${email}`, {}, {
+                headers: {
+                    "cb-access-token": localStorage.getItem("cb_access_token")
+                }
+            })
 
-            if(res.data.success){
-                
+            if (res.data.success) {
+                setIsUser(res.data.find)
+                setNextStep(true)
+                setUser(res.data.data)
+                setLoading(false)
             }
         } catch (error) {
-            setLoading(!loading)
+            setLoading(false)
+        }
+    }
+
+    const addMemberConfirm = async () => {
+        setLoading(true)
+        try {
+            const res = await axios.post(`/api/business/member-confirm?email=${email}&role=${active}&business=${currentBusiness._id}`, {}, {
+                headers: {
+                    "cb-access-token": localStorage.getItem("cb_access_token")
+                }
+            })
+
+            if (res.data.success) {
+                setLoading(false)
+                notificationOK(res.data.message)
+            }
+
+            if (!res.data.invite) {
+                setSuccess(true)
+            }
+
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+            notificationNOT(error.message)
         }
     }
 
@@ -154,7 +192,7 @@ const Business_AddTeamMember = ({ view, setView }) => {
                                             type='email'
                                             onChange={(e) => setEmail(e.target.value)}
                                             placeholder='eg - xyz123@gmail.com'
-                                            className='w-full px-4 py-2 border rounded focus:outline-none focus:ring-2 ring-[#4863D4]'
+                                            className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                                         />
                                     </div>
                                 }
@@ -164,7 +202,11 @@ const Business_AddTeamMember = ({ view, setView }) => {
                                 className='space-y-5'
                             >
                                 <p>
-                                    robiulawal69@gmail.com is a new user. Send invite to robiulawal69@gmail.com to join this business
+                                    {isUser ?
+                                        `${user?.name} is already using CashBook app. Choose their role in this business and add`
+                                        :
+                                        `${email} is a new user. Send invite to ${email} to join this business`
+                                    }
                                 </p>
                                 <div
                                     className='p-4 flex justify-between items-center space-x-2 border rounded'
@@ -173,19 +215,25 @@ const Business_AddTeamMember = ({ view, setView }) => {
                                         className='h-10 w-10 flex justify-center items-center text-xl bg-[#eee6ed] text-[#5a0f4c] rounded-full'
                                     >
                                         <span>
-                                            {'robiulawal69@gmail.com'.toLocaleUpperCase().split('')[0]}
+                                            {email.toLocaleUpperCase().split('')[0]}
                                         </span>
                                     </div>
                                     <div
                                         className=''
                                     >
-                                        <p className=''>robiulawal69@gmail.com</p>
-                                        <p className='text-sm text-gray-500'>robiulawal69@gmail.com</p>
+                                        <p className=''>
+                                            {isUser ? user?.name : email}
+                                        </p>
+                                        <p className='text-sm text-gray-500'>{email}</p>
                                     </div>
                                     <div
-                                        className='px-4 py-1 flex justify-center items-center text-xs bg-gray-100 text-gray-500 rounded no-wrap'
+                                        className={`px-4 py-1 flex justify-center items-center text-xs rounded no-wrap ${isUser ? 'bg-[#EDEFFB] text-[#4863D4]' : 'bg-gray-100 text-gray-500'}`}
                                     >
-                                        Not a Cashbook User
+                                        {isUser ?
+                                            'Cashbook User'
+                                            :
+                                            'Not a Cashbook User'
+                                        }
                                     </div>
                                 </div>
                                 <div
@@ -221,7 +269,9 @@ const Business_AddTeamMember = ({ view, setView }) => {
                                             {
                                                 (active == 'partner' ? partnerTopics : stuffTopics)
                                                     .map((cat, i) =>
-                                                        <>
+                                                        <div
+                                                            key={i}
+                                                        >
                                                             {cat?.roles?.length > 0 &&
                                                                 <div
                                                                     key={i}
@@ -257,7 +307,7 @@ const Business_AddTeamMember = ({ view, setView }) => {
                                                                     </div>
                                                                 </div>
                                                             }
-                                                        </>
+                                                        </div>
                                                     )
                                             }
                                         </div>
@@ -285,11 +335,11 @@ const Business_AddTeamMember = ({ view, setView }) => {
                                     </button>
                                 }
                                 <button
-                                    onClick={(e) => setNextStep(!nextStep)}
+                                    onClick={handleVerify}
                                     className='flex items-center space-x-2  px-8 py-3 border bg-[#4863D4] text-white rounded'
 
                                 >
-                                    Next
+                                    {loading ? 'Verifying' : 'Next'}
                                 </button>
                             </div>
                             :
@@ -304,15 +354,25 @@ const Business_AddTeamMember = ({ view, setView }) => {
                                     <span>Change Email</span>
                                 </button>
                                 <button
-                                    onClick={(e) => setNextStep(!nextStep)}
+                                    onClick={addMemberConfirm}
                                     className='flex items-center space-x-2  px-8 py-3 border bg-[#4863D4] text-white rounded'
 
                                 >
-                                    <span>Invite as</span>
+                                    {loading ?
+                                        <span>Addeding...</span>
+                                        :
+                                        <span>{isUser ? 'Add as' : 'Invite as'} {active}</span>
+                                    }
                                 </button>
                             </div>
                         }
                     </div>
+                    {success &&
+                        <Business_AddMemberSuccess {...{
+                            view: success,
+                            setView: setSuccess
+                        }} />
+                    }
                 </DrawerContent>
             </Drawer>
         </>

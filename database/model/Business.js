@@ -29,8 +29,13 @@ const businessSchema = mongoose.Schema({
     teams: {
         type : [
             {
-                type: mongoose.Types.ObjectId,
-                ref: 'User'
+                role  : {
+                    type: String,
+                },
+                user  : {
+                    type: mongoose.Types.ObjectId,
+                    ref: 'User'
+                }
             }
         ],
         default : []

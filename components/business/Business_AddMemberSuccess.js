@@ -38,14 +38,14 @@ export default function Business_AddMemberSuccess({ view, setView }) {
           </div>
 
           <div
-            className='px-6 pt-3 pb-10 space-y-1'
+            className='px-6 pt-3 pb-10 flex flex-col justify-center items-center space-y-5'
           >
             <IoCheckmarkOutline size={60}
               className='p-4 bg-[#21B15E] text-white rounded-full' />
               <p className='w-full text-center text-2xl font-semibold'>
               Robiul Awal added as staff!
               </p>
-              <p className='w-full text-center text-gray-500 font-semibold'>
+              <p className='w-full text-center text-gray-500'>
               Your new team count is 2. You can add Robiul Awal to books of this business
               </p>
           </div>
