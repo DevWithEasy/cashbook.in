@@ -5,23 +5,52 @@ import {
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { deleteEntry } from '../../libs/allEntryAction';
-import { removeEntry } from '../../store/slice/bookSlice';
 import { IoIosArrowDown, IoIosArrowUp, IoMdCheckmarkCircle } from 'react-icons/io';
 import Image from 'next/image';
 import { categories, types } from '../../public/image/bussiness/business_data';
+import axios from 'axios'
+import { updateBusiness } from '../../store/slice/bookSlice';
+import { notificationNOT, notificationOK } from '../../utils/toastNotification';
 
-export default function Business_Update({ id, view, setView }) {
+export default function Business_Update({view, setView }) {
     const { currentBusiness } = useSelector(state => state.book)
-    const [business, setBusiness] = useState(currentBusiness)
     const dispatch = useDispatch()
+    const [name, setName] = useState(currentBusiness?.name)
+    const [address, setAddress] = useState(currentBusiness?.address)
+    const [stuffs, setStuffs] = useState(currentBusiness?.stuffs)
+    const [email, setEmail] = useState(currentBusiness?.email)
+    const [phone, setPhone] = useState(currentBusiness?.phone)
+    const [categoryView, setCategoryView] = useState(false)
+    const [typeView, setTypeView] = useState(false)
+    const [category, setCategory] = useState(categories.find(cat => cat.id === currentBusiness?.category))
+    const [type, setType] = useState(types.find(cat => cat.id === currentBusiness?.type))
     const [loading, setLoading] = useState(false)
-    const [categoryView, setCategoryView] = useState('')
-    const [typeView, setTypeView] = useState('')
-    const [category, setCategory] = useState(categories.find(cat=>cat.id === business?.category))
-    const [type, setType] = useState(types.find(cat=>cat.id === business?.type))
 
-    console.log(business)
+    const handleBusinessUpdate = async () => {
+        setLoading(true)
+        try {
+            const res = await axios.put(`/api/business?id=${currentBusiness._id}`,
+                { name, address, phone, email, stuffs, category: category.id, type: type.id },
+                {
+                    headers: {
+                        "cb-access-token": localStorage.getItem("cb_access_token")
+                    }
+                }
+            )
+            if(res.data.success){
+                setLoading(false)
+                setView(false)
+                dispatch(updateBusiness(res.data.data))
+                notificationOK(res.data.message)
+            }
+            
+        } catch (error) {
+            console.log(error)
+            setLoading(false)
+            notificationNOT(error.message)
+        }
+    }
+
     return (
         <>
             <Modal
@@ -38,7 +67,7 @@ export default function Business_Update({ id, view, setView }) {
                         <div
                             className='h-16 px-6 py-4 flex justify-between items-center border-b'
                         >
-                            <p className='text-xl'>Leave Business</p>
+                            <p className='text-xl'>Update Business</p>
                             <button
                                 onClick={() => setView(!view)}
                                 className='px-4 py-1 border rounded'
@@ -53,7 +82,7 @@ export default function Business_Update({ id, view, setView }) {
                                 <div className="space-y-1">
                                     <label className="text-sm text-gray-500">Business Name</label>
                                     <input
-                                        value={business?.name}
+                                        value={name}
                                         onChange={(e) => { setName(e.target.value) }}
                                         className="w-full p-2 rounded border focus:outline-[#4863D4]"
                                     />
@@ -61,8 +90,8 @@ export default function Business_Update({ id, view, setView }) {
                                 <div className="space-y-1">
                                     <label className="text-sm text-gray-500">Business Address</label>
                                     <input
-                                        value={business?.address}
-                                        onChange={(e) => { setName(e.target.value) }}
+                                        value={address}
+                                        onChange={(e) => { setAddress(e.target.value) }}
                                         className="w-full p-2 rounded border focus:outline-[#4863D4]"
                                     />
                                 </div>
@@ -70,8 +99,24 @@ export default function Business_Update({ id, view, setView }) {
                                     <label className="text-sm text-gray-500">Business Staff</label>
                                     <input
                                         type='number'
-                                        value={business?.stuffs}
-                                        onChange={(e) => { setName(e.target.value) }}
+                                        value={stuffs}
+                                        onChange={(e) => { setStuffs(e.target.value) }}
+                                        className="w-full p-2 rounded border focus:outline-[#4863D4]"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-sm text-gray-500">Business Email</label>
+                                    <input
+                                        value={email}
+                                        onChange={(e) => { setEmail(e.target.value) }}
+                                        className="w-full p-2 rounded border focus:outline-[#4863D4]"
+                                    />
+                                </div>
+                                <div className="space-y-1">
+                                    <label className="text-sm text-gray-500">Business Phone</label>
+                                    <input
+                                        value={phone}
+                                        onChange={(e) => { setPhone(e.target.value) }}
                                         className="w-full p-2 rounded border focus:outline-[#4863D4]"
                                     />
                                 </div>
@@ -213,27 +258,20 @@ export default function Business_Update({ id, view, setView }) {
                         <div
                             className='h-20 px-6 flex justify-end items-center border-t space-x-5'
                         >
-
                             <button
                                 onClick={(e) => setView(!view)}
-                                className='px-6 py-3 border bg-[#4863D4] text-white rounded'
+                                className='px-6 py-3 border text-[#4863D4] rounded'
 
                             >
                                 <span>Cancel</span>
                             </button>
 
                             <button
-                                onClick={(e) => deleteEntry({
-                                    id,
-                                    action: removeEntry,
-                                    dispatch,
-                                    setLoading,
-                                    setView
-                                })}
-                                className='px-6 py-3 border bg-[#C93B3B] text-white rounded'
+                                onClick={handleBusinessUpdate}
+                                className='px-6 py-3 border bg-[#4863D4] text-white rounded'
 
                             >
-                                <span>{loading ? 'Leaveing...' : 'Leave'}</span>
+                                <span>{loading ? 'Saving...' : 'Save Change'}</span>
                             </button>
                         </div>
                     </div>

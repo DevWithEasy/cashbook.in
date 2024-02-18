@@ -5,12 +5,17 @@ import { BsBuildings } from "react-icons/bs";
 import { TiInfo } from "react-icons/ti";
 import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { useRouter } from 'next/router';
+import { useSelector } from 'react-redux';
+import {categories,types} from '../../../../public/image/bussiness/business_data'
 
 const profile = () => {
+    const { currentBusiness } = useSelector(state => state.book)
     const router = useRouter()
     const {pathname} = router
     const path = pathname.split('/').pop()
     const [view,setView] = useState(false)
+    const category = categories.find(cat => cat.id === currentBusiness?.category)
+    const type = types.find(cat => cat.id === currentBusiness?.type)
     return (
         <UserLayout  {...{path}}>
             <BusinessLayout {...{path}}>
@@ -73,25 +78,31 @@ const profile = () => {
                         </TabList>
 
                         <TabPanels>
-                            <TabPanel>
+                            <TabPanel
+                                className='space-y-3'
+                            >
                                 <p className='text-sm text-gray-500'>Business Name</p>
-                                <p>-</p>
+                                <p>{currentBusiness?.name ?  currentBusiness?.name : '-'}</p>
                                 <p className='text-sm text-gray-500'>Business Address</p>
-                                <p>-</p>
+                                <p>{currentBusiness?.address ?  currentBusiness?.address : '-'}</p>
                                 <p className='text-sm text-gray-500'>Staff Size</p>
-                                <p>-</p>
+                                <p>{currentBusiness?.stuffs ?  currentBusiness?.stuffs : '-'}</p>
                             </TabPanel>
-                            <TabPanel>
+                            <TabPanel
+                                className='space-y-3'
+                            >
                                 <p className='text-sm text-gray-500'>Business Category</p>
-                                <p>-</p>
+                                <p>{currentBusiness?.category ?  category?.name : '-'}</p>
                                 <p className='text-sm text-gray-500'>Business Subcategory</p>
-                                <p>-</p>
+                                <p>{currentBusiness?.type ?  type?.name : '-'}</p>
                             </TabPanel>
-                            <TabPanel>
+                            <TabPanel
+                                className='space-y-3'
+                            >
                                 <p className='text-sm text-gray-500'>Business Mobile Number</p>
-                                <p>-</p>
+                                <p>{currentBusiness?.phone ?  currentBusiness?.phone : '-'}</p>
                                 <p className='text-sm text-gray-500'>Business Email</p>
-                                <p>-</p>
+                                <p>{currentBusiness?.email ?  currentBusiness?.email : '-'}</p>
                             </TabPanel>
                         </TabPanels>
                     </Tabs>

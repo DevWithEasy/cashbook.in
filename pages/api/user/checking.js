@@ -25,10 +25,6 @@ async function handler(req, res) {
             }
         })
 
-
-
-        console.log(businesses)
-
         const books = await Book.find({ user: id })
 
         const booksWithTotals = await Promise.all(books.map(async (book) => {

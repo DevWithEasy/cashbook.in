@@ -26,6 +26,9 @@ const bookSlice = createSlice({
         addBusiness: (state, action) => {
             state.businesses = [action.payload, ...state.businesses]
         },
+        updateBusiness: (state, action) => {
+            state.businesses = state.businesses.map(business => business._id === action.payload._id ? action.payload : business)
+        },
         addBooks: (state, action) => {
             state.books = action.payload
         },
@@ -85,5 +88,5 @@ const bookSlice = createSlice({
 
     }
 })
-export const {refresh,addBusinesses,addCurrentBusiness,addBusiness, addBooks,addCurrentBooks,reAddCurrentBooks, addCurrentBook, addBook, removeBook, renameBook, addEntries, addEntry, removeEntry, updatePrevEntry,addCCPs,addCCP,updateCCP,removeCCP, logoutReset } = bookSlice.actions
+export const {refresh,addBusinesses,addCurrentBusiness,addBusiness,updateBusiness, addBooks,addCurrentBooks,reAddCurrentBooks, addCurrentBook, addBook, removeBook, renameBook, addEntries, addEntry, removeEntry, updatePrevEntry,addCCPs,addCCP,updateCCP,removeCCP, logoutReset } = bookSlice.actions
 export default bookSlice.reducer
