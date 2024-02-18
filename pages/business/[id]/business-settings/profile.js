@@ -12,7 +12,7 @@ const profile = () => {
     const {pathname} = router
     const path = pathname.split('/').pop()
     return (
-        <UserLayout>
+        <UserLayout  {...{path}}>
             <BusinessLayout {...{path}}>
                 <div
                     className='w-8/12 space-y-5'

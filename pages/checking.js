@@ -20,6 +20,7 @@ const Checking = () => {
             const res = await axios.post(`/api/user/checking?id=${user._id}`)
 
             if (res.data.success) {
+                console.log(res.data)
 
                 const { businessId } = res.data
                 const { user, businesses, books } = res.data.data
@@ -35,6 +36,8 @@ const Checking = () => {
                     return router.push(`/onboarding`)
                 } else if (user.name.length > 0 && businessId === null) {
                     return router.push(`/add-first-business`)
+                }else if (!user.name.length > 0 && businessId) {
+                    return router.push(`/onboarding`)
                 }
 
             }

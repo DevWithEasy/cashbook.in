@@ -13,7 +13,7 @@ const team = () => {
     const [view, setView] = useState(false)
     const [roleView,setRoleView] = useState(false)
     return (
-        <UserLayout>
+        <UserLayout  {...{path}}>
             <BusinessLayout {...{path}}>
                 <div className="w-8/12 pb-10">
                     <div className="p-4 flex justify-between items-center border rounded">

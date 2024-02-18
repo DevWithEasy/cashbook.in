@@ -1,43 +1,47 @@
-import { useDispatch, useSelector } from 'react-redux';
-import { createBook } from '../../libs/allBookAction';
-import { addBook, refresh } from '../../store/slice/bookSlice';
-import React, { useState } from 'react'
 import {
   Modal,
-  ModalOverlay,
   ModalContent,
-} from '@chakra-ui/react'
-import axios from 'axios'
+  ModalOverlay,
+} from '@chakra-ui/react';
+import axios from 'axios';
+import { useRouter } from 'next/router';
+import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { login } from '../../store/slice/authSlice';
+import { notificationNOT, notificationOK } from '../../utils/toastNotification';
 
 export default function Business_TeamMemberAccept({ params, view, setView }) {
-  const [code, setCode] = useState("")
+  const router = useRouter()
+  const [otp, setOtp] = useState("")
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
 
   const handleVerify = async () => {
     
     const mail = localStorage.getItem('cb_email') || params.email
-    setLoading(!loading)
+    setLoading(true)
     try {
         const res = await axios.post(`/api/user/invitation_accept?email=${mail}&otp=${otp}`,params)
 
         if (res.data.success) {
 
-            // const { message, data } = res.data
+            const { message, data } = res.data
 
-            setLoading(!loading)
-            // dispatch(login(data))
+            setLoading(false)
+            dispatch(login(data))
 
-            // localStorage.setItem('cb_access_token', res.data.token)
+            localStorage.setItem('cb_access_token', res.data.token)
 
-            // localStorage.removeItem('cb_email')
+            localStorage.removeItem('cb_email')
 
-            // notificationOK(message)
+            notificationOK(message)
+
+            router.push('/signin')
 
         }
     } catch (error) {
-        console.log(error)
-        setLoading(!loading)
+        notificationNOT(error.message)
+        setLoading(false)
     }
 }
   return (
@@ -71,7 +75,7 @@ export default function Business_TeamMemberAccept({ params, view, setView }) {
               <label className='text-sm text-gray-500'>Code</label>
               <input
                 type='number'
-                onChange={(e) => setCode(e.target.value)}
+                onChange={(e) => setOtp(e.target.value)}
                 className='w-full px-4 py-2 rounded border focus:outline-[#4863D4]'
                 autoFocus={true}
               />
@@ -82,8 +86,8 @@ export default function Business_TeamMemberAccept({ params, view, setView }) {
           >
             <button
               onClick={handleVerify}
-              className={`px-8 py-3 text-white rounded ${code.length === 6 ? 'bg-[#4863D4]' : 'bg-[#4863D4]/50 cursor-not-allowed'}`}
-              disabled ={code.length === 6 ? false : true}
+              className={`px-8 py-3 text-white rounded ${otp.length === 6 ? 'bg-[#4863D4]' : 'bg-[#4863D4]/50 cursor-not-allowed'}`}
+              disabled ={otp.length === 6 ? false : true}
 
             >
               {loading ? 'Saving...' : 'Save'}

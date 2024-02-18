@@ -26,7 +26,7 @@ const UserLayout = ({ path, children }) => {
         router.push(`/business/${business?._id}/cashbooks`)
         dispatch(addCurrentBusiness(business))
     }
-
+    
     return (
         <div
             className='h-screen overflow-hidden'
@@ -91,7 +91,7 @@ const UserLayout = ({ path, children }) => {
                                             </button>
                                             <button
                                                 onClick={() => router.push(`/business/${business?._id}/business-settings/settings`)}
-                                                className={`w-full px-4 py-2 flex items-center space-x-2 rounded ${path == 'settings' && 'bg-[#212121]'}`}
+                                                className={`w-full px-4 py-2 flex items-center space-x-2 rounded ${path && 'bg-[#212121]'}`}
                                             >
                                                 <span>
                                                     <IoSettingsOutline />

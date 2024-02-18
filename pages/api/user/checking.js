@@ -8,8 +8,17 @@ async function handler(req, res) {
     initDatabase()
     try {
         const { id } = (req.query)
-        const user = await User.findOne({_id : id})
-        const businesses = await Business.find({ user: id })
+
+        const user = await User.findOne({ _id: id })
+
+        const businesses = await Business.find({
+            $or: [
+                { user: id },
+                { teams: { $elemMatch: { user: id } } }
+            ]
+        })
+        console.log(businesses)
+
         const books = await Book.find({ user: id })
 
         const booksWithTotals = await Promise.all(books.map(async (book) => {
@@ -24,24 +33,25 @@ async function handler(req, res) {
             ])
 
             const totalCashIn = cashIn.length > 0 ? cashIn[0].total : 0
+            
             const totalCashOut = cashOut.length > 0 ? cashOut[0].total : 0
 
             return {
                 ...book.toJSON(),
-                stock : totalCashIn-totalCashOut
+                stock: totalCashIn - totalCashOut
             };
         }))
 
         return res.status(200).json({
-            success : true,
-            status:200,
-            data : {
+            success: true,
+            status: 200,
+            data: {
                 user,
                 businesses,
-                books : booksWithTotals
+                books: booksWithTotals
             },
-            businessId : businesses.length > 0 ? businesses[0]._id : null,
-            message:"Successfully signin"
+            businessId: businesses.length > 0 ? businesses[0]._id : null,
+            message: "Successfully signin"
         })
 
     } catch (error) {

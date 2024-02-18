@@ -8,7 +8,9 @@ import Business from "../../../database/model/Business";
 async function handler(req, res) {
     initDatabase()
     try {
-        const { email, otp } = (req.query)
+        const { email, otp } = req.query
+        const { token } = req.body
+
         const findOTP = await Verification.findOne({ email: email })
 
         const valid = await bcrypt.compare(otp, findOTP.code)
@@ -20,47 +22,50 @@ async function handler(req, res) {
                 message: "OTP Not Found."
             })
         }
-        console.log(req.body,valid)
-        // const finduser = await User.findOne({email: email})
-        // if(!finduser){
 
-        //     const newUser = new User({
-        //         email : email,
-        //         name : '',
-        //         number : '',
-        //         image : {
-        //             public_id : '',
-        //             url : ''
-        //         }
-        //     })
+        jwt.verify(token, process.env.JWT_SECRET, async(err, data) => {
+            if (err) return res.status(403).json({
+                success: false,
+                status: 403,
+                message: "Token is not valid."
+            })
 
-        //     const user = await newUser.save()
+            const newUser = new User({
+                email: email,
+                name: '',
+                number: '',
+                image: {
+                    public_id: '',
+                    url: ''
+                }
+            })
 
-        //     const token = await jwt.sign({id : user._id},process.env.JWT_SECRET)
+            const user = await newUser.save()
 
-        //     await Verification.deleteOne({email: email})
-        
-        //     return res.status(200).json({
-        //         success : true,
-        //         status:200,
-        //         data : user,
-        //         message:"Successfully signin",
-        //         token
-        //     })
-        // }else{
+            const userRole = {
+                user: user._id,
+                role: data.role
+            }
 
-        //     await Verification.deleteOne({email: email})
+            await Business.findByIdAndUpdate(data.business, {
+                $push: {
+                    teams: userRole
+                }
+            })
 
-        //     const token = await jwt.sign({id : finduser._id},process.env.JWT_SECRET)
-        
-        //     return res.status(200).json({
-        //         success : true,
-        //         status:200,
-        //         data : finduser,
-        //         message:"Successfully signin",
-        //         token
-        //     })
-        // }
+            const newToken = await jwt.sign({ id: user._id }, process.env.JWT_SECRET)
+
+            await Verification.deleteOne({ email: email })
+
+            return res.status(200).json({
+                success: true,
+                status: 200,
+                data: user,
+                message: "Successfully signin",
+                token : newToken
+            })
+
+        })
 
     } catch (error) {
         console.log(error)

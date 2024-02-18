@@ -91,6 +91,7 @@ const Business_AddTeamMember = ({ view, setView }) => {
             if (res.data.success) {
                 setLoading(false)
                 notificationOK(res.data.message)
+                setView(false)
             }
 
             if (!res.data.invite) {

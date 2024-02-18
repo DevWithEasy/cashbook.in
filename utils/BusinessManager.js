@@ -7,10 +7,11 @@ class BusinessManager{
     }
 
     getRole(business){
+
         if(this.user?._id === business?.user){
             return 'Owner'
         }else{
-            const findTeamMember = business?.teams?.find(member=>member?.id === this.user?._id)
+            const findTeamMember = business?.teams?.find(member=>member?.user === this.user?._id)
             return findTeamMember?.role
         }
     }

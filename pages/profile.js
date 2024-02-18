@@ -10,6 +10,7 @@ import Image from "next/image";
 import user_img from '../public/image/profile.png'
 import UpadateProfile from "../components/UpdateProfile";
 import UpdateProfilePhoto from "../components/UpdateProfilePhoto";
+import moment from "moment";
 
 export default function Profile() {
     const [isNoti, setNoti] = useState(false)
@@ -33,6 +34,7 @@ export default function Profile() {
         }
         fileReader.readAsDataURL(e.target.files[0])
     }
+    console.log(user)
     return (
         <Layout>
             <div
@@ -154,7 +156,7 @@ export default function Profile() {
                     <div
                         className="w-5/12 py-1 mx-auto flex justify-end text-xs text-gray-500"
                     >
-                        <span>Since 01 Mar, 2021</span>
+                        <span>{moment(user?.createdAt).fromNow()}</span>
                     </div>
                 </div>
 
