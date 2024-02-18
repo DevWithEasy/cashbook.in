@@ -1,10 +1,16 @@
 import { useRouter } from 'next/router';
 import React from 'react';
 import {useSelector} from 'react-redux'
+import BusinessManager from '../utils/BusinessManager';
 
 const BusinessLayout = ({path,children}) => {
-    const {currentBusiness} = useSelector(state=>state.book)
+    const { businesses, currentBusiness, books } = useSelector(state => state.book)
+    const { user } = useSelector(state => state.auth)
     const router = useRouter()
+
+    const businessManager = new BusinessManager(user,books, businesses, currentBusiness)
+    const role = businessManager.getRole(currentBusiness)
+
     const sidebars = [
         {
             title : 'Business Team',
@@ -18,7 +24,7 @@ const BusinessLayout = ({path,children}) => {
         },
         {
             title : 'Settings',
-            desc : 'Change owner or delete business',
+            desc : `${role === 'Owner' || role === 'Partner' ?'Change owner or delete business' : 'Leave business'}`,
             path : 'settings',
         },
     ]

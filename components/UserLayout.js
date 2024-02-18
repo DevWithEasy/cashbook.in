@@ -90,7 +90,7 @@ const UserLayout = ({ path, children }) => {
                                                 <span>Cashbooks</span>
                                             </button>
                                             <button
-                                                onClick={() => router.push(`/business/${business?._id}/business-settings/settings`)}
+                                                onClick={() => router.push(`/business/${business?._id}/business-settings/team`)}
                                                 className={`w-full px-4 py-2 flex items-center space-x-2 rounded ${path && 'bg-[#212121]'}`}
                                             >
                                                 <span>

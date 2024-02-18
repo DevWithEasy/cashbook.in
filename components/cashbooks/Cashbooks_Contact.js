@@ -2,10 +2,18 @@ import React from 'react';
 import { IoLogoWhatsapp } from 'react-icons/io';
 import Link from 'next/link';
 import { GoPlus } from 'react-icons/go';
+import { useSelector } from 'react-redux';
+import BusinessManager from '../../utils/BusinessManager';
 
 const Cashbooks_Contact = ({ view, setView }) => {
+    const {books, businesses, currentBusiness } = useSelector(state => state.book)
+    const { isAuth,user } = useSelector(state => state.auth)
+
+    const businessManager = new BusinessManager(user,books, businesses, currentBusiness)
+    const role = businessManager.getRole(currentBusiness)
     return (
         <>
+        {role === 'Owner' || role === 'Partner' ?
             <div
                 className='flex justify-end'
             >
@@ -17,6 +25,10 @@ const Cashbooks_Contact = ({ view, setView }) => {
                     <span>Add New Book</span>
                 </button>
             </div>
+            :
+            <></>
+        }
+            
             <div
                 className='p-3 space-y-1 border rounded-lg'
             >

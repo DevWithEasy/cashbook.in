@@ -1,21 +1,33 @@
+import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { FaExchangeAlt } from "react-icons/fa";
 import { MdOutlineDelete } from "react-icons/md";
-import { useRouter } from 'next/router';
-import {UserLayout,BusinessLayout, Business_OwnerChange, Business_Delete} from '../../../../components/Index'
+import { useSelector } from 'react-redux';
+import { BusinessLayout, Business_Delete, Business_OwnerChange, Business_TeamMemberLeave, UserLayout } from '../../../../components/Index';
+import BusinessManager from '../../../../utils/BusinessManager';
 
 const settings = () => {
+    const { businesses,currentBusiness,books } = useSelector(state => state.book)
+    const { user } = useSelector(state => state.auth)
     const router = useRouter()
     const {pathname} = router
     const path = pathname.split('/').pop()
     const [deleteView,setDeleteView] = useState(false)
     const [ownerChangeView,setOwnerChangeView] = useState(false)
+    const [leaveView,setLeaveView] = useState(false)
+
+    const businessManager = new BusinessManager(user,books, businesses, currentBusiness)
+    const role = businessManager.getRole(currentBusiness)
+
+
     return (
         <UserLayout  {...{path}}>
             <BusinessLayout {...{path}}>
                 <div
                     className='w-8/12 space-y-5'
                 >
+                    {role === 'Owner' || role === 'Partner' ?
+                    <>
                     <div
                         className='p-6 flex justify-between items-center border rounded'
                     >
@@ -62,6 +74,32 @@ const settings = () => {
                             <span>Delete Business</span>
                         </button>
                     </div>
+                    </>
+                    :
+<div
+                        className='p-6 flex justify-between items-center border rounded'
+                    >
+                        <div>
+                            <p
+                                className=''
+                            >
+                                Leave Business
+                            </p>
+                            <p
+                                className='text-sm text-gray-500'
+                            >
+                                You will lose access to this business
+                            </p>
+                        </div>
+                        <button
+                            onClick={()=>setLeaveView(!leaveView)}
+                            className='px-6 py-2 flex items-center space-x-2 text-red-600 focus:ring-2 rounded'
+                        >
+                            <MdOutlineDelete />
+                            <span>Leave Business</span>
+                        </button>
+                    </div>
+                }
                 </div>
                 {deleteView &&
                     <Business_Delete {...{
@@ -73,6 +111,12 @@ const settings = () => {
                     <Business_OwnerChange {...{
                         view : ownerChangeView,
                         setView : setOwnerChangeView
+                    }}/>
+                }
+                {leaveView &&
+                    <Business_TeamMemberLeave {...{
+                        view : leaveView,
+                        setView : setLeaveView
                     }}/>
                 }
             </BusinessLayout>

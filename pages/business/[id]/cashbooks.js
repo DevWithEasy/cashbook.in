@@ -2,12 +2,14 @@ import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Book_Add, Book_Duplicate, Book_Move, Book_Update, Cashbooks_Book, Cashbooks_Contact, Cashbooks_Header, Cashbooks_NoBook, Cashbooks_Search, UserLayout } from '../../../components/Index';
+import { Book_Add, Book_Duplicate, Book_Move, Book_Update, Cashbooks_Book, Cashbooks_Contact, Cashbooks_Header, Cashbooks_NoBook, Cashbooks_NoBook_Staff, Cashbooks_Search, UserLayout } from '../../../components/Index';
 import { getBooks } from '../../../libs/allBookAction';
 import { addCurrentBooks, addCurrentBusiness, reAddCurrentBooks } from '../../../store/slice/bookSlice';
+import BusinessManager from '../../../utils/BusinessManager';
 
 const Cashbooks = () => {
     const { businesses,currentBusiness,currentBooks, books,random } = useSelector(state => state.book)
+    const { user } = useSelector(state => state.auth)
     const dispatch = useDispatch()
     const router = useRouter()
     const [sortBy, setSortBy] = useState({
@@ -19,6 +21,9 @@ const Cashbooks = () => {
     const [duplicateView, setDuplicateView] = useState(false)
     const [moveView, setMoveView] = useState(false)
     const [id, setId] = useState(null)
+
+    const businessManager = new BusinessManager(user,books, businesses, currentBusiness)
+    const role = businessManager.getRole(currentBusiness)
 
     const getBusinessBooks = async() => {
         const findBusiness = businesses.find(business => business._id === router.query.id)
@@ -68,7 +73,13 @@ const Cashbooks = () => {
                                             }
                                         </div>
                                         :
-                                        <Cashbooks_NoBook {...{ view, setView }} />
+                                        <>
+                                            {role === 'Owner' || role === 'Partner' ?
+                                                <Cashbooks_NoBook {...{ view, setView }} />
+                                                :
+                                                <Cashbooks_NoBook_Staff/>
+                                            }
+                                        </>
                                     }
                                 </div>
                                 <div

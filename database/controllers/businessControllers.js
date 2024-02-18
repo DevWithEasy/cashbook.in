@@ -5,6 +5,13 @@ import User from "../model/User"
 export const getBusiness = async(req,res)=>{
     try {
         const bussinesses = await Business.find({user : req.user.id})
+        .populate({
+            path : 'teams',
+            populate : {
+                path : 'user',
+                model : 'User'
+            }
+        })
 
         const books = await Book.find({business : req.query.id})
         
@@ -42,6 +49,7 @@ export const createBusiness = async(req,res)=>{
         })
 
         const business = await newBusiness.save()
+        
         
         res.status(200).json({
             success : true,

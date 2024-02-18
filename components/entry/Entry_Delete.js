@@ -5,15 +5,14 @@ import {
   ModalFooter,
   ModalOverlay
 } from '@chakra-ui/react';
+import moment from 'moment';
 import React, { useState } from 'react';
 import { MdDeleteOutline } from "react-icons/md";
 import { RxCross2 } from "react-icons/rx";
 import { TiInfo } from "react-icons/ti";
 import { useDispatch, useSelector } from 'react-redux';
-import { createBook } from '../../libs/allBookAction';
-import { addBook, removeEntry } from '../../store/slice/bookSlice';
-import moment from 'moment';
 import { deleteEntry } from '../../libs/allEntryAction';
+import { removeEntry } from '../../store/slice/bookSlice';
 
 export default function Entry_Delete({id, view, setView }) {
   const {entries} = useSelector(state=>state.book)

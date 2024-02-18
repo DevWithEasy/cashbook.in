@@ -34,7 +34,6 @@ const Header = () => {
                 className=""
                 height={25}
                 width={150}
-                style={{ width: "auto", height: "auto" }}
             />
             </Link>
             <Menu>

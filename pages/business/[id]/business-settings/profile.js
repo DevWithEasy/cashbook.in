@@ -1,6 +1,5 @@
-import React from 'react';
-import UserLayout from '../../../../components/UserLayout';
-import BusinessLayout from '../../../../components/BusinessLayout';
+import React, { useState } from 'react';
+import {UserLayout,Business_Update,BusinessLayout} from '../../../../components/Index';
 import { MdOutlineEdit } from "react-icons/md";
 import { BsBuildings } from "react-icons/bs";
 import { TiInfo } from "react-icons/ti";
@@ -11,6 +10,7 @@ const profile = () => {
     const router = useRouter()
     const {pathname} = router
     const path = pathname.split('/').pop()
+    const [view,setView] = useState(false)
     return (
         <UserLayout  {...{path}}>
             <BusinessLayout {...{path}}>
@@ -41,7 +41,11 @@ const profile = () => {
                                     Incomplete business profile
                                 </p>
                             </div>
-                            <MdOutlineEdit size={28} className='text-blue-500 cursor-pointer' />
+                            <MdOutlineEdit 
+                                size={28} 
+                                onClick={()=>setView(!view)}
+                                className='text-blue-500 cursor-pointer'
+                            />
                         </div>
                         <div
                             className='h-2 bg-gray-100 rounded-full'
@@ -92,6 +96,11 @@ const profile = () => {
                         </TabPanels>
                     </Tabs>
                 </div>
+                {view &&
+                    <Business_Update {...{
+                        view,setView
+                    }}/>
+                }
             </BusinessLayout>
         </UserLayout>
     );

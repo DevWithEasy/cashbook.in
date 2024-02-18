@@ -17,7 +17,7 @@ const Business_AddTeamMember = ({ view, setView }) => {
     const {currentBusiness} = useSelector(state=>state.book)
     const [nextStep, setNextStep] = useState(false)
     const [emailView, setEmailView] = useState(false)
-    const [active, setActive] = useState('staff')
+    const [active, setActive] = useState('Staff')
     const [email, setEmail] = useState('')
     const [loading, setLoading] = useState(false)
     const [isUser, setIsUser] = useState(false)
@@ -252,14 +252,14 @@ const Business_AddTeamMember = ({ view, setView }) => {
                                             className='space-x-2'
                                         >
                                             <button
-                                                onClick={() => setActive('partner')}
-                                                className={`px-4 py-1 bg-gray-100 border rounded-full ${active == 'partner' && 'bg-[#f8efe7] text-[#bd610d] border-[#bd610d]'}`}
+                                                onClick={() => setActive('Partner')}
+                                                className={`px-4 py-1 bg-gray-100 border rounded-full ${active == 'Partner' && 'bg-[#f8efe7] text-[#bd610d] border-[#bd610d]'}`}
                                             >
                                                 Partner
                                             </button>
                                             <button
-                                                onClick={() => setActive('staff')}
-                                                className={`px-4 py-1 bg-gray-100 border rounded-full ${active == 'staff' && 'bg-[#e7f2f9] text-[#137ac9] border-[#137ac9]'}`}
+                                                onClick={() => setActive('Staff')}
+                                                className={`px-4 py-1 bg-gray-100 border rounded-full ${active == 'Staff' && 'bg-[#e7f2f9] text-[#137ac9] border-[#137ac9]'}`}
                                             >
                                                 Staff
                                             </button>

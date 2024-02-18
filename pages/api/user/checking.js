@@ -17,6 +17,16 @@ async function handler(req, res) {
                 { teams: { $elemMatch: { user: id } } }
             ]
         })
+        .populate({
+            path : 'teams',
+            populate : {
+                path : 'user',
+                model : 'User'
+            }
+        })
+
+
+
         console.log(businesses)
 
         const books = await Book.find({ user: id })
