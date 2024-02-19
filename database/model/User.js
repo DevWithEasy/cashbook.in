@@ -23,6 +23,8 @@ const userSchema = mongoose.Schema({
             default : ''
         }
     }
+},{
+    timestamps:true
 })
 
 const User = mongoose.models.User || mongoose.model('User',userSchema)

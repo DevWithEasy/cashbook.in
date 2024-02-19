@@ -21,14 +21,14 @@ const team = () => {
     const role = businessManager.getRole(currentBusiness)
     const totalMember = businessManager.getTotalMembers()
 
-    const handleRoute=(id)=>{
-        if(role === 'Staff'){
+    const handleRoute = (id) => {
+        if (role === 'Staff') {
             return
-        }else{
+        } else {
             router.push(`/business/${currentBusiness?._id}/business-settings/team/${id}`)
         }
     }
-
+    
     return (
         <UserLayout  {...{ path }}>
             <BusinessLayout {...{ path }}>
@@ -86,7 +86,7 @@ const team = () => {
                                         {businessManager.getOwnerPartners().map((member, i) =>
                                             <div
                                                 key={i}
-                                                onClick={()=>handleRoute(member?.user?._id)}
+                                                onClick={() => handleRoute(member?.user?._id)}
                                                 className={`flex items-center justify-between space-x-3 ${role !== 'Staff' && 'cursor-pointer'}`}
                                             >
                                                 <Image
@@ -101,8 +101,10 @@ const team = () => {
                                                 >
                                                     <div>
                                                         <p>{member?.user?.name}</p>
-                                                        <p className='text-sm text-gray-500'>{member?.user?.number}</p>
-                                                        <p className='text-sm text-gray-500'>{member?.user?.email}</p>
+                                                        <p className='text-sm text-gray-500'>{member?.user?.email}
+                                                        </p>
+                                                        <p className='text-sm text-gray-500'>{member?.user?.number}
+                                                        </p>
                                                     </div>
                                                     <span
                                                         className={`px-4 py-1 text-xs rounded ${member?.role === 'Owner' ? 'bg-green-100 text-green-500' : 'bg-[#F8EFE7] text-[#BD610D]'}`}
@@ -130,7 +132,7 @@ const team = () => {
                                             {businessManager.getStaffs().map((member, i) =>
                                                 <div
                                                     key={i}
-                                                    onClick={()=>handleRoute(member?.user?._id)}
+                                                    onClick={() => handleRoute(member?.user?._id)}
                                                     className={`flex items-center justify-between space-x-3 ${role !== 'Staff' && 'cursor-pointer'}`}
                                                 >
                                                     <Image
@@ -144,9 +146,15 @@ const team = () => {
                                                         className='w-full flex items-center justify-between'
                                                     >
                                                         <div>
-                                                            <p>{member?.user?.name}</p>
-                                                            <p className='text-sm text-gray-500'>{member?.user?.number}</p>
-                                                            <p className='text-sm text-gray-500'>{member?.user?.email}</p>
+                                                            <p>
+                                                                {member?.user?.name}
+                                                            </p>
+                                                            <p className='text-sm text-gray-500'>
+                                                                {member?.user?.email}
+                                                            </p>
+                                                            <p className='text-sm text-gray-500'>
+                                                                {member?.user?.number}
+                                                            </p>
                                                         </div>
                                                         <span
                                                             className={`px-4 py-1 text-xs rounded bg-[#E7F2F9] text-[#137AC6]`}

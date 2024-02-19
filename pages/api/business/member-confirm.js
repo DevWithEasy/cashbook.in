@@ -14,7 +14,8 @@ async function handler(req, res) {
         if (user) {
             const userRole = {
                 user: user._id,
-                role: req.query.role
+                role: req.query.role,
+                createdAt : Date.now()
             }
 
             await Business.findByIdAndUpdate(req.query.business, {

@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 class BusinessManager{
     constructor(user,books,businesses,currentBusiness){
         this.user = user
@@ -7,7 +9,6 @@ class BusinessManager{
     }
 
     getRole(business){
-
         if(this.user?._id === business?.user?._id){
             return 'Owner'
         }else{
@@ -35,8 +36,20 @@ class BusinessManager{
         return this.currentBusiness?.teams?.filter(member=>member?.role === 'Staff')
     }
 
-    isBorder(i){
-        
+    getInfo(memberId){
+        if(this.currentBusiness?.user?._id === memberId){
+            return {
+                user : this.user,
+                role : 'Owner',
+                join : `Member since from ${moment(this.user?.createdAt).fromNow()}`
+            }
+        }else{
+            const member = this.currentBusiness.teams.find(m=>m?.user?._id === memberId)
+            return {
+                ...member,
+                join : `Member since from ${moment(member?.createdAt).fromNow()}`
+            }
+        }
     }
 }
 

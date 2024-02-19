@@ -30,7 +30,17 @@ async function handler(req, res) {
             payment : ''
         })
 
-        const business  = await newBusiness.save()
+        await newBusiness.save()
+
+        const business  = await Business.findById(newBusiness._id)
+        .populate('user')
+        .populate({
+            path: 'teams',
+            populate: {
+                path: 'user',
+                model: 'User'
+            }
+        })
 
         const newBook = new Book({
             name : 'Business Book',
