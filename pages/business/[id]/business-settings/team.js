@@ -21,6 +21,14 @@ const team = () => {
     const role = businessManager.getRole(currentBusiness)
     const totalMember = businessManager.getTotalMembers()
 
+    const handleRoute=(id)=>{
+        if(role === 'Staff'){
+            return
+        }else{
+            router.push(`/business/${currentBusiness?._id}/business-settings/team/${id}`)
+        }
+    }
+
     return (
         <UserLayout  {...{ path }}>
             <BusinessLayout {...{ path }}>
@@ -67,44 +75,47 @@ const team = () => {
                         <div
                             className="space-y-5"
                         >
-                            <div
-                                className="space-y-2"
-                            >
-                                <p className="text-gray-500">Owner/Partners</p>
+                            {businessManager.getOwnerPartners().length > 0 &&
                                 <div
-                                    className="space-y-3"
+                                    className="space-y-2"
                                 >
-                                    {businessManager.getOwnerPartners().map((member, i) =>
-                                        <div
-                                            key={i}
-                                            className={`flex items-center justify-between space-x-3 pb-5`}
-                                        >
-                                            <Image
-                                                alt=''
-                                                src={member?.user?.image?.url ? member?.image?.url : '/image/profile.png'}
-                                                width={60}
-                                                height={60}
-                                                className='rounded-full'
-                                            />
+                                    <p className="text-sm text-gray-500">Owner/Partners</p>
+                                    <div
+                                        className="space-y-3"
+                                    >
+                                        {businessManager.getOwnerPartners().map((member, i) =>
                                             <div
-                                                className='w-full flex items-center justify-between'
+                                                key={i}
+                                                onClick={()=>handleRoute(member?.user?._id)}
+                                                className={`flex items-center justify-between space-x-3 ${role !== 'Staff' && 'cursor-pointer'}`}
                                             >
-                                                <div>
-                                                    <p>{member?.user?.name}</p>
-                                                    <p className='text-sm text-gray-500'>{member?.user?.number}</p>
-                                                    <p className='text-sm text-gray-500'>{member?.user?.email}</p>
-                                                </div>
-                                                <span
-                                                    className={`px-4 py-1 text-xs rounded ${member?.role === 'Owner' ? 'bg-green-100 text-green-500' : 'bg-[#F8EFE7] text-[#BD610D]'}`}
+                                                <Image
+                                                    alt=''
+                                                    src={member?.user?.image?.url ? member?.image?.url : '/image/profile.png'}
+                                                    width={60}
+                                                    height={60}
+                                                    className='rounded-full'
+                                                />
+                                                <div
+                                                    className='w-full flex items-center justify-between'
                                                 >
-                                                    {member?.role}
-                                                </span>
+                                                    <div>
+                                                        <p>{member?.user?.name}</p>
+                                                        <p className='text-sm text-gray-500'>{member?.user?.number}</p>
+                                                        <p className='text-sm text-gray-500'>{member?.user?.email}</p>
+                                                    </div>
+                                                    <span
+                                                        className={`px-4 py-1 text-xs rounded ${member?.role === 'Owner' ? 'bg-green-100 text-green-500' : 'bg-[#F8EFE7] text-[#BD610D]'}`}
+                                                    >
+                                                        {member?.role}
+                                                    </span>
+                                                </div>
                                             </div>
-                                        </div>
-                                    )
-                                    }
+                                        )
+                                        }
+                                    </div>
                                 </div>
-                            </div>
+                            }
 
 
                             {businessManager.getStaffs().length > 0 &&
@@ -112,14 +123,15 @@ const team = () => {
                                     <div
                                         className="space-y-2"
                                     >
-                                        <p className="text-gray-500">
+                                        <p className="text-sm text-gray-500">
                                             Staffs ({businessManager.getStaffs().length})
                                         </p>
                                         <div>
                                             {businessManager.getStaffs().map((member, i) =>
                                                 <div
                                                     key={i}
-                                                    className='flex items-center justify-between space-x-3'
+                                                    onClick={()=>handleRoute(member?.user?._id)}
+                                                    className={`flex items-center justify-between space-x-3 ${role !== 'Staff' && 'cursor-pointer'}`}
                                                 >
                                                     <Image
                                                         alt=''

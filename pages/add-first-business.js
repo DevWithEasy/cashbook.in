@@ -6,10 +6,10 @@ import axios from 'axios';
 import { categories, types } from '../public/image/bussiness/business_data';
 import handleInput from '../utils/handleInput';
 import { ImSpinner9 } from "react-icons/im";
-import Head  from 'next/head';
+import Head from 'next/head';
 import { notificationNOT, notificationOK } from '../utils/toastNotification';
 import { useRouter } from 'next/router';
-import {useDispatch} from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { addBusiness } from '../store/slice/bookSlice';
 
 const AddFirstBusiness = () => {
@@ -23,20 +23,20 @@ const AddFirstBusiness = () => {
     const [typeView, setTypeView] = useState('')
     const [category, setCategory] = useState({})
     const [type, setType] = useState({})
-    const createBusiness =async()=>{
-        try{
+    const createBusiness = async () => {
+        try {
             setLoading(true)
-            const res = await axios.post('/api/business',{
-                ...value, 
-                category :category.id,
-                type : type.id
-            },{
+            const res = await axios.post('/api/business', {
+                ...value,
+                category: category.id,
+                type: type.id
+            }, {
                 headers: {
                     "cb-access-token": localStorage.getItem("cb_access_token")
                 }
             })
-            if(res.data.status === 200){
-                const {data,message} = res.data
+            if (res.data.status === 200) {
+                const { data, message } = res.data
 
                 dispatch(addBusiness(data))
 
@@ -45,7 +45,7 @@ const AddFirstBusiness = () => {
 
                 router.push(`/business/${data._id}/cashbooks`)
             }
-        }catch(err){
+        } catch (err) {
             setLoading(false)
             notificationNOT(err.message)
         }
@@ -71,7 +71,7 @@ const AddFirstBusiness = () => {
                             Business Name
                         </label>
                         <input
-                            name = 'name'
+                            name='name'
                             placeholder='Added Business Name'
                             onChange={(e) => handleInput(e, value, setValue)}
                             className='w-1/2 p-2 border rounded focus:outline-[#4863D4]'
@@ -99,16 +99,16 @@ const AddFirstBusiness = () => {
                             >
                                 {category.image &&
                                     <div
-                                    className='flex items-center space-x-2'
-                                >
-                                    <Image
-                                        alt=''
-                                        src={category.image}
-                                        height={35}
-                                        width={35}
-                                    />
-                                    <p className='text-sm'>{category.name}</p>
-                                </div>
+                                        className='flex items-center space-x-2'
+                                    >
+                                        <Image
+                                            alt=''
+                                            src={category.image}
+                                            height={35}
+                                            width={35}
+                                        />
+                                        <p className='text-sm'>{category.name}</p>
+                                    </div>
                                 }
                                 {categoryView ?
                                     <IoIosArrowUp size={20} /> :
@@ -171,16 +171,16 @@ const AddFirstBusiness = () => {
                             >
                                 {type.image &&
                                     <div
-                                    className='flex items-center space-x-2'
-                                >
-                                    <Image
-                                        alt=''
-                                        src={type?.image}
-                                        height={35}
-                                        width={35}
-                                    />
-                                    <p className='text-sm'>{type?.name}</p>
-                                </div>
+                                        className='flex items-center space-x-2'
+                                    >
+                                        <Image
+                                            alt=''
+                                            src={type?.image}
+                                            height={35}
+                                            width={35}
+                                        />
+                                        <p className='text-sm'>{type?.name}</p>
+                                    </div>
                                 }
                                 {typeView ?
                                     <IoIosArrowUp size={20} /> :
@@ -229,7 +229,7 @@ const AddFirstBusiness = () => {
                             {!loading ?
                                 'Create Business'
                                 :
-                                <ImSpinner9 />
+                                'Createing...'
                             }
 
                         </button>

@@ -17,6 +17,7 @@ async function handler(req, res) {
                 { teams: { $elemMatch: { user: id } } }
             ]
         })
+        .populate('user')
         .populate({
             path : 'teams',
             populate : {

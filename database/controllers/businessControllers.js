@@ -5,6 +5,7 @@ import User from "../model/User"
 export const getBusiness = async (req, res) => {
     try {
         const bussinesses = await Business.find({ user: req.user.id })
+            .populate('user')
             .populate({
                 path: 'teams',
                 populate: {
@@ -48,8 +49,9 @@ export const createBusiness = async (req, res) => {
             email: user.email
         })
 
-        const business = await newBusiness.save()
+        await newBusiness.save()
 
+        const business = await Business.findById(newBusiness._id).populate('user')
 
         res.status(200).json({
             success: true,
@@ -82,6 +84,7 @@ export const updateBusiness = async (req, res) => {
         }
         )
         const business = await Business.findById(req.query.id)
+            .populate('user')
             .populate({
                 path: 'teams',
                 populate: {
@@ -94,7 +97,7 @@ export const updateBusiness = async (req, res) => {
             success: "success",
             status: 200,
             data: business,
-            message : 'Successfully Updated.'
+            message: 'Successfully Updated.'
         })
     } catch (err) {
         res.status(500).json({

@@ -8,7 +8,7 @@ class BusinessManager{
 
     getRole(business){
 
-        if(this.user?._id === business?.user){
+        if(this.user?._id === business?.user?._id){
             return 'Owner'
         }else{
             const findTeamMember = business?.teams?.find(member=>member?.user?._id === this.user?._id)
@@ -27,7 +27,8 @@ class BusinessManager{
 
     getOwnerPartners(){
         const findTeamMember = this.currentBusiness?.teams?.filter(member=>member?.role === 'Partner')
-        return [{role : 'Owner', user : this.user},...findTeamMember]
+        
+        return [{role : 'Owner', user : this.currentBusiness.user},...findTeamMember]
     }
 
     getStaffs(){
