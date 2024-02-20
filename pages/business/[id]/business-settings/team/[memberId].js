@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
-import { BusinessLayout, Business_RoleChange, UserLayout } from '../../../../../components/Index';
+import { BusinessLayout, Business_RoleChange, Business_RoleRemove, UserLayout } from '../../../../../components/Index';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import BusinessManager from '../../../../../utils/BusinessManager';
 import Image from 'next/image'
@@ -256,6 +256,13 @@ const BusinessMemberInfo = () => {
                         member,
                         view: roleChangeView,
                         setView: setRoleChangeView
+                    }} />
+                }
+                {roleRemoveView &&
+                    <Business_RoleRemove {...{
+                        member,
+                        view: roleRemoveView,
+                        setView: setRoleRemoveView
                     }} />
                 }
             </BusinessLayout>
