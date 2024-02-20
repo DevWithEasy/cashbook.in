@@ -19,7 +19,7 @@ export default function Business_RoleRemove({ member, view, setView }) {
   const handleRoleRemove = async () => {
     setLoading(true)
     try {
-      const res = await axios.post(`/api/business/member-role-change?`, {
+      const res = await axios.post(`/api/business/member-remove`, {
         b_id: currentBusiness._id,
         t_id: member._id
       },
