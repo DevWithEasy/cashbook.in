@@ -7,58 +7,10 @@ import React, { useState } from 'react';
 import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 import { IoMdInformationCircle } from "react-icons/io";
+import { ownTopics, partnerTopics, stuffTopics } from '../../public/data/rolePermissions';
 
 const Business_RolePermission = ({ view, setView }) => {
     const [active, setActive] = useState('staff')
-
-    const ownTopics = [
-        {
-            title: 'Permissions',
-            roles: [
-                'Full access to all books of this business',
-                'Full access to business settings',
-                'Add/remove members in business'
-            ]
-        },
-        {
-            title: 'Restrictions',
-            roles: []
-        }
-    ]
-    const partnerTopics = [
-        {
-            title: 'Permissions',
-            roles: [
-                'Full access to all books of this business',
-                'Full access to business settings',
-                'Add/remove members in business'
-            ]
-        },
-        {
-            title: 'Restrictions',
-            roles: [
-                'Can’t delete business',
-                'Can’t remove owner from business'
-            ]
-        }
-    ]
-    const stuffTopics = [
-        {
-            title: 'Permissions',
-            roles: [
-                'Limited access to selected book',
-                'Owner/Partner can assign Admin, Viewer or Operator role to staff in any book'
-            ]
-        },
-        {
-            title: 'Restrictions',
-            roles: [
-                'No access to books they are not part of',
-                'No access to business settings',
-                'No option to delete books'
-            ]
-        }
-    ]
 
     return (
         <>
@@ -113,7 +65,8 @@ const Business_RolePermission = ({ view, setView }) => {
                             </button>
                         </div>
                         <div>
-                            <div
+                            {active=== 'own' &&
+                                <div
                                 className='my-4 px-4 py-2 flex items-center space-x-2 rounded bg-gray-100'
                             >
                                 <p>
@@ -121,6 +74,7 @@ const Business_RolePermission = ({ view, setView }) => {
                                 </p>
                                 <p className='text-sm'>Each business can have only one owner</p>
                             </div>
+                            }
                             {
                                 (active == 'own' ? ownTopics : active == 'partner' ? partnerTopics : stuffTopics)
                                     .map((cat, i) =>

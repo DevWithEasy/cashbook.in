@@ -5,7 +5,9 @@ import { BusinessLayout, UserLayout } from '../../../../../components/Index';
 import { IoArrowBackOutline } from 'react-icons/io5';
 import BusinessManager from '../../../../../utils/BusinessManager';
 import Image from 'next/image'
-import { IoIosArrowDown, IoIosArrowUp } from 'react-icons/io';
+import { IoIosArrowDown, IoIosArrowUp, IoMdCheckmarkCircle } from 'react-icons/io';
+import { MdCancel, MdInfo } from 'react-icons/md';
+import { ImUsers } from 'react-icons/im';
 
 const BusinessMemberInfo = () => {
     const { businesses, currentBusiness, books } = useSelector(state => state.book)
@@ -16,12 +18,15 @@ const BusinessMemberInfo = () => {
     const role = businessManager.getRole(currentBusiness)
     const member = businessManager.getInfo(router.query.memberId)
 
-    const [permissionView,setPermissionView] = useState(false)
+    const [permissionView, setPermissionView] = useState(false)
+
+    const permissions = businessManager.getPermissionInfo(member?.role)
+    
     return (
         <UserLayout  {...{ path: 'team' }}>
             <BusinessLayout {...{ path: 'team' }}>
                 <div
-                    className='w-8/12 space-y-5'
+                    className='w-8/12 pb-10 space-y-5'
                 >
                     <div
                         className='flex items-center space-x-1 text-sm text-gray-500'
@@ -51,12 +56,18 @@ const BusinessMemberInfo = () => {
                             className='w-full flex items-center justify-between'
                         >
                             <div>
-                                <p>{member?.user?.name}</p>
+                                <p>
+                                    {user?._id === member?.user?._id ?
+                                        'You'
+                                        :
+                                        member?.user?.name
+                                    }
+                                </p>
                                 <p className='text-sm text-gray-500'>{member?.user?.email}
                                 </p>
                                 <p className='text-sm text-gray-500'>{member?.user?.number}
                                 </p>
-                                <p className='text-sm text-gray-500'>{member?.role}
+                                <p className='text-sm text-gray-500'>{member?.join}
                                 </p>
                             </div>
                             <span
@@ -66,21 +77,110 @@ const BusinessMemberInfo = () => {
                             </span>
                         </div>
                     </div>
+
                     <div
-                        className=''
+                        className='space-y-5'
                     >
                         <button
-                            onClick={()=>setPermissionView(!permissionView)}
+                            onClick={() => setPermissionView(!permissionView)}
                             className='w-full p-2 flex justify-center items-center space-x-2 border rounded'
                         >
                             <span>{role} permissions</span>
-                            {!permissionView ?
-                            <IoIosArrowDown />
-                            :
-                            <IoIosArrowUp />
+                            {permissionView ?
+                                <IoIosArrowDown />
+                                :
+                                <IoIosArrowUp />
 
                             }
                         </button>
+
+                        {permissionView &&
+                            <div
+                                className='p-6 space-y-5 border rounded'
+                            >
+                                {member?.role === 'Owner' &&
+                                    <div
+                                    className='px-4 py-2 flex items-center space-x-3 text-sm bg-[#EEEDFA] rounded'
+                                >
+                                    <MdInfo className='text-[#534ECD]' size={25}/>
+                                    <p>Each business can have only one owner</p>
+                                </div>
+                                }
+                                {
+                                permissions.map((cat, i) =>
+                                        <>
+                                            {cat?.roles?.length > 0 &&
+                                                <div
+                                                    key={i}
+                                                    className='pb-5 space-y-2'
+                                                >
+                                                    <p>{cat.title}</p>
+                                                    <div
+                                                        className='space-y-2 text-sm'
+                                                    >
+                                                        {
+                                                            cat.roles.map((role,i)=>
+                                                            <div
+                                                            key={i}
+                                                            className='flex items-center space-x-2'
+                                                        >
+                                                            <p>
+                                                            {cat.title == 'Permissions' ?
+                                                                <IoMdCheckmarkCircle 
+                                                                size={23}
+                                                                className='text-[#21b15e]'
+                                                            />
+                                                                :
+                                                                <MdCancel 
+                                                                size={23}
+                                                                className='text-[#c93b3b]'
+                                                            />
+                                                            }
+                                                            </p>
+                                                            <p>{role}</p>
+                                                        </div>
+                                                            )
+                                                        }
+                                                    </div>
+                                                </div>
+                                            }
+                                        </>
+                                    )
+                            }
+                            </div>
+                        }
+                    </div>
+                    
+                    <div
+                        className='space-y-5'
+                    >
+                        <p
+                            className='text-gray-500'
+                        >
+                            Books()
+                        </p>
+                        <div>
+                            <div
+                                className='flex items-center space-x-4'
+                            >
+                                <ImUsers 
+                                    size={40}
+                                    className='p-2 bg-[#EEEDFA] text-[#534ECD] rounded-full'
+                                />
+                                <div>
+                                    <p
+                                        className=''
+                                    >
+                                        Daily Book
+                                    </p>
+                                    <p
+                                        className='text-sm text-gray-500'
+                                    >
+                                        Full Access
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </BusinessLayout>

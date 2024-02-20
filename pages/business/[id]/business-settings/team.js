@@ -100,7 +100,13 @@ const team = () => {
                                                     className='w-full flex items-center justify-between'
                                                 >
                                                     <div>
-                                                        <p>{member?.user?.name}</p>
+                                                        <p>
+                                                            {businessManager.getInfo(member?.user?._id)?.user?._id === user?._id ?
+                                                                'You'
+                                                                :
+                                                                businessManager.getInfo(member?.user?._id)?.user?.name
+                                                            }
+                                                        </p>
                                                         <p className='text-sm text-gray-500'>{member?.user?.email}
                                                         </p>
                                                         <p className='text-sm text-gray-500'>{member?.user?.number}

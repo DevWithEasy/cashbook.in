@@ -1,4 +1,5 @@
 import moment from 'moment'
+import { ownTopics, partnerTopics, stuffTopics } from '../public/data/rolePermissions'
 
 class BusinessManager{
     constructor(user,books,businesses,currentBusiness){
@@ -45,11 +46,17 @@ class BusinessManager{
             }
         }else{
             const member = this.currentBusiness.teams.find(m=>m?.user?._id === memberId)
+            console.log(member)
             return {
                 ...member,
                 join : `Member since from ${moment(member?.createdAt).fromNow()}`
             }
         }
+    }
+
+    getPermissionInfo(role){
+        const data = role === 'Owner' ? ownTopics : role === 'Partner' ? partnerTopics : stuffTopics
+        return data
     }
 }
 
