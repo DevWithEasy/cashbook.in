@@ -7,6 +7,7 @@ import team_image from "../../../../public/image/AddTeamFirstTime.png";
 import { useSelector } from 'react-redux';
 import { useRouter } from "next/router";
 import BusinessManager from "../../../../utils/BusinessManager";
+import Head from 'next/head'
 
 const team = () => {
     const { businesses, currentBusiness, books } = useSelector(state => state.book)
@@ -32,6 +33,9 @@ const team = () => {
     return (
         <UserLayout  {...{ path }}>
             <BusinessLayout {...{ path }}>
+                <Head>
+                    <title>Team - {currentBusiness?.name} - CashBook</title>
+                </Head>
                 <div className="w-8/12 pb-10">
                     {role === 'Owner' || role === 'Partner' ?
                         <div className="p-4 flex justify-between items-center border rounded">

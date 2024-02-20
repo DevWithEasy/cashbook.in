@@ -29,7 +29,10 @@ async function handler(req, res){
         return res.status(200).json({
             success : "success",
             status:200,
-            data : book,
+            data : {
+                ...Book._doc,
+                stock : 0
+            },
             message:"Successfully Created"
         })
     }catch(err){

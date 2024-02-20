@@ -18,6 +18,11 @@ class BusinessManager{
         }
     }
 
+    getBooks(business){
+        const findBooks = this.books?.filter(book=>book?.business === business?._id)
+        return findBooks
+    }
+
     totalBook(business){
         const findBooks = this.books?.filter(book=>book?.business === business?._id)
         return findBooks?.length
@@ -46,7 +51,6 @@ class BusinessManager{
             }
         }else{
             const member = this.currentBusiness.teams.find(m=>m?.user?._id === memberId)
-            console.log(member)
             return {
                 ...member,
                 join : `Member since from ${moment(member?.createdAt).fromNow()}`
