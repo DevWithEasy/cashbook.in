@@ -110,11 +110,12 @@ export const updateBusiness = async (req, res) => {
 
 export const deleteBusiness = async (req, res) => {
     try {
-        await Business.findByIdAndDelete(req.query.id)
+        const business =  await Business.findById(req.query.id)
         res.status(200).json({
-            success: "success",
+            success: true,
             status: 200,
-            data: {}
+            data: business,
+            message : 'Successfully Deleted.'
         })
     } catch (err) {
         res.status(500).json({

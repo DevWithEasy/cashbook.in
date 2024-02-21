@@ -1,4 +1,5 @@
 import Book from "../model/Book"
+import Business from "../model/Business"
 import Contact from "../model/Contact"
 import Entry from "../model/Entry"
 import Payment from "../model/Payment"
@@ -86,10 +87,21 @@ export const updateBook = async(req,res)=>{
 
 export const deleteBook = async(req,res)=>{
     try {
+        const book = await Book.findById(req.query.id)
+        
         await Contact.deleteMany({"book" : (req.query.id)})
+
         await Payment.deleteMany({"book" : (req.query.id)})
+
         await Entry.deleteMany({"book" : (req.query.id)})
+
         await Book.deleteOne({"_id" : req.query.id})
+
+        await Business.findByIdAndUpdate(book.business,{
+            $pull : {
+                books : req.query.id
+            }
+        })
 
         return res.status(200).json({
             success : "success",

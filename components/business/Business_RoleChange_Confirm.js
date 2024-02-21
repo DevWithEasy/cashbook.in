@@ -8,7 +8,7 @@ import { RxDotFilled } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux'
 import { notificationNOT, notificationOK } from '../../utils/toastNotification';
 import axios from 'axios'
-import { updateBusiness } from '../../store/slice/bookSlice';
+import { addCurrentBusiness, updateBusiness } from '../../store/slice/bookSlice';
 
 export default function Business_RoleChange_Confirm({ member, view, setView, setFirstView }) {
   const dispatch = useDispatch()
@@ -33,6 +33,7 @@ export default function Business_RoleChange_Confirm({ member, view, setView, set
       if(res.data.success){
         setLoading(false)
         dispatch(updateBusiness(res.data.data))
+        dispatch(addCurrentBusiness(res.data.data))
         notificationOK(res.data.message)
         setView(false)
         setFirstView(false)

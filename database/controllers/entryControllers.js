@@ -19,6 +19,7 @@ export const createEntry = async (req, res) => {
         await newEntry.save()
 
         const entry = await Entry.findById(newEntry._id)
+        .populate('user')
         .populate('payment')
         .populate('category')
         .populate('contact')
@@ -93,6 +94,7 @@ export const updateEntry = async (req, res) => {
         await newHistory.save()
 
         const entry = await Entry.findOne({ "_id": req.query.id })
+        .populate('user')
         .populate('payment')
         .populate('category')
         .populate('contact')

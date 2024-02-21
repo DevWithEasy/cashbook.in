@@ -9,7 +9,7 @@ const categorySchema = mongoose.Schema({
         type:mongoose.Types.ObjectId,
         ref:'User'
     },
-    bookId:{
+    book:{
         type:mongoose.Types.ObjectId,
         ref:'Book'
     }

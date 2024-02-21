@@ -38,6 +38,12 @@ class BusinessManager{
         return [{role : 'Owner', user : this.currentBusiness.user},...findTeamMember]
     }
 
+    getPartners(){
+        const findTeamMember = this.currentBusiness?.teams?.filter(member=>member?.role === 'Partner')
+        
+        return findTeamMember
+    }
+
     getStaffs(){
         return this.currentBusiness?.teams?.filter(member=>member?.role === 'Staff')
     }

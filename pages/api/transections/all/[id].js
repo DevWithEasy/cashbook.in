@@ -7,7 +7,7 @@ import Payment from "../../../../database/model/Payment";
 export default async function handler(req, res){
     initDatabase()
     try{
-        const entries = await Entry.find({"book" : req.query.id})
+        const entries = await Entry.find({"book" : req.query.id}).populate('user')
 
         const data = []
 
