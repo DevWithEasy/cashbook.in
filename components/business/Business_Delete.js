@@ -11,9 +11,11 @@ import { useSelector } from 'react-redux';
 import axios from 'axios'
 import { MdDeleteOutline } from 'react-icons/md';
 import { notificationNOT, notificationOK } from '../../utils/toastNotification';
+import { useRouter } from 'next/router';
 
 const Business_Delete = ({ view, setView }) => {
     const { currentBusiness } = useSelector(state => state.book)
+    const router = useRouter()
     const [data, setData] = useState({})
     const [loading, setLoading] = useState(false)
     const [nextStep, setNextStep] = useState(false)
@@ -44,9 +46,8 @@ const Business_Delete = ({ view, setView }) => {
             })
             if (res.data.success) {
                 setLoading(false)
-                console.log(res.data)
                 notificationOK(res.data.message)
-
+                router.push(`/checking`)
             }
         } catch (error) {
             console.log(error)

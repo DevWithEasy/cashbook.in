@@ -1,5 +1,10 @@
 import Book from "../model/Book"
 import Business from "../model/Business"
+import Category from "../model/Category"
+import Contact from "../model/Contact"
+import Entry from "../model/Entry"
+import History from "../model/History"
+import Payment from "../model/Payment"
 import User from "../model/User"
 
 export const getBusiness = async (req, res) => {
@@ -111,10 +116,33 @@ export const updateBusiness = async (req, res) => {
 export const deleteBusiness = async (req, res) => {
     try {
         const business =  await Business.findById(req.query.id)
+
+        await Promise.all(
+            business.books.map(async(book)=>{
+                const entries = await Entry.find({book : book})
+
+                entries.forEach(async(entry)=>{
+                    await History.deleteMany({entry : entry})
+                })
+
+                await Entry.deleteMany({book : book})
+
+                await Category.deleteMany({book : book})
+
+                await Payment.deleteMany({book : book})
+
+                await Contact.deleteMany({book : book})
+
+                await Book.findByIdAndDelete(book)
+            })
+        )
+
+        await Business.findByIdAndDelete(req.query.id)
+
         res.status(200).json({
             success: true,
             status: 200,
-            data: business,
+            data: {},
             message : 'Successfully Deleted.'
         })
     } catch (err) {

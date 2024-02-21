@@ -9,7 +9,7 @@ import { IoIosArrowDown, IoIosArrowUp, IoMdCheckmarkCircle } from 'react-icons/i
 import Image from 'next/image';
 import { categories, types } from '../../public/image/bussiness/business_data';
 import axios from 'axios'
-import { updateBusiness } from '../../store/slice/bookSlice';
+import { addCurrentBusiness, updateBusiness } from '../../store/slice/bookSlice';
 import { notificationNOT, notificationOK } from '../../utils/toastNotification';
 
 export default function Business_Update({view, setView }) {
@@ -41,6 +41,7 @@ export default function Business_Update({view, setView }) {
                 setLoading(false)
                 setView(false)
                 dispatch(updateBusiness(res.data.data))
+                dispatch(addCurrentBusiness(res.data.data))
                 notificationOK(res.data.message)
             }
             
