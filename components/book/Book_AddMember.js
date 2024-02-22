@@ -6,18 +6,19 @@ import {
 import React, { useState } from 'react';
 import { ImUsers } from 'react-icons/im';
 import { IoIosArrowForward, IoMdCheckmarkCircle } from 'react-icons/io';
-import { MdCancel, MdInfo } from "react-icons/md";
+import { MdCancel, MdInfo, MdOutlineInfo } from "react-icons/md";
 import { Business_AddTeamMember } from '../Index';
 import { useSelector } from 'react-redux'
 import BusinessManager from '../../utils/BusinessManager';
 import Image from 'next/image'
+import { AiOutlinePlus } from 'react-icons/ai';
 
 const Book_AddMember = ({ view, setView }) => {
     const { books, businesses, currentBusiness, currentBook } = useSelector(state => state.book)
     const { user } = useSelector(state => state.auth)
     const [addView, setAddView] = useState(false)
     const [nextStep, setNextStep] = useState(false)
-    const [active, setActive] = useState('Staff')
+    const [active, setActive] = useState('Data Operator')
     const [selected, setSelected] = useState({})
     const [loading, setLoading] = useState(false)
 
@@ -85,7 +86,7 @@ const Book_AddMember = ({ view, setView }) => {
                         className='h-screen'
                     >
                         <div
-                            className='h-28'
+                            className='h-36'
                         >
                             <div
                                 className='px-6 py-4 flex justify-between items-center'
@@ -117,11 +118,11 @@ const Book_AddMember = ({ view, setView }) => {
                             </div>
                         </div>
                         <div
-                            className='h-[100vh-112px]'
+                            className='h-[calc(100vh-224px)] p-6 overflow-y-auto'
                         >
                             {!nextStep ?
                                 <div
-                                    className='h-[calc(100vh-192px)] p-6 space-y-5 overflow-y-auto'
+                                    className='space-y-5'
                                 >
                                     <div
                                         className='space-y-2'
@@ -194,7 +195,10 @@ const Book_AddMember = ({ view, setView }) => {
                                                                             </p>
                                                                         </div>
                                                                         <button
-                                                                            onClick={() => setNextStep(!nextStep)}
+                                                                            onClick={() => {
+                                                                                setNextStep(!nextStep)
+                                                                                setSelected(member)
+                                                                            }}
                                                                             className='px-4 py-1 text-xs rounded bg-[#E7F2F9] text-[#137AC6]'
                                                                         >
                                                                             ADD
@@ -210,33 +214,33 @@ const Book_AddMember = ({ view, setView }) => {
                                     </div>
                                 </div>
                                 :
-                                <div>
+                                <div
+                                    className='space-y-5'
+                                >
                                     <div
-                                        className='p-4 flex justify-between items-center space-x-2 border rounded'
+                                        className='p-4 flex  items-center space-x-4 border rounded'
                                     >
+                                        <div>
+                                            <div
+                                                className='h-10 w-10 flex justify-center items-center text-xl bg-[#eee6ed] text-[#5a0f4c] rounded-full'
+                                            >
+                                                <span>
+                                                    {selected?.user?.email?.toLocaleUpperCase().split('')[0]}
+                                                </span>
+                                            </div>
+                                        </div>
                                         <div
-                                            className='h-10 w-10 flex justify-center items-center text-xl bg-[#eee6ed] text-[#5a0f4c] rounded-full'
+                                            className='w-full flex justify-between items-center'
                                         >
-                                            <span>
-                                                {email.toLocaleUpperCase().split('')[0]}
+                                            <div>
+                                                <p className=''>
+                                                    {selected?.user?.name}
+                                                </p>
+                                                <p className='text-sm text-gray-500'>{selected?.user?.email}</p>
+                                            </div>
+                                            <span className='px-2 py-1 text-sm bg-[#EBEEFD] text-[#4863D4] rounded'>
+                                                {selected?.role}
                                             </span>
-                                        </div>
-                                        <div
-                                            className=''
-                                        >
-                                            <p className=''>
-                                                {isUser ? user?.name : email}
-                                            </p>
-                                            <p className='text-sm text-gray-500'>{email}</p>
-                                        </div>
-                                        <div
-                                            className={`px-4 py-1 flex justify-center items-center text-xs rounded no-wrap ${isUser ? 'bg-[#EDEFFB] text-[#4863D4]' : 'bg-gray-100 text-gray-500'}`}
-                                        >
-                                            {isUser ?
-                                                'Cashbook User'
-                                                :
-                                                'Not a Cashbook User'
-                                            }
                                         </div>
                                     </div>
                                     <div
@@ -254,16 +258,22 @@ const Book_AddMember = ({ view, setView }) => {
                                                 className='space-x-2'
                                             >
                                                 <button
-                                                    onClick={() => setActive('Partner')}
-                                                    className={`px-4 py-1 bg-gray-100 border rounded-full ${active == 'Partner' && 'bg-[#f8efe7] text-[#bd610d] border-[#bd610d]'}`}
+                                                    onClick={() => setActive('Data Operator')}
+                                                    className={`px-4 py-1 bg-gray-100 border rounded-full ${active == 'Data Operator' && 'bg-[#e7f2f9] text-[#137ac9] border-[#137ac9]'}`}
                                                 >
-                                                    Partner
+                                                    Data Operator
                                                 </button>
                                                 <button
-                                                    onClick={() => setActive('Staff')}
-                                                    className={`px-4 py-1 bg-gray-100 border rounded-full ${active == 'Staff' && 'bg-[#e7f2f9] text-[#137ac9] border-[#137ac9]'}`}
+                                                    onClick={() => setActive('Viewer')}
+                                                    className={`px-4 py-1 bg-gray-100 border rounded-full ${active == 'Viewer' && 'bg-[#e7f2f9] text-[#137ac9] border-[#137ac9]'}`}
                                                 >
-                                                    Staff
+                                                    Viewer
+                                                </button>
+                                                <button
+                                                    onClick={() => setActive('Admin')}
+                                                    className={`px-4 py-1 bg-gray-100 border rounded-full ${active == 'Admin' && 'bg-[#e7f2f9] text-[#137ac9] border-[#137ac9]'}`}
+                                                >
+                                                    Admin
                                                 </button>
                                             </div>
                                             <div
@@ -316,9 +326,37 @@ const Book_AddMember = ({ view, setView }) => {
                                             </div>
                                         </div>
                                     </div>
+                                    <p
+                                        className='flex items-center space-x-3 text-sm text-gray-500'
+                                    >
+                                        <MdOutlineInfo/>
+                                        <span>You can change this role later</span>
+                                    </p>
                                 </div>
                             }
                         </div>
+                        
+                            {nextStep &&
+                            <div
+                            className='h-20 p-6 flex justify-end items-center border-t'
+                        >
+                                <button
+                                    onClick={() => { }}
+                                    className='flex items-center space-x-2  px-8 py-3 border bg-[#4863D4] text-white rounded'
+
+                                >
+                                    <AiOutlinePlus/>
+                                    {loading ?
+                                        <span>Addeding...</span>
+                                        :
+                                        <span>
+                                            ADD
+                                        </span>
+                                    }
+                                </button>
+                                </div>
+                            }
+                        
                     </div>
 
 
