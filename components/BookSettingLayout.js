@@ -25,7 +25,7 @@ const BookSettingLayout = ({ path, children }) => {
     ]
     return (
         <div
-            className=''
+            className='h-[calc(100vh-48px)]'
         >
             <div
                 className='h-[70px] px-6 border-b flex items-center'
@@ -71,7 +71,7 @@ const BookSettingLayout = ({ path, children }) => {
                 </div>
             </div>
             <div
-                className='flex justify-between'
+                className='h-[calc(100vh-118px)] flex justify-between'
             >
                 <div
                     className='w-3/12 pl-4'
@@ -98,7 +98,7 @@ const BookSettingLayout = ({ path, children }) => {
                     }
                 </div>
                 <div
-                    className='w-9/12 px-6 py-4 border-l'
+                    className='w-9/12 px-6 py-4 border-l overflow-y-auto'
                 >
                     {children}
                 </div>

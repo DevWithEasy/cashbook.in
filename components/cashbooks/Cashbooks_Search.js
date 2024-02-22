@@ -1,7 +1,7 @@
 import React from 'react';
 import { CiSearch } from 'react-icons/ci';
 import { TiArrowSortedDown } from 'react-icons/ti';
-import {MdOutlineRadioButtonChecked, MdOutlineTurnRight, MdRadioButtonUnchecked } from "react-icons/md";
+import { MdOutlineRadioButtonChecked, MdOutlineTurnRight, MdRadioButtonUnchecked } from "react-icons/md";
 import {
     Menu,
     MenuButton,
@@ -9,7 +9,7 @@ import {
     MenuList,
 } from '@chakra-ui/react';
 
-const Cashbooks_Search = ({sortBy,setSortBy}) => {
+const Cashbooks_Search = ({ sortBy, setSortBy }) => {
     const sorts = [
         {
             title: 'Last Update',
@@ -67,17 +67,20 @@ const Cashbooks_Search = ({sortBy,setSortBy}) => {
                         sorts.map((sort, i) =>
                             <MenuItem
                                 key={i}
-                                onClick={() => setSortBy(sort)}
-                                className='space-x-2'
                             >
-                                {sort.sort === sortBy.sort ?
-                                    <MdOutlineRadioButtonChecked className='text-[#4863D4]' />
-                                    :
-                                    <MdRadioButtonUnchecked />
-                                }
-                                <span>
-                                    {sort.title}
-                                </span>
+                                <button
+                                    onClick={() => setSortBy(sort)}
+                                    className='space-x-2'
+                                >
+                                    {sort.sort === sortBy.sort ?
+                                        <MdOutlineRadioButtonChecked className='text-[#4863D4]' />
+                                        :
+                                        <MdRadioButtonUnchecked />
+                                    }
+                                    <span>
+                                        {sort.title}
+                                    </span>
+                                </button>
                             </MenuItem>
                         )
                     }

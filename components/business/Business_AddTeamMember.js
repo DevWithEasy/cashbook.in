@@ -105,6 +105,16 @@ const Business_AddTeamMember = ({ view, setView }) => {
         }
     }
 
+    const checkEmail=()=>{
+        const member = currentBusiness.teams.find(member=>member?.user?.email === email)
+        if(member?.role){
+            return true
+        }else{
+            return false
+        }
+    }
+
+
     return (
         <>
             <Drawer
@@ -186,6 +196,9 @@ const Business_AddTeamMember = ({ view, setView }) => {
                                     </div>
                                     :
                                     <div
+                                        className='space-y-3'
+                                    >
+                                        <div
                                         className='space-y-1'
                                     >
                                         <label className='block text-sm'>Add Email</label>
@@ -196,6 +209,15 @@ const Business_AddTeamMember = ({ view, setView }) => {
                                             className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                                         />
                                     </div>
+                                    {checkEmail() &&
+                                    <p
+                                        className='p-1 bg-[#F7E1E1] text-[#C93B3B] text-sm rounded'
+                                    >
+                                        Member with this email address <b>({email})</b> already added to this business.
+                                        </p>
+                                    }
+                                    </div>
+                                    
                                 }
                             </div>
                             :

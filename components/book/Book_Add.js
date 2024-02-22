@@ -6,7 +6,6 @@ import {
   Modal,
   ModalOverlay,
   ModalContent,
-  Spinner,
 } from '@chakra-ui/react'
 
 export default function Book_Add({ view, setView }) {
