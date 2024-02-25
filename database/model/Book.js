@@ -16,8 +16,18 @@ const bookSchema = mongoose.Schema({
     members: {
         type: [
             {
-                type: mongoose.Types.ObjectId,
-                ref: 'User'
+                role  : {
+                    type: String,
+                },
+                user  : {
+                    type: mongoose.Types.ObjectId,
+                    ref: 'User'
+                },
+                createdAt : {
+                    type : Date,
+                    required : true,
+                    default : Date.now()
+                }
             }
         ],
         default: []
