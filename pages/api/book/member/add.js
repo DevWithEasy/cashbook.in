@@ -9,22 +9,30 @@ async function handler(req, res) {
         const userRole = {
             user: req.body.user,
             role: req.body.role,
-            createdAt : Date.now()
+            createdAt: Date.now()
         }
 
         await Book.findByIdAndUpdate(req.body.book, {
             $push: {
-                teams: userRole
+                members: userRole
             }
         })
 
         const book = await Book.findById(req.body.book)
+            .populate('user')
+            // .populate({
+            //     path: 'members',
+            //     populate: {
+            //         path: 'user',
+            //         model: 'User'
+            //     }
+            // })
 
         return res.status(200).json({
             success: true,
             status: 200,
-            invite : false, 
-            data : book,
+            invite: false,
+            data: book,
             message: "Team member added Successfully"
         })
 
