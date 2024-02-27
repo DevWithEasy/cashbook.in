@@ -9,11 +9,14 @@ import { IoMdCheckmarkCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
 import axios from 'axios'
 import Business_AddMemberSuccess from './Business_AddMemberSuccess';
-import {useSelector} from 'react-redux'
+import {useDispatch, useSelector} from 'react-redux'
 import { notificationNOT, notificationOK } from '../../utils/toastNotification';
+import api from '../../utils/api';
+import { addCurrentBusiness, updateBusiness } from '../../store/slice/bookSlice';
 
 
 const Business_AddTeamMember = ({ view, setView }) => {
+    const dispatch = useDispatch()
     const {currentBusiness} = useSelector(state=>state.book)
     const [nextStep, setNextStep] = useState(false)
     const [emailView, setEmailView] = useState(false)
@@ -62,7 +65,7 @@ const Business_AddTeamMember = ({ view, setView }) => {
     const handleVerify = async () => {
         setLoading(true)
         try {
-            const res = await axios.post(`/api/business/member-verify?email=${email}`, {}, {
+            const res = await axios.post(`${api}/business/member-verify?email=${email}`, {}, {
                 headers: {
                     "cb-access-token": localStorage.getItem("cb_access_token")
                 }
@@ -82,13 +85,15 @@ const Business_AddTeamMember = ({ view, setView }) => {
     const addMemberConfirm = async () => {
         setLoading(true)
         try {
-            const res = await axios.post(`/api/business/member-confirm?email=${email}&role=${active}&business=${currentBusiness._id}`, {}, {
+            const res = await axios.post(`${api}/business/member-confirm?email=${email}&role=${active}&business=${currentBusiness._id}`, {}, {
                 headers: {
                     "cb-access-token": localStorage.getItem("cb_access_token")
                 }
             })
 
             if (res.data.success) {
+                dispatch(updateBusiness(res.data.data))
+                dispatch(addCurrentBusiness(res.data.data))
                 setLoading(false)
                 notificationOK(res.data.message)
                 setView(false)

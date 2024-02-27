@@ -12,6 +12,7 @@ import axios from 'axios'
 import { MdDeleteOutline } from 'react-icons/md';
 import { notificationNOT, notificationOK } from '../../utils/toastNotification';
 import { useRouter } from 'next/router';
+import api from '../../utils/api';
 
 const Business_Delete = ({ view, setView }) => {
     const { currentBusiness } = useSelector(state => state.book)
@@ -23,7 +24,7 @@ const Business_Delete = ({ view, setView }) => {
 
     const getBusinessInfo = async () => {
         try {
-            const res = await axios.get(`/api/business/info?id=${currentBusiness._id}`, {
+            const res = await axios.get(`${api}/business/info/${currentBusiness._id}`, {
                 headers: {
                     "cb-access-token": localStorage.getItem("cb_access_token")
                 }
@@ -39,7 +40,7 @@ const Business_Delete = ({ view, setView }) => {
     const handleDeleteBusiness = async () => {
         setLoading(true)
         try {
-            const res = await axios.delete(`/api/business?id=${currentBusiness._id}`, {
+            const res = await axios.delete(`${api}/business/${currentBusiness._id}`, {
                 headers: {
                     "cb-access-token": localStorage.getItem("cb_access_token")
                 }

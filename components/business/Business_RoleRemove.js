@@ -8,9 +8,12 @@ import { RxDotFilled } from 'react-icons/rx';
 import { useDispatch, useSelector } from 'react-redux'
 import { notificationNOT, notificationOK } from '../../utils/toastNotification';
 import axios from 'axios'
-import { updateBusiness } from '../../store/slice/bookSlice';
+import { addCurrentBusiness, updateBusiness } from '../../store/slice/bookSlice';
+import api from '../../utils/api';
+import { useRouter } from 'next/router';
 
 export default function Business_RoleRemove({ member, view, setView }) {
+  const router = useRouter()
   const dispatch = useDispatch()
   const { user } = useSelector(state => state.auth)
   const { currentBusiness } = useSelector(state => state.book)
@@ -19,7 +22,7 @@ export default function Business_RoleRemove({ member, view, setView }) {
   const handleRoleRemove = async () => {
     setLoading(true)
     try {
-      const res = await axios.post(`/api/business/member-remove`, {
+      const res = await axios.post(`${api}/business/member-remove`, {
         b_id: currentBusiness._id,
         t_id: member._id
       },
@@ -32,6 +35,8 @@ export default function Business_RoleRemove({ member, view, setView }) {
       if (res.data.success) {
         setLoading(false)
         dispatch(updateBusiness(res.data.data))
+        dispatch(addCurrentBusiness(res.data.data))
+        router.push(`/business/${currentBusiness._id}/business-settings/team`)
         notificationOK(res.data.message)
         setView(false)
       }

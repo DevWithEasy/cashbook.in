@@ -25,7 +25,6 @@ const Invite = () => {
         }
     }
 
-    // console.log(router.query)
     return (
         <div
             className='h-screen pt-10  bg-gray-100 overflow-y-auto'

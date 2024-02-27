@@ -10,13 +10,15 @@ import { IoMdArrowBack } from "react-icons/io";
 import { MdCheckBox, MdCheckBoxOutlineBlank } from 'react-icons/md';
 import { RxDotFilled } from 'react-icons/rx';
 import { TiInfo } from "react-icons/ti";
-import { useSelector } from 'react-redux';
+import { useSelector,useDispatch } from 'react-redux';
 import user_img from '../../public/image/profile.png';
 import BusinessManager from '../../utils/BusinessManager';
 import { notificationNOT, notificationOK } from '../../utils/toastNotification';
-import { addCurrentBusiness } from '../../store/slice/bookSlice';
+import { addCurrentBusiness, updateBusiness } from '../../store/slice/bookSlice';
+import api from '../../utils/api';
 
 const Business_OwnerChange = ({ view, setView }) => {
+    const dispatch = useDispatch()
     const { businesses, currentBusiness, books } = useSelector(state => state.book)
     const { user } = useSelector(state => state.auth)
     const businessManager = new BusinessManager(user, books, businesses, currentBusiness)
@@ -44,7 +46,7 @@ const Business_OwnerChange = ({ view, setView }) => {
     const handleOwnerChange = async () => {
         setLoading(true)
         try {
-            const res = await axios.post(`/api/business/member-owner-change`, {
+            const res = await axios.post(`${api}/business/member-owner-change`, {
                 b_id: currentBusiness._id,
                 t_id: selected._id,
                 u_id : selected?.user?._id

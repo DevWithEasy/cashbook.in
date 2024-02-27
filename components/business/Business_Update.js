@@ -11,6 +11,7 @@ import { categories, types } from '../../public/image/bussiness/business_data';
 import axios from 'axios'
 import { addCurrentBusiness, updateBusiness } from '../../store/slice/bookSlice';
 import { notificationNOT, notificationOK } from '../../utils/toastNotification';
+import api from '../../utils/api';
 
 export default function Business_Update({view, setView }) {
     const { currentBusiness } = useSelector(state => state.book)
@@ -29,7 +30,7 @@ export default function Business_Update({view, setView }) {
     const handleBusinessUpdate = async () => {
         setLoading(true)
         try {
-            const res = await axios.put(`/api/business?id=${currentBusiness._id}`,
+            const res = await axios.put(`${api}/business/${currentBusiness._id}`,
                 { name, address, phone, email, stuffs, category: category.id, type: type.id },
                 {
                     headers: {

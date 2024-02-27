@@ -7,9 +7,7 @@ import {
 } from '@chakra-ui/react';
 import moment from 'moment';
 import React, { useState } from 'react';
-import { MdDeleteOutline } from "react-icons/md";
-import { RxCross2, RxDotFilled } from "react-icons/rx";
-import { TiInfo } from "react-icons/ti";
+import { RxDotFilled } from "react-icons/rx";
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteEntry } from '../../libs/allEntryAction';
 import { removeEntry } from '../../store/slice/bookSlice';

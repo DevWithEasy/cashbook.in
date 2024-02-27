@@ -18,7 +18,11 @@ const Checking = () => {
 
     const handleChecking = async () => {
         try {
-            const res = await axios.get(`${api}/user/checking?id=${user._id}`)
+            const res = await axios.get(`${api}/user/checking`,{
+                headers: {
+                    "cb-access-token": localStorage.getItem("cb_access_token")
+                }
+            })
 
             if (res.data.success) {
 

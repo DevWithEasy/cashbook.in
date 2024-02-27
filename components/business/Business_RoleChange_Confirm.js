@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { notificationNOT, notificationOK } from '../../utils/toastNotification';
 import axios from 'axios'
 import { addCurrentBusiness, updateBusiness } from '../../store/slice/bookSlice';
+import api from '../../utils/api';
 
 export default function Business_RoleChange_Confirm({ member, view, setView, setFirstView }) {
   const dispatch = useDispatch()
@@ -19,7 +20,7 @@ export default function Business_RoleChange_Confirm({ member, view, setView, set
   const handleRoleChange = async () => {
     setLoading(true)
     try {
-      const res = await axios.post(`/api/business/member-role-change?`, {
+      const res = await axios.post(`${api}/business/member-role-change`, {
         b_id: currentBusiness._id,
         t_id: member._id,
         role: member?.role === 'Staff' ? 'Partner' : 'Staff'
