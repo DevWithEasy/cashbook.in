@@ -22,7 +22,7 @@ const Entry_Category = ({ items, view, setView }) => {
     useEffect(() => {
         dispatch(addCCPs([]))
         getData({
-            url: `/api/category?id=${currentBook._id}`,
+            url: `/category/${currentBook._id}`,
             dispatch,
             action: addCCPs,
             setLoading

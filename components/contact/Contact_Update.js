@@ -93,7 +93,7 @@ const Contact_Update = ({ id, view, setView }) => {
             <button
               onClick={(e) => updateData(
                 {
-                  url: `/api/contact?id=${id}`,
+                  url: `contact/${id}`,
                   value: { name, phone, type },
                   action : updateCCP,
                   dispatch,

@@ -48,7 +48,7 @@ export default function Category_Delete({ id,view, setView }) {
                             onClick={() =>
                                 deleteData({
                                     id,
-                                    url: `/api/category?id=${id}`,
+                                    url: `category/${id}`,
                                     action: removeCCP,
                                     dispatch,
                                     setLoading,

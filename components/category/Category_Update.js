@@ -52,7 +52,7 @@ const Category_Update = ({ id, view, setView }) => {
             <button
               onClick={(e) => updateData(
                 {
-                  url : `/api/category?id=${id}`,
+                  url : `category/?id=${id}`,
                   value,
                   action : updateCCP,
                   dispatch,

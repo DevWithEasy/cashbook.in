@@ -36,7 +36,7 @@ const Entry_Details = ({ id, view, setView }) => {
             id, setEntry, setLoading
         })
     }, [id])
-
+    console.log(entry)
     return (
         <>
             <Drawer
@@ -157,7 +157,7 @@ const Entry_Details = ({ id, view, setView }) => {
                                     </p>
                                 </div>
                             </div>
-                            {entry?.histories?.length > 0 ?
+                            {entry?.histories?.length > 0 &&
                                 <>
                                     {
                                         entry.histories.map(history =>
@@ -176,9 +176,15 @@ const Entry_Details = ({ id, view, setView }) => {
                                                 <div
                                                     className='text-sm space-y-2'
                                                 >
-                                                    <p className='text-gray-500'>
-                                                        Change On {getDate(history.createdAt)}
-                                                    </p>
+                                                    <div>
+                                                        <p>
+                                                            Change By
+                                                            {history?.user?._id === user._id ? ' You' : history?.user?.name}
+                                                        </p>
+                                                        <p className='text-gray-500 text-xs'>
+                                                            Change On {getDate(history.createdAt)}
+                                                        </p>
+                                                    </div>
                                                     <p>
                                                         <span>From : </span>
                                                         <span className='font-semibold'> {history.from}</span>
@@ -193,35 +199,6 @@ const Entry_Details = ({ id, view, setView }) => {
                                         )
                                     }
                                 </>
-                                :
-                                <div
-                                    className='py-1 relative pl-6 border-l'
-                                >
-                                    <div
-                                        className='absolute -left-4 top-2.5'
-                                    >
-                                        <AiOutlineEdit
-                                            size={30}
-                                            className='p-2 bg-gray-100 text-gray-400 rounded-full'
-                                        />
-                                    </div>
-                                    <div
-                                        className='text-sm space-y-2'
-                                    >
-                                        <p className='text-gray-500'>
-                                            Change On {getDate(history.createdAt)}
-                                        </p>
-                                        <p>
-                                            <span>From : </span>
-                                            <span className='font-semibold'> {history.from}</span>
-                                        </p>
-                                        <p>
-                                            <span>To : </span>
-                                            <span className='font-semibold'> {history.to}</span>
-                                        </p>
-                                        <p>{history.remark}</p>
-                                    </div>
-                                </div>
                             }
                             {entry?.histories?.length === 0 &&
                                 <div
@@ -300,24 +277,24 @@ const Entry_Details = ({ id, view, setView }) => {
                     }
                     {moveView &&
                         <Entry_Move {...{
-                            items : [id],
-                            setFirstView : setView,
+                            items: [id],
+                            setFirstView: setView,
                             view: moveView,
                             setView: setMoveView
                         }} />
                     }
                     {copyView &&
                         <Entry_Duplicate {...{
-                            items : [id],
-                            setFirstView : setView,
+                            items: [id],
+                            setFirstView: setView,
                             view: copyView,
                             setView: setCopyView
                         }} />
                     }
                     {oppositeView &&
                         <Entry_Opposite {...{
-                            items : [id],
-                            setFirstView : setView,
+                            items: [id],
+                            setFirstView: setView,
                             view: oppositeView,
                             setView: setOppositeView
                         }} />

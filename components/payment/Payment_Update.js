@@ -53,7 +53,7 @@ const Payment_Update = ({ id, view, setView }) => {
             <button
               onClick={(e) => updateData(
                 {
-                  url : `/api/payment?id=${id}`,
+                  url : `payment/${id}`,
                   value,
                   action : updateCCP,
                   dispatch,

@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import Head from 'next/head'
 import { addEntries } from '../../../../../store/slice/bookSlice';
 import axios from 'axios'
+import api from '../../../../../utils/api';
 
 const Transactions = () => {
     const { entries, currentBook } = useSelector(state => state.book)
@@ -60,7 +61,7 @@ const Transactions = () => {
         dispatch(addEntries([]))
         setLoading(true)
         try {
-            const res = await axios.get(`/api/transections/all/${id}`, {
+            const res = await axios.get(`${api}/transection/all/${id}`, {
                 headers: {
                     "cb-access-token": localStorage.getItem("cb_access_token")
                 }

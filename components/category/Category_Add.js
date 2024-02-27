@@ -49,7 +49,7 @@ export default function Category_Add({ view, setView }) {
           >
             <button
               onClick={(e) => createData({
-                url : `/api/category?id=${currentBook._id}`,
+                url : `category/${currentBook._id}`,
                 value : {
                   name
                 },

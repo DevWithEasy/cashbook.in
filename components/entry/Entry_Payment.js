@@ -22,7 +22,7 @@ const Entry_Payment = ({ items, view, setView }) => {
     useEffect(() => {
         dispatch(addCCPs([]))
         getData({
-            url: `/api/payment?id=${currentBook._id}`,
+            url: `/payment/${currentBook._id}`,
             dispatch,
             action: addCCPs,
             setLoading

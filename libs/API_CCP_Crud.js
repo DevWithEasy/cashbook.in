@@ -32,7 +32,7 @@ export const getData=async(data)=>{
     }
 
     try {
-        const res = await axios.get(url,{
+        const res = await axios.get(`${api}/${url}`,{
             headers : {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -55,7 +55,7 @@ export const updateData=async(data)=>{
     const {url,value,dispatch,action,refresh,setLoading,setView} = data
     setLoading(true)
     try {
-        const res = await axios.put(url,value,{
+        const res = await axios.put(`${api}/${url}`,value,{
             headers : {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -76,7 +76,7 @@ export const deleteData=async(data)=>{
     const {id,url,dispatch,action,setLoading,setView} = data
     setLoading(true)
     try {
-        const res = await axios.delete(url,{
+        const res = await axios.delete(`${api}/${url}`,{
             headers : {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }

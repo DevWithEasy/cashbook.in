@@ -70,7 +70,7 @@ export default function Contact_Delete({ id, view, setView }) {
                             onClick={(e) => deleteData(
                                 {
                                     id,
-                                    url: `/api/contact?id=${id}`,
+                                    url: `contact/${id}`,
                                     action: removeCCP,
                                     dispatch,
                                     setLoading,

@@ -22,7 +22,7 @@ const Entry_Contact = ({ items, view, setView }) => {
     useEffect(() => {
         dispatch(addCCPs([]))
         getData({
-            url: `/api/contact?id=${currentBook._id}`,
+            url: `/contact/?id=${currentBook._id}`,
             dispatch,
             action: addCCPs,
             setLoading

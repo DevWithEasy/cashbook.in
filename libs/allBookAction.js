@@ -20,7 +20,7 @@ export const getBooks = async (id,dispatch, action) => {
 export const createBook = async (id, name, setLoading, dispatch, action, refresh, setView) => {
     try {
         setLoading(true)
-        const res = await axios.post(`${api}/book/add?id=${id}`, { name }, {
+        const res = await axios.post(`${api}/book/${id}`, { name }, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -33,6 +33,7 @@ export const createBook = async (id, name, setLoading, dispatch, action, refresh
             setView(false)
         }
     } catch (err) {
+        console.log(err)
         setLoading(false)
         notificationNOT(err.message)
     }

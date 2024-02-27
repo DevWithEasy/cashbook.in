@@ -49,7 +49,7 @@ export default function Payment_Add({ view, setView }) {
           >
             <button
               onClick={(e) => createData({
-                url : `/api/payment?id=${currentBook._id}`,
+                url : `payment/${currentBook._id}`,
                 value : {
                   name
                 },

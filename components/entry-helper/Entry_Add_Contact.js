@@ -15,7 +15,7 @@ const Entry_Add_Contact = ({ contact, setContact, contactAddView, setContactAddV
     useEffect(() => {
         dispatch(addCCPs([]))
         getData({
-            url: `/api/contact?id=${currentBook._id}`,
+            url: `contact/${currentBook._id}`,
             dispatch,
             action: addCCPs,
             setLoading

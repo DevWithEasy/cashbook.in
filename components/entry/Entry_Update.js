@@ -6,19 +6,19 @@ import {
 import moment from 'moment';
 import React, { useState } from 'react';
 import { BsClock } from "react-icons/bs";
+import { useDispatch, useSelector } from 'react-redux';
+import { updateEntry } from '../../libs/allEntryAction';
+import { updatePrevEntry } from '../../store/slice/bookSlice';
+import handleInput from '../../utils/handleInput';
 import { Category_Add, Contact_Add, Payment_Add } from '../Index';
 import Entry_Add_AMPM from '../entry-helper/Entry_Add_AMPM';
 import Entry_Add_Category from '../entry-helper/Entry_Add_Category';
 import Entry_Add_Contact from '../entry-helper/Entry_Add_Contact';
+import Entry_Add_Header from '../entry-helper/Entry_Add_Header';
 import Entry_Add_Hour from '../entry-helper/Entry_Add_Hour';
 import Entry_Add_Minute from '../entry-helper/Entry_Add_Minute';
 import Entry_Add_Payment from '../entry-helper/Entry_Add_Payment';
-import { updateEntry } from '../../libs/allEntryAction';
-import Entry_Add_Header from '../entry-helper/Entry_Add_Header';
 import Entry_Add_Type from '../entry-helper/Entry_Add_Type';
-import handleInput from '../../utils/handleInput';
-import {useDispatch,useSelector} from 'react-redux'
-import { addEntry, updatePrevEntry } from '../../store/slice/bookSlice';
 
 
 const Entry_Update = ({id,view, setView }) => {

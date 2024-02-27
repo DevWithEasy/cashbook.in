@@ -69,7 +69,7 @@ export default function Payment_Delete({id, view, setView }) {
                             onClick={() => deleteData(
                                 {
                                     id,
-                                    url : `/api/payment?id=${id}`,
+                                    url : `payment/${id}`,
                                     action : removeCCP,
                                     dispatch,
                                     setLoading,

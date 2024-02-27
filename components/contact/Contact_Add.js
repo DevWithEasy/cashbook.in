@@ -81,7 +81,7 @@ export default function Contact_Add({ view, setView }) {
             <button
               onClick={(e) =>
                 createData({
-                  url : `/api/contact?id=${currentBook._id}`,
+                  url : `contact/${currentBook._id}`,
                   value : {
                     name,
                     phone,
