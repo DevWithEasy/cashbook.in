@@ -11,8 +11,11 @@ import BusinessManager from '../../utils/BusinessManager'
 import { notificationNOT, notificationOK } from '../../utils/toastNotification'
 import { Book_AddMember_AddButton, Book_AddMember_Header, Book_AddMember_Member, Book_AddMember_Role, Book_AddMember_Search, Book_AddMember_Selected, Business_AddTeamMember } from '../Index'
 import axios from 'axios'
+import {useDispatch} from 'react-redux'
+import { addCurrentBook } from '../../store/slice/bookSlice'
 
 const Book_AddMember = ({ view, setView }) => {
+    const dispatch = useDispatch()
     const { books, businesses, currentBusiness, currentBook } = useSelector(state => state.book)
     const { user } = useSelector(state => state.auth)
     const [addView, setAddView] = useState(false)
@@ -41,6 +44,8 @@ const Book_AddMember = ({ view, setView }) => {
                 setLoading(false)
                 notificationOK(res.data.message)
                 setView(false)
+                dispatch(addCurrentBook(res.data.data))
+                console.log(res.data)
             }
 
         } catch (error) {
