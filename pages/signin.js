@@ -7,6 +7,7 @@ import GoogleView from '../components/signin/GoogleView';
 import axios from 'axios'
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux'
+import api from '../utils/api';
 
 const Signup = () => {
     const router = useRouter()
@@ -39,7 +40,7 @@ const Signup = () => {
         e.preventDefault()
         setLoading(!loading)
         try {
-            const res = await axios.post(`/api/user/send_otp?email=${email}`)
+            const res = await axios.post(`${api}/user/send_otp?email=${email}`)
             if (res.data.success) {
                 setSuccess(true)
                 localStorage.setItem('cb_email', email)

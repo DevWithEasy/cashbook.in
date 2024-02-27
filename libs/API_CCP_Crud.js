@@ -1,11 +1,12 @@
 import axios from 'axios'
 import { notificationNOT, notificationOK } from '../utils/toastNotification'
+import api from '../utils/api'
 
 export const createData=async(data)=>{
     const {url,value,setView,setLoading,dispatch,action} = data
     setLoading(true)
     try {
-        const res = await axios.post(url,value,{
+        const res = await axios.post(`${api}/${url}`,value,{
             headers : {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }

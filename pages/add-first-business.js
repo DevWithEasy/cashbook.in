@@ -11,6 +11,7 @@ import { notificationNOT, notificationOK } from '../utils/toastNotification';
 import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux'
 import { addBusiness } from '../store/slice/bookSlice';
+import api from '../utils/api';
 
 const AddFirstBusiness = () => {
     const dispatch = useDispatch()
@@ -26,7 +27,7 @@ const AddFirstBusiness = () => {
     const createBusiness = async () => {
         try {
             setLoading(true)
-            const res = await axios.post('/api/business', {
+            const res = await axios.post(`${api}/business`, {
                 ...value,
                 category: category.id,
                 type: type.id

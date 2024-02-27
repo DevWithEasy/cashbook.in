@@ -8,6 +8,7 @@ import handleInput from '../utils/handleInput';
 import { login } from '../store/slice/authSlice';
 import { useRouter } from 'next/router';
 import { addBook, addBusiness } from '../store/slice/bookSlice';
+import api from '../utils/api';
 
 const Onboarding = () => {
     const router = useRouter()
@@ -21,7 +22,7 @@ const Onboarding = () => {
     const handleComplete=async()=>{
         setLoading(!loading)
         try {
-            const res = await axios.post(`api/user/account_confirm`,{
+            const res = await axios.post(`${api}/user/account_confirm`,{
                 ...value,check
             },
             {

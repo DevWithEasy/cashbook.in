@@ -4,6 +4,7 @@ import { Business_TeamMemberAccept } from '../components/Index';
 import { useRouter } from 'next/router';
 import { useState } from 'react';
 import axios from 'axios'
+import api from '../utils/api';
 
 const Invite = () => {
     const router = useRouter()
@@ -13,7 +14,7 @@ const Invite = () => {
     const handleAccepting = async () => {
         setLoading(true)
         try {
-            const res = await axios.post(`/api/user/send_otp?email=${router.query.email}`)
+            const res = await axios.post(`${api}/user/send_otp?email=${router.query.email}`)
             if (res.data.success) {
                 setView(true)
                 setLoading(false)

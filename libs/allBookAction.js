@@ -1,9 +1,10 @@
 import axios from "axios"
 import { notificationNOT, notificationOK } from "../utils/toastNotification"
+import api from "../utils/api"
 
 export const getBooks = async (id,dispatch, action) => {
     try {
-        const res = await axios.get(`/api/book/${id}`, {
+        const res = await axios.get(`${api}/book/${id}`, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -19,7 +20,7 @@ export const getBooks = async (id,dispatch, action) => {
 export const createBook = async (id, name, setLoading, dispatch, action, refresh, setView) => {
     try {
         setLoading(true)
-        const res = await axios.post(`/api/book/add?id=${id}`, { name }, {
+        const res = await axios.post(`${api}/book/add?id=${id}`, { name }, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -40,7 +41,7 @@ export const createBook = async (id, name, setLoading, dispatch, action, refresh
 export const updateBook = async (id, name, setLoading, dispatch, action, refresh, setView, isCurrent, addCurrentBook) => {
     try {
         setLoading(true)
-        const res = await axios.put(`/api/book/${id}`, { name }, {
+        const res = await axios.put(`${api}/book/${id}`, { name }, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -69,7 +70,7 @@ export const deleteBook = async (name, book, router, setLoading, dispatch, actio
     }
     try {
         setLoading(true)
-        const res = await axios.delete(`/api/book/${book._id}`, {
+        const res = await axios.delete(`${api}/book/${book._id}`, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -93,7 +94,7 @@ export const moveBook = async (data) => {
     const {id, to, setLoading, dispatch, action,refresh, setView} = data
     try {
         setLoading(true)
-        const res = await axios.put(`/api/book/move?id=${id}&to=${to}`, {},{
+        const res = await axios.put(`${api}/book/move?id=${id}&to=${to}`, {},{
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -116,7 +117,7 @@ export const copyBook = async (data) => {
     const {id, values, setLoading, dispatch, action,refresh, setView} = data
     try {
         setLoading(true)
-        const res = await axios.put(`/api/book/copy?id=${id}`, {values},{
+        const res = await axios.put(`${api}/book/copy?id=${id}`, {values},{
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }

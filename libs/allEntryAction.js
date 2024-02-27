@@ -1,11 +1,12 @@
 import axios from "axios"
 import { notificationNOT, notificationOK } from "../utils/toastNotification"
+import api from "../utils/api"
 
 export const createEntry = async (data) => {
     const { id, value, setLoading, dispatch, action, setView } = data
     try {
         setLoading(true)
-        const res = await axios.post(`/api/transections/${id}`, value, {
+        const res = await axios.post(`${api}/transections/${id}`, value, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -27,7 +28,7 @@ export const createEntryOther = async (data) => {
     const { id, value, setValue, type, setLoading, dispatch, action } = data
     try {
         setLoading(true)
-        const res = await axios.post(`/api/transections/add`, value, {
+        const res = await axios.post(`${api}/transections/add`, value, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -55,7 +56,7 @@ export const updateEntry = async (data) => {
 
     try {
         setLoading(true)
-        const res = await axios.put(`/api/transections/${value._id}`, value, {
+        const res = await axios.put(`${api}/transections/${value._id}`, value, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -76,7 +77,7 @@ export const deleteEntry = async (data) => {
     const { id, setLoading, dispatch, action, setView } = data
     try {
         setLoading(true)
-        const res = await axios.delete(`/api/transections/${id}`, {
+        const res = await axios.delete(`${api}/transections/${id}`, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -97,7 +98,7 @@ export const deleteEntryMany = async (data) => {
     const { items, setLoading, dispatch, action, setView } = data
     try {
         setLoading(true)
-        const res = await axios.put(`/api/transections/deletemany`,
+        const res = await axios.put(`${api}/transections/deletemany`,
             { entries: items },
             {
                 headers: {
@@ -121,7 +122,7 @@ export const deleteEntryMany = async (data) => {
 export const entryDetails = async (data) => {
     const { id, setEntry, setLoading } = data
     try {
-        const res = await axios.get(`/api/transections/${id}`, {
+        const res = await axios.get(`${api}/transections/${id}`, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -141,7 +142,7 @@ export const moveEntry = async (data) => {
 
     try {
         setLoading(true)
-        const res = await axios.put(`/api/transections/move?to=${to}`, { entries: value }, {
+        const res = await axios.put(`${api}/transections/move?to=${to}`, { entries: value }, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -167,7 +168,7 @@ export const copyEntry = async (data) => {
 
     try {
         setLoading(true)
-        const res = await axios.put(`/api/transections/copy?to=${to}`, { entries: value }, {
+        const res = await axios.put(`${api}/transections/copy?to=${to}`, { entries: value }, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -190,7 +191,7 @@ export const oppositeEntry = async (data) => {
 
     try {
         setLoading(true)
-        const res = await axios.put(`/api/transections/opposite?to=${to}`, { entries: value }, {
+        const res = await axios.put(`${api}/transections/opposite?to=${to}`, { entries: value }, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
@@ -213,7 +214,7 @@ export const ccpUpdateEntry = async (data) => {
 
     try {
         setLoading(true)
-        const res = await axios.put(`/api/transections/ccp_update?field=${field}&f_id=${id}`, { entries: items }, {
+        const res = await axios.put(`${api}/transections/ccp_update?field=${field}&f_id=${id}`, { entries: items }, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }

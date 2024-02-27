@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 import { addBooks, addBusinesses } from '../store/slice/bookSlice';
+import api from '../utils/api';
 
 const Checking = () => {
     const dispatch = useDispatch()
@@ -17,7 +18,7 @@ const Checking = () => {
 
     const handleChecking = async () => {
         try {
-            const res = await axios.post(`/api/user/checking?id=${user._id}`)
+            const res = await axios.get(`${api}/user/checking?id=${user._id}`)
 
             if (res.data.success) {
 
