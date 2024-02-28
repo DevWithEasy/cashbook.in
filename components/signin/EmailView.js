@@ -6,6 +6,7 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/slice/authSlice';
 import { notificationOK } from '../../utils/toastNotification';
+import api from '../../utils/api';
 
 const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleView, success, setSuccess, loading, setLoading }) => {
     const router = useRouter()
@@ -20,7 +21,7 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
         const mail = localStorage.getItem('cb_email') || email
         setLoading(!loading)
         try {
-            const res = await axios.post(`/api/user/verify_otp?email=${mail}&otp=${otp}`)
+            const res = await axios.post(`${api}/user/verify-otp?email=${mail}&otp=${otp}`)
 
             if (res.data.success) {
 

@@ -3,16 +3,16 @@ import {
     DrawerContent,
     DrawerOverlay
 } from '@chakra-ui/react'
+import axios from 'axios'
 import React, { useState } from 'react'
 import { AiOutlinePlus } from 'react-icons/ai'
 import { MdOutlineInfo } from "react-icons/md"
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { addCurrentBook, renameBook } from '../../store/slice/bookSlice'
 import BusinessManager from '../../utils/BusinessManager'
+import api from '../../utils/api'
 import { notificationNOT, notificationOK } from '../../utils/toastNotification'
 import { Book_AddMember_AddButton, Book_AddMember_Header, Book_AddMember_Member, Book_AddMember_Role, Book_AddMember_Search, Book_AddMember_Selected, Business_AddTeamMember } from '../Index'
-import axios from 'axios'
-import {useDispatch} from 'react-redux'
-import { addCurrentBook } from '../../store/slice/bookSlice'
 
 const Book_AddMember = ({ view, setView }) => {
     const dispatch = useDispatch()
@@ -29,7 +29,7 @@ const Book_AddMember = ({ view, setView }) => {
     const addBookMember = async () => {
         setLoading(true)
         try {
-            const res = await axios.post(`/api/book/member/add`, {
+            const res = await axios.post(`${api}/book/member/add`, {
                 role : active,
                 member: selected?.user?._id,
                 book: currentBook._id
@@ -45,6 +45,7 @@ const Book_AddMember = ({ view, setView }) => {
                 notificationOK(res.data.message)
                 setView(false)
                 dispatch(addCurrentBook(res.data.data))
+                dispatch(renameBook(res.data.data))
                 console.log(res.data)
             }
 

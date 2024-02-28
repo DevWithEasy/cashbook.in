@@ -38,17 +38,17 @@ const Signup = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault()
-        setLoading(!loading)
+        setLoading(true)
         try {
-            const res = await axios.post(`${api}/user/send_otp?email=${email}`)
+            const res = await axios.post(`${api}/user/send-otp?email=${email}`)
             if (res.data.success) {
                 setSuccess(true)
                 localStorage.setItem('cb_email', email)
-                setLoading(!loading)
+                setLoading(false)
             }
         } catch (error) {
             console.log(error)
-            setLoading(!loading)
+            setLoading(false)
         }
     }
 
