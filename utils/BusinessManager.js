@@ -29,7 +29,7 @@ class BusinessManager{
     }
 
     getTotalMembers(){
-        return this.currentBusiness.teams.length + 1
+        return this.currentBusiness?.teams?.length + 1
     }
 
     getOwnerPartners(){

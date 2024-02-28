@@ -4,13 +4,13 @@ import {
   ModalOverlay
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { MdOutlineContentCopy, MdOutlineTurnRight } from "react-icons/md";
-import { TbPlusMinus } from "react-icons/tb";
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
+import handleInput from '../utils/handleInput';
 
 export default function UpadateProfile({ view, setView }) {
-  const [name, setName] = useState("")
+  const {user} = useSelector(state=>state.auth)
   const dispatch = useDispatch()
+  const [value,setValue] = useState(user)
   const [loading, setLoading] = useState(false)
   return (
     <>
@@ -44,6 +44,9 @@ export default function UpadateProfile({ view, setView }) {
               >
                 <label className='text-sm'>Your Name</label>
                 <input
+                  name='name'
+                  value={value?.name}
+                  onChange={(e)=>handleInput(e)}
                   className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                 />
               </div>
@@ -52,6 +55,9 @@ export default function UpadateProfile({ view, setView }) {
               >
                 <label className='text-sm'>Email</label>
                 <input
+                  name='email'
+                  value={value?.email}
+                  onChange={(e)=>handleInput(e)}
                   className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                 />
               </div>
@@ -60,6 +66,9 @@ export default function UpadateProfile({ view, setView }) {
               >
                 <label className='text-sm'>Mobile Number</label>
                 <input
+                  name='number'
+                  value={value?.number}
+                  onChange={(e)=>handleInput(e)}
                   className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                 />
               </div>

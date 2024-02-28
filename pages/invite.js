@@ -14,7 +14,7 @@ const Invite = () => {
     const handleAccepting = async () => {
         setLoading(true)
         try {
-            const res = await axios.post(`${api}/user/send_otp?email=${router.query.email}`)
+            const res = await axios.post(`${api}/user/send-otp?email=${router.query.email}`)
             if (res.data.success) {
                 setView(true)
                 setLoading(false)

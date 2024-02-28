@@ -7,6 +7,7 @@ import { Tabs, TabList, TabPanels, Tab, TabPanel } from '@chakra-ui/react'
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import {categories,types} from '../../../../public/image/bussiness/business_data'
+import Head from 'next/head'
 
 const profile = () => {
     const { currentBusiness } = useSelector(state => state.book)
@@ -19,6 +20,9 @@ const profile = () => {
     return (
         <UserLayout  {...{path}}>
             <BusinessLayout {...{path}}>
+            <Head>
+                    <title>Profile - {currentBusiness?.name} - CashBook</title>
+                </Head>
                 <div
                     className='w-8/12 space-y-5'
                 >

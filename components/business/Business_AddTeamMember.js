@@ -91,16 +91,14 @@ const Business_AddTeamMember = ({ view, setView }) => {
                 }
             })
 
-            if (res.data.success) {
+            if (res.data.invite) {
+                setSuccess(true)
+            }else{
                 dispatch(updateBusiness(res.data.data))
                 dispatch(addCurrentBusiness(res.data.data))
                 setLoading(false)
                 notificationOK(res.data.message)
                 setView(false)
-            }
-
-            if (!res.data.invite) {
-                setSuccess(true)
             }
 
         } catch (error) {

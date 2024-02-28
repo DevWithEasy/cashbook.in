@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { uploadPhoto } from '../libs/AllUserAction';
 import { login } from '../store/slice/authSlice';
 import {
     Modal,

@@ -5,6 +5,7 @@ import { MdOutlineDelete } from "react-icons/md";
 import { useSelector } from 'react-redux';
 import { BusinessLayout, Business_Delete, Business_OwnerChange, Business_TeamMemberLeave, UserLayout } from '../../../../components/Index';
 import BusinessManager from '../../../../utils/BusinessManager';
+import Head from 'next/head'
 
 const settings = () => {
     const { businesses,currentBusiness,books } = useSelector(state => state.book)
@@ -23,6 +24,9 @@ const settings = () => {
     return (
         <UserLayout  {...{path}}>
             <BusinessLayout {...{path}}>
+            <Head>
+                    <title>Settings - {currentBusiness?.name} - CashBook</title>
+                </Head>
                 <div
                     className='w-8/12 space-y-5'
                 >

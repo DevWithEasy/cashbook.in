@@ -22,7 +22,7 @@ const Onboarding = () => {
     const handleComplete=async()=>{
         setLoading(!loading)
         try {
-            const res = await axios.post(`${api}/user/account_confirm`,{
+            const res = await axios.post(`${api}/user/account-confirm`,{
                 ...value,check
             },
             {

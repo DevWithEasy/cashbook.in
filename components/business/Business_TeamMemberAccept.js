@@ -22,7 +22,7 @@ export default function Business_TeamMemberAccept({ params, view, setView }) {
     const mail = localStorage.getItem('cb_email') || params.email
     setLoading(true)
     try {
-        const res = await axios.post(`${api}/user/invitation_accept?email=${mail}&otp=${otp}`,params)
+        const res = await axios.post(`${api}/user/invitation-accept?email=${mail}&otp=${otp}`,params)
 
         if (res.data.success) {
 
