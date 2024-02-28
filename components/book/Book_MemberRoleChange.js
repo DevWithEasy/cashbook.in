@@ -13,17 +13,16 @@ import { Book_AddMember_Role } from '../Index'
 
 const Book_MemberRoleChange = ({ member, view, setView }) => {
     const dispatch = useDispatch()
-    const { books, businesses, currentBusiness, currentBook } = useSelector(state => state.book)
-    const { user } = useSelector(state => state.auth)
+    const { currentBook } = useSelector(state => state.book)
     const [active, setActive] = useState(member?.role)
     const [loading, setLoading] = useState(false)
 
-    const addBookMember = async () => {
+    const updateBookMember = async () => {
         setLoading(true)
         try {
-            const res = await axios.post(`${api}/book/member/add`, {
+            const res = await axios.post(`${api}/book/member/update`, {
                 role : active,
-                member: selected?.user?._id,
+                member: member?._id,
                 book: currentBook._id
             },
                 {
@@ -38,7 +37,6 @@ const Book_MemberRoleChange = ({ member, view, setView }) => {
                 setView(false)
                 dispatch(addCurrentBook(res.data.data))
                 dispatch(renameBook(res.data.data))
-                console.log(res.data)
             }
 
         } catch (error) {
@@ -100,7 +98,7 @@ const Book_MemberRoleChange = ({ member, view, setView }) => {
                                 className='h-20 p-6 flex justify-end items-center border-t'
                             >
                                 <button
-                                    onClick={addBookMember}
+                                    onClick={updateBookMember}
                                     className='flex items-center space-x-2  px-8 py-3 border bg-[#4863D4] text-white rounded'
 
                                 >

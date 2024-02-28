@@ -6,7 +6,7 @@ const Book_AddMember_Header = ({ view, setView, nextStep }) => {
     const { currentBook } = useSelector(state => state.book)
     return (
         <div
-            className='h-36'
+            className='h-32'
         >
             <div
                 className='px-6 py-4 flex justify-between items-center'

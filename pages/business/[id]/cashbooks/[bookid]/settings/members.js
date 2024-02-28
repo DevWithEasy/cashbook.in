@@ -5,7 +5,7 @@ import Image from 'next/image'
 import user_image from '../../../../../../public/image/profile.png'
 import { useSelector } from "react-redux";
 import { useRouter } from 'next/router';
-import { BookSettingLayout, UserLayout, Book_AddMember, Book_MemberRoleChange } from '../../../../../../components/Index';
+import { BookSettingLayout, UserLayout, Book_AddMember, Book_MemberRoleChange, Book_MemberRemove } from '../../../../../../components/Index';
 import Head from 'next/head'
 import {
     Menu,
@@ -25,7 +25,6 @@ const members = () => {
     const [deleteView, setDeleteView] = useState(false)
     const [member, setMember] = useState()
 
-    console.log(member)
     return (
         <UserLayout>
             <BookSettingLayout {...{ path }}>
@@ -88,7 +87,7 @@ const members = () => {
                             <div>
                                 {currentBook.members.map(member =>
                                     <div
-                                        className='flex items-center justify-between space-x-3'
+                                        className='py-3 flex items-center justify-between space-x-3 border-t'
                                     >
                                         <Image
                                             alt=''
@@ -125,7 +124,7 @@ const members = () => {
                                                             }}
                                                             className='w-full p-2 text-left hover:bg-slate-100'
                                                         >
-                                                            Rename
+                                                            Change Role
                                                         </button>
                                                         <button
                                                             onClick={() => {
@@ -134,7 +133,7 @@ const members = () => {
                                                             }}
                                                             className='w-full p-2 text-left hover:bg-slate-100'
                                                         >
-                                                            Delete
+                                                            Remove
                                                         </button>
                                                     </MenuList>
                                                 </Menu>
@@ -157,6 +156,13 @@ const members = () => {
                             member,
                             view: updateView,
                             setView: setUpdateView
+                        }} />
+                    }
+                    {deleteView &&
+                        <Book_MemberRemove {...{
+                            member,
+                            view: deleteView,
+                            setView: setDeleteView
                         }} />
                     }
                 </div>

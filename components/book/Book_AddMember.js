@@ -61,7 +61,7 @@ const Book_AddMember = ({ view, setView }) => {
             <Drawer
                 isOpen={view}
                 placement='right'
-                size='md'
+                size='lg'
             >
                 <DrawerOverlay />
                 <DrawerContent>
@@ -73,7 +73,7 @@ const Book_AddMember = ({ view, setView }) => {
                         }} />
 
                         <div
-                            className='h-[calc(100vh-224px)] p-6 overflow-y-auto'
+                            className='h-[calc(100vh-208px)] p-6 overflow-y-auto'
                         >
                             {!nextStep ?
                                 <div
