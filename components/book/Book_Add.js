@@ -47,15 +47,15 @@ export default function Book_Add({ view, setView }) {
             className='px-6 py-4 flex justify-end border-t'
           >
             <button
-              onClick={(e) => createBook(
-                currentBusiness?._id,
+              onClick={(e) => createBook({
+                id : currentBusiness?._id,
                 name,
                 setLoading,
                 dispatch,
                 addBook,
                 refresh,
                 setView
-              )}
+              })}
               className='px-8 py-3 bg-[#4863D4] text-white rounded'
 
             >

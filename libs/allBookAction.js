@@ -17,7 +17,8 @@ export const getBooks = async (id,dispatch, action) => {
     }
 }
 
-export const createBook = async (id, name, setLoading, dispatch, action, refresh, setView) => {
+export const createBook = async (data) => {
+    const {id, name, setLoading, dispatch, addBook, refresh, setView} = data
     try {
         setLoading(true)
         const res = await axios.post(`${api}/book/${id}`, { name }, {
@@ -28,7 +29,7 @@ export const createBook = async (id, name, setLoading, dispatch, action, refresh
         if (res.data.status === 200) {
             setLoading(false)
             notificationOK(res.data.message)
-            dispatch(action(res.data.data))
+            dispatch(addBook(res.data.data))
             dispatch(refresh())
             setView(false)
         }
