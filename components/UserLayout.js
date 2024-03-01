@@ -74,7 +74,7 @@ const UserLayout = ({ path, children }) => {
                                         <div>
                                             <p className='text-sm'>{business?.name}</p>
                                             <p className='text-xs'>
-                                                Role : {businessManager.getRole(business)} - {businessManager.totalBook(business)} Book
+                                                Role : {businessManager.getRole(business)} - {businessManager.totalBook(business._id)} Book
                                             </p>
                                         </div>
                                     </div>

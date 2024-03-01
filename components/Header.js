@@ -14,6 +14,7 @@ import logo from '../public/cashbook.svg';
 import user_img from '../public/image/profile.png';
 import { logout } from '../store/slice/authSlice';
 import { useRouter } from 'next/router';
+import { logoutReset } from '../store/slice/bookSlice';
 
 const Header = () => {
     const router = useRouter()
@@ -21,6 +22,7 @@ const Header = () => {
     const user = useSelector(state => state.auth.user)
     const handleLogout = () => {
         dispatch(logout())
+        dispatch(logoutReset())
         router.push('/')
     }
     return (
@@ -28,13 +30,13 @@ const Header = () => {
             className='h-12 px-4 py-3 pr-8 flex justify-between items-center border-b shadow'
         >
             <Link href='/'>
-            <Image
-                src={logo.src}
-                alt="logo"
-                className=""
-                height={25}
-                width={150}
-            />
+                <Image
+                    src={logo.src}
+                    alt="logo"
+                    className=""
+                    height={25}
+                    width={150}
+                />
             </Link>
             <Menu>
                 <MenuButton

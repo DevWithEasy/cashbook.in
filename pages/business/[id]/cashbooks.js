@@ -25,6 +25,8 @@ const Cashbooks = () => {
     const businessManager = new BusinessManager(user,books, businesses, currentBusiness)
     const role = businessManager.getRole(currentBusiness)
 
+    businessManager.getCurrenBooks(router.query.id)
+
     const getBusinessBooks = async() => {
 
         getBooks(router.query.id,dispatch,reAddCurrentBooks)
