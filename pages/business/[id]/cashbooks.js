@@ -25,7 +25,7 @@ const Cashbooks = () => {
     const businessManager = new BusinessManager(user,books, businesses, currentBusiness)
     const role = businessManager.getRole(currentBusiness)
 
-    businessManager.getCurrenBooks(router.query.id)
+    const bi_Books = businessManager.getCurrenBooks(router.query.id)
 
     const getBusinessBooks = async() => {
 
@@ -64,10 +64,10 @@ const Cashbooks = () => {
                                 >
                                     <Cashbooks_Search {...{ sortBy, setSortBy }} />
 
-                                    {currentBooks?.length > 0 ?
+                                    {bi_Books?.length > 0 ?
                                         <div>
                                             {
-                                                currentBooks.map(book =>
+                                                bi_Books.map(book =>
                                                     <Cashbooks_Book key={book._id}
                                                         {...{
                                                             book,
