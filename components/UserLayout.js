@@ -1,5 +1,5 @@
 import { useRouter } from 'next/router';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BsBuildings } from "react-icons/bs";
 import { GoPlus } from "react-icons/go";
 import { IoSettingsOutline } from 'react-icons/io5';
@@ -8,6 +8,7 @@ import { useSelector,useDispatch } from 'react-redux';
 import { addCurrentBusiness } from '../store/slice/bookSlice';
 import { Business_Add, Header } from './Index';
 import BusinessManager from '../utils/BusinessManager';
+import socket from '../utils/socket';
 
 const UserLayout = ({ path, children }) => {
     const dispatch = useDispatch()
@@ -26,6 +27,10 @@ const UserLayout = ({ path, children }) => {
         router.push(`/business/${business?._id}/cashbooks`)
         dispatch(addCurrentBusiness(business))
     }
+
+    useEffect(()=>{
+        socket.emit('join_chat',{id : user._id})
+    })
     
     return (
         <div
