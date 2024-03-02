@@ -24,7 +24,7 @@ const BusinessLayout = ({path,children}) => {
         },
         {
             title : 'Settings',
-            desc : `${role === 'Owner' || role === 'Partner' ?'Change owner or delete business' : 'Leave business'}`,
+            desc : `${role === 'Owner' ?'Change owner or delete business' : 'Leave business'}`,
             path : 'settings',
         },
     ]

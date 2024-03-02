@@ -8,15 +8,22 @@ import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
 import {categories,types} from '../../../../public/image/bussiness/business_data'
 import Head from 'next/head'
+import BusinessManager from '../../../../utils/BusinessManager';
 
 const profile = () => {
-    const { currentBusiness } = useSelector(state => state.book)
+    const { businesses, currentBusiness, books } = useSelector(state => state.book)
+    const { user } = useSelector(state => state.auth)
     const router = useRouter()
     const {pathname} = router
     const path = pathname.split('/').pop()
     const [view,setView] = useState(false)
     const category = categories.find(cat => cat.id === currentBusiness?.category)
     const type = types.find(cat => cat.id === currentBusiness?.type)
+
+    const businessManager = new BusinessManager(user, books, businesses, currentBusiness)
+    const role = businessManager.getRole(currentBusiness)
+
+
     return (
         <UserLayout  {...{path}}>
             <BusinessLayout {...{path}}>
@@ -50,11 +57,13 @@ const profile = () => {
                                     Incomplete business profile
                                 </p>
                             </div>
-                            <MdOutlineEdit 
+                            { (role === 'Owner' || role === 'Partner') &&
+                                <MdOutlineEdit 
                                 size={28} 
                                 onClick={()=>setView(!view)}
                                 className='text-blue-500 cursor-pointer'
                             />
+                            }
                         </div>
                         <div
                             className='h-2 bg-gray-100 rounded-full'
@@ -71,7 +80,7 @@ const profile = () => {
                             <TiInfo size={30} className='text-[#4863D4]' />
                             <p
                                 className='text-xs'
-                            >7 out of 10 fields are incomplete. Fill these to complete your profile</p>
+                            >{businessManager.getBusinessInfo()} out of 6 fields are incomplete. Fill these to complete your profile</p>
                         </div>
                     </div>
                     <Tabs>

@@ -91,13 +91,29 @@ class BusinessManager {
                 role: 'Owner',
                 join: `Member since from ${moment(this.user?.createdAt).fromNow()}`
             }
+            
         } else {
             const member = this.currentBusiness.teams.find(m => m?.user?._id === memberId)
+
             return {
                 ...member,
                 join: `Member since from ${moment(member?.createdAt).fromNow()}`
             }
         }
+    }
+
+    getBusinessInfo(){
+        let num = 2
+        if(this.currentBusiness?.name.length > 0 && this.currentBusiness?.address.length > 0 && this.currentBusiness?.phone.length > 0 && this.currentBusiness?.email.length > 0){
+            return num = num + 4
+        }else if(this.currentBusiness?.name.length > 0 && this.currentBusiness?.address.length > 0 && this.currentBusiness?.phone.length > 0){
+            return num = num + 3
+        }else if(this.currentBusiness?.name.length > 0 && this.currentBusiness?.address.length > 0){
+            return num = num + 2
+        }else if(this.currentBusiness?.name.length > 0){
+            return num = num + 1
+        } 
+        return num
     }
 
     getPermissionInfo(role) {
