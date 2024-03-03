@@ -12,6 +12,7 @@ import axios from 'axios'
 import { addCurrentBusiness, updateBusiness } from '../../store/slice/bookSlice';
 import { notificationNOT, notificationOK } from '../../utils/toastNotification';
 import api from '../../utils/api';
+import socket from '../../utils/socket';
 
 export default function Business_Update({view, setView }) {
     const { currentBusiness } = useSelector(state => state.book)
@@ -44,6 +45,7 @@ export default function Business_Update({view, setView }) {
                 dispatch(updateBusiness(res.data.data))
                 dispatch(addCurrentBusiness(res.data.data))
                 notificationOK(res.data.message)
+                socket.emit('update_business',{business : res.data.data})
             }
             
         } catch (error) {

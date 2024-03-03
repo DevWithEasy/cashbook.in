@@ -5,7 +5,7 @@ import { GoPlus } from "react-icons/go";
 import { IoSettingsOutline } from 'react-icons/io5';
 import { MdBook } from "react-icons/md";
 import { useSelector, useDispatch } from 'react-redux';
-import { addCurrentBusiness } from '../store/slice/bookSlice';
+import { addCurrentBusiness,updateBusiness } from '../store/slice/bookSlice';
 import { Business_Add, Header } from './Index';
 import BusinessManager from '../utils/BusinessManager';
 import socket from '../utils/socket';
@@ -29,8 +29,18 @@ const UserLayout = ({ path, children }) => {
         dispatch(addCurrentBusiness(business))
     }
 
+    useEffect(()=>{
+        socket.on('update_business_client',data=>{
+            dispatch(updateBusiness(data))
+            dispatch(addCurrentBusiness(data))
+        })
+    })
+
     useEffect(() => {
-        socket.emit('join_cashbook',{_id : user._id})
+        socket.emit('join_cashbook', { _id: user._id })
+        socket.on('connection',(socket)=>{
+
+        })
     })
 
     return (
