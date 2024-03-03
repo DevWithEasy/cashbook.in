@@ -8,7 +8,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { addCurrentBusiness } from '../store/slice/bookSlice';
 import { Business_Add, Header } from './Index';
 import BusinessManager from '../utils/BusinessManager';
-import { io } from 'socket.io-client'
+import socket from '../utils/socket';
 
 
 const UserLayout = ({ path, children }) => {
@@ -30,8 +30,7 @@ const UserLayout = ({ path, children }) => {
     }
 
     useEffect(() => {
-        const socket = io('http://localhost:8080')
-        // socket.emit('join_chat',{id : user._id})
+        socket.emit('join_cashbook',{_id : user._id})
     })
 
     return (
