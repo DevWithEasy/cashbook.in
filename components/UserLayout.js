@@ -30,13 +30,7 @@ const UserLayout = ({ path, children }) => {
     }
 
     useEffect(() => {
-        const socket = io('http://localhost:8080', {
-            transports: ['websocket', 'polling'],
-        });
-
-        socket.on("connect_error", async err => {
-            console.log(`connect_error due to ${err.message}`)
-        })
+        const socket = io('http://localhost:8080')
         // socket.emit('join_chat',{id : user._id})
     })
 
