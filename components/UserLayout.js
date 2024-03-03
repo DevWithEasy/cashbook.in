@@ -4,34 +4,42 @@ import { BsBuildings } from "react-icons/bs";
 import { GoPlus } from "react-icons/go";
 import { IoSettingsOutline } from 'react-icons/io5';
 import { MdBook } from "react-icons/md";
-import { useSelector,useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { addCurrentBusiness } from '../store/slice/bookSlice';
 import { Business_Add, Header } from './Index';
 import BusinessManager from '../utils/BusinessManager';
-import socket from '../utils/socket';
+import { io } from 'socket.io-client'
+
 
 const UserLayout = ({ path, children }) => {
     const dispatch = useDispatch()
-    const {books, businesses, currentBusiness } = useSelector(state => state.book)
-    const { isAuth,user } = useSelector(state => state.auth)
+    const { books, businesses, currentBusiness } = useSelector(state => state.book)
+    const { isAuth, user } = useSelector(state => state.auth)
     const router = useRouter()
     const [view, setView] = useState(false)
 
-    const businessManager = new BusinessManager(user,books, businesses, currentBusiness)
+    const businessManager = new BusinessManager(user, books, businesses, currentBusiness)
 
-    if(!isAuth) {
+    if (!isAuth) {
         router.push('/signin')
     }
-    
-    const handleRoute=(business)=>{
+
+    const handleRoute = (business) => {
         router.push(`/business/${business?._id}/cashbooks`)
         dispatch(addCurrentBusiness(business))
     }
 
-    useEffect(()=>{
-        socket.emit('join_chat',{id : user._id})
+    useEffect(() => {
+        const socket = io('http://localhost:8080', {
+            transports: ['websocket', 'polling'],
+        });
+
+        socket.on("connect_error", async err => {
+            console.log(`connect_error due to ${err.message}`)
+        })
+        // socket.emit('join_chat',{id : user._id})
     })
-    
+
     return (
         <div
             className='h-screen overflow-hidden'
