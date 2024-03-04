@@ -11,6 +11,7 @@ import { addCurrentBook, renameBook } from '../../store/slice/bookSlice';
 import axios from 'axios'
 import { notificationNOT, notificationOK } from '../../utils/toastNotification';
 import api from '../../utils/api';
+import socket from '../../utils/socket'
 
 export default function Book_MemberRemove({ member, view, setView }) {
   const { currentBook } = useSelector(state => state.book)
@@ -36,6 +37,7 @@ export default function Book_MemberRemove({ member, view, setView }) {
             setView(false)
             dispatch(addCurrentBook(res.data.data))
             dispatch(renameBook(res.data.data))
+            socket.emit('remove_team',{_id : member.user._id,book : res.data.data})
         }
 
     } catch (error) {

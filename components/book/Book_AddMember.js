@@ -13,6 +13,7 @@ import BusinessManager from '../../utils/BusinessManager'
 import api from '../../utils/api'
 import { notificationNOT, notificationOK } from '../../utils/toastNotification'
 import { Book_AddMember_AddButton, Book_AddMember_Header, Book_AddMember_Member, Book_AddMember_Role, Book_AddMember_Search, Book_AddMember_Selected, Business_AddTeamMember } from '../Index'
+import socket from '../../utils/socket'
 
 const Book_AddMember = ({ view, setView }) => {
     const dispatch = useDispatch()
@@ -46,7 +47,7 @@ const Book_AddMember = ({ view, setView }) => {
                 setView(false)
                 dispatch(addCurrentBook(res.data.data))
                 dispatch(renameBook(res.data.data))
-                console.log(res.data)
+                socket.emit('add_team',{_id : selected?.user?._id,book : res.data.data})
             }
 
         } catch (error) {

@@ -60,7 +60,7 @@ const Cashbooks = () => {
                                 className='flex justify-between space-x-5'
                             >
                                 <div
-                                    className='w-9/12 space-y-5'
+                                    className='w-full md:w-9/12 space-y-5'
                                 >
                                     <Cashbooks_Search {...{ sortBy, setSortBy }} />
 
@@ -87,7 +87,7 @@ const Cashbooks = () => {
                                     }
                                 </div>
                                 <div
-                                    className='w-3/12 px-4 space-y-5'
+                                    className='hidden md:w-3/12 px-4 space-y-5'
                                 >
                                     <Cashbooks_Contact {...{ view, setView }} />
                                 </div>

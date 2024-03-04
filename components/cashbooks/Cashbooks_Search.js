@@ -38,7 +38,7 @@ const Cashbooks_Search = ({ sortBy, setSortBy }) => {
             className='flex items-center space-x-5'
         >
             <div
-                className='relative w-7/12'
+                className='relative w-1/2 md:w-7/12'
             >
                 <input
                     placeholder='Search by book name...'
@@ -50,10 +50,10 @@ const Cashbooks_Search = ({ sortBy, setSortBy }) => {
                 />
             </div>
             <Menu
-                className='w-6/12'
+                className='w-5/12'
             >
                 <MenuButton
-                    className='border rounded'
+                    className='border rounded focus:ring-2 ring-[#4863D4]'
                 >
                     <div
                         className='w-full p-[10px] flex justify-between items-center space-x-2 text-sm'
@@ -70,7 +70,7 @@ const Cashbooks_Search = ({ sortBy, setSortBy }) => {
                             >
                                 <button
                                     onClick={() => setSortBy(sort)}
-                                    className='space-x-2'
+                                    className='flex items-center space-x-2'
                                 >
                                     {sort.sort === sortBy.sort ?
                                         <MdOutlineRadioButtonChecked className='text-[#4863D4]' />
@@ -87,6 +87,7 @@ const Cashbooks_Search = ({ sortBy, setSortBy }) => {
                     <div></div>
                 </MenuList>
             </Menu>
+
         </div>
     );
 };

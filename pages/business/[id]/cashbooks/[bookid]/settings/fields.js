@@ -15,7 +15,7 @@ const fields = () => {
                 <Head>
                     <title>Fields - {currentBook?.name} - CashBook</title>
                 </Head>
-                <div className="w-8/12 space-y-5">
+                <div className="w-full md:w-8/12 space-y-5">
                     <p className='text-sm text-gray-500'>Entry Field</p>
                     <div
                         className='space-y-5'

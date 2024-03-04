@@ -103,17 +103,31 @@ class BusinessManager {
     }
 
     getBusinessInfo(){
-        let num = 2
         if(this.currentBusiness?.name.length > 0 && this.currentBusiness?.address.length > 0 && this.currentBusiness?.phone.length > 0 && this.currentBusiness?.email.length > 0){
-            return num = num + 4
+            return {
+                num : 6,
+                width : 100,
+                color : 'bg-blue-500'
+            }
         }else if(this.currentBusiness?.name.length > 0 && this.currentBusiness?.address.length > 0 && this.currentBusiness?.phone.length > 0){
-            return num = num + 3
+            return {
+                num : 5,
+                width : 83.3,
+                color : 'bg-red-500'
+            }
         }else if(this.currentBusiness?.name.length > 0 && this.currentBusiness?.address.length > 0){
-            return num = num + 2
+            return {
+                num : 4,
+                width : 66.64,
+                color : 'bg-red-400'
+            }
         }else if(this.currentBusiness?.name.length > 0){
-            return num = num + 1
-        } 
-        return num
+            return {
+                num : 3,
+                width : 49.98,
+                color : 'bg-red-300'
+            } 
+        }
     }
 
     getPermissionInfo(role) {

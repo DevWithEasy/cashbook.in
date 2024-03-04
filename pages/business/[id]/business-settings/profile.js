@@ -23,7 +23,8 @@ const profile = () => {
     const businessManager = new BusinessManager(user, books, businesses, currentBusiness)
     const role = businessManager.getRole(currentBusiness)
 
-
+    const info = businessManager.getBusinessInfo()
+    
     return (
         <UserLayout  {...{path}}>
             <BusinessLayout {...{path}}>
@@ -49,12 +50,12 @@ const profile = () => {
                                 <p
                                     className=''
                                 >
-                                    Loan
+                                    {currentBusiness?.name}
                                 </p>
                                 <p
-                                    className='text-sm text-red-400'
+                                    className={`text-sm ${info?.num === 6 ? 'text-[#4863D4]' : 'text-red-400'}`}
                                 >
-                                    Incomplete business profile
+                                    {info?.num === 6 ? 'Complete' : 'Incomplete'} business profile
                                 </p>
                             </div>
                             { (role === 'Owner' || role === 'Partner') &&
@@ -69,9 +70,9 @@ const profile = () => {
                             className='h-2 bg-gray-100 rounded-full'
                         >
                             <div
-                                className='h-full w-[20%] bg-red-500 rounded-full'
+                                style={{width : `${info?.width}%` || `100%`}}
+                                className={`h-full rounded-full ${info?.width === 100 ? 'bg-[#4863D4]' : 'bg-red-500'}`}
                             >
-
                             </div>
                         </div>
                         <div
@@ -80,7 +81,7 @@ const profile = () => {
                             <TiInfo size={30} className='text-[#4863D4]' />
                             <p
                                 className='text-xs'
-                            >{businessManager.getBusinessInfo()} out of 6 fields are incomplete. Fill these to complete your profile</p>
+                            >{info?.num} out of 6 fields are incomplete. Fill these to complete your profile</p>
                         </div>
                     </div>
                     <Tabs>

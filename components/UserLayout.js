@@ -5,7 +5,7 @@ import { GoPlus } from "react-icons/go";
 import { IoSettingsOutline } from 'react-icons/io5';
 import { MdBook } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-import { addBooks, addBusinesses, addCurrentBusiness, removeBusiness, updateBusiness } from '../store/slice/bookSlice';
+import { addBook, addBooks, addBusinesses, addCurrentBusiness, refresh, removeBusiness, renameBook, updateBusiness } from '../store/slice/bookSlice';
 import BusinessManager from '../utils/BusinessManager';
 import api from '../utils/api';
 import socket from '../utils/socket';
@@ -15,10 +15,11 @@ import axios from 'axios'
 
 const UserLayout = ({ path, children }) => {
     const dispatch = useDispatch()
-    const { books, businesses, currentBusiness } = useSelector(state => state.book)
+    const { books, businesses, currentBusiness, currentBook } = useSelector(state => state.book)
     const { isAuth, user } = useSelector(state => state.auth)
     const router = useRouter()
     const [view, setView] = useState(false)
+    console.log(router.asPath)
 
     const businessManager = new BusinessManager(user, books, businesses, currentBusiness)
 
@@ -31,7 +32,28 @@ const UserLayout = ({ path, children }) => {
         dispatch(addCurrentBusiness(business))
     }
 
+    const handleChecking = async () => {
+        try {
+            const res = await axios.get(`${api}/user/checking`, {
+                headers: {
+                    "cb-access-token": localStorage.getItem("cb_access_token")
+                }
+            })
+
+            if (res.data.success) {
+
+                const { businesses, books } = res.data.data
+
+                dispatch(addBusinesses(businesses))
+                dispatch(addBooks(books))
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
+        //===============Business=================
         socket.on('update_business_client', data => {
             dispatch(updateBusiness(data))
             dispatch(addCurrentBusiness(data))
@@ -42,26 +64,32 @@ const UserLayout = ({ path, children }) => {
             router.push('/checking')
         })
 
-        socket.on('add_business_client', async(data) => {
-            try {
-                const res = await axios.get(`${api}/user/checking`,{
-                    headers: {
-                        "cb-access-token": localStorage.getItem("cb_access_token")
-                    }
-                })
-    
-                if (res.data.success) {
-    
-                    const { businesses, books } = res.data.data
-                    
-                    dispatch(addBusinesses(businesses))
-                    dispatch(addBooks(books))
-    
-                }
-            } catch (error) {
-                console.log(error)
+        socket.on('add_business_client', async (data) => {
+            handleChecking()
+        })
+        //===============Business=================
+
+        //===============Book=================
+        //add book member
+        socket.on('add_team_client', data => {
+            handleChecking()
+            if(router.asPath === `/business/${data?.business}/cashbooks`){
+                router.reload()
             }
         })
+        socket.on('update_book_client', data => {
+            dispatch(renameBook(data))
+        })
+
+        //remove book member
+        socket.on('remove_team_client', data => {
+            if (currentBook._id === data._id) {
+                router.push('/checking')
+            } else {
+                dispatch(renameBook(data))
+            }
+        })
+        //===============Book=================
     })
 
     useEffect(() => {

@@ -42,7 +42,7 @@ const Payment = () => {
                     <title>Payment Field - {currentBook?.name} - CashBook</title>
                 </Head>
                 <div
-                    className='w-8/12 space-y-5'
+                    className='w-full md:w-8/12 space-y-5'
                 >
                     <div
                         className='flex items-center space-x-1 text-sm text-gray-500'

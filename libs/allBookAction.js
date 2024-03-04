@@ -1,6 +1,7 @@
 import axios from "axios"
 import { notificationNOT, notificationOK } from "../utils/toastNotification"
 import api from "../utils/api"
+import socket from "../utils/socket"
 
 export const getBooks = async (id,dispatch, action) => {
     try {
@@ -58,6 +59,7 @@ export const updateBook = async (id, name, setLoading, dispatch, action, refresh
             if (isCurrent) {
                 dispatch(addCurrentBook(res.data.data))
             }
+            socket.emit('update_book',{book : res.data.data})
         }
     } catch (error) {
         setLoading(false)

@@ -31,9 +31,9 @@ const members = () => {
                 <Head>
                     <title>Members - {currentBook?.name} - CashBook</title>
                 </Head>
-                <div className="w-8/12">
-                    <div className="p-4 flex justify-between items-center border rounded">
-                        <div className="w-7/12">
+                <div className="w-full md:w-8/12">
+                    <div className="p-4 flex flex-col space-y-3 md:flex-row md:justify-between md:items-center border rounded">
+                        <div className="md:w-7/12">
                             <p className="text-lg">Business Team</p>
                             <p className="text-sm text-gray-500">
                                 Add your business partners or staffs to this business and manage
@@ -42,7 +42,7 @@ const members = () => {
                         </div>
                         <button
                             onClick={() => setView(!view)}
-                            className="px-4 py-2 flex items-center space-x-2 bg-[#4863D4] text-white rounded active:ring-2">
+                            className="px-4 py-2 flex justify-center md:justify-start items-center space-x-2 bg-[#4863D4] text-white rounded active:ring-2">
                             <IoPersonAddSharp />
                             <span>Add team member</span>
                         </button>
