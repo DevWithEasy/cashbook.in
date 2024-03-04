@@ -11,6 +11,7 @@ import axios from 'axios'
 import { addCurrentBusiness, updateBusiness } from '../../store/slice/bookSlice';
 import api from '../../utils/api';
 import { useRouter } from 'next/router';
+import socket from '../../utils/socket';
 
 export default function Business_RoleRemove({ member, view, setView }) {
   const router = useRouter()
@@ -39,6 +40,7 @@ export default function Business_RoleRemove({ member, view, setView }) {
         router.push(`/business/${currentBusiness._id}/business-settings/team`)
         notificationOK(res.data.message)
         setView(false)
+        socket.emit('remove_business',{_id : member.user._id,b_id : currentBusiness._id})
       }
     } catch (error) {
       setLoading(false)
@@ -46,7 +48,7 @@ export default function Business_RoleRemove({ member, view, setView }) {
       notificationNOT(error.message)
     }
   }
-
+  
   return (
     <>
       <Modal

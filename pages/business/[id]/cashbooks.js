@@ -8,7 +8,7 @@ import { addCurrentBooks, addCurrentBusiness, reAddCurrentBooks } from '../../..
 import BusinessManager from '../../../utils/BusinessManager';
 
 const Cashbooks = () => {
-    const { businesses,currentBusiness,currentBooks, books,random } = useSelector(state => state.book)
+    const { businesses,currentBusiness, books,random } = useSelector(state => state.book)
     const { user } = useSelector(state => state.auth)
     const dispatch = useDispatch()
     const router = useRouter()

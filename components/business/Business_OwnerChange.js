@@ -16,6 +16,7 @@ import BusinessManager from '../../utils/BusinessManager';
 import { notificationNOT, notificationOK } from '../../utils/toastNotification';
 import { addCurrentBusiness, updateBusiness } from '../../store/slice/bookSlice';
 import api from '../../utils/api';
+import socket from '../../utils/socket';
 
 const Business_OwnerChange = ({ view, setView }) => {
     const dispatch = useDispatch()
@@ -63,6 +64,7 @@ const Business_OwnerChange = ({ view, setView }) => {
                 dispatch(addCurrentBusiness(res.data.data))
                 notificationOK(res.data.message)
                 setView(false)
+                socket.emit('update_business',{business : res.data.data})
             }
         } catch (error) {
             setLoading(false)

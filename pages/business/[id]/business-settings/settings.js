@@ -28,7 +28,7 @@ const settings = () => {
                     <title>Settings - {currentBusiness?.name} - CashBook</title>
                 </Head>
                 <div
-                    className='w-8/12 space-y-5'
+                    className='w-full md:w-8/12 space-y-5'
                 >
                     {role === 'Owner' ?
                         <>

@@ -10,6 +10,7 @@ import { notificationNOT, notificationOK } from '../../utils/toastNotification';
 import axios from 'axios'
 import { addCurrentBusiness, updateBusiness } from '../../store/slice/bookSlice';
 import api from '../../utils/api';
+import socket from '../../utils/socket';
 
 export default function Business_RoleChange_Confirm({ member, view, setView, setFirstView }) {
   const dispatch = useDispatch()
@@ -38,6 +39,7 @@ export default function Business_RoleChange_Confirm({ member, view, setView, set
         notificationOK(res.data.message)
         setView(false)
         setFirstView(false)
+        socket.emit('update_business',{business : res.data.data})
       }
     } catch (error) {
       setLoading(false)

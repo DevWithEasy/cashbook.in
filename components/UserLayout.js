@@ -4,11 +4,13 @@ import { BsBuildings } from "react-icons/bs";
 import { GoPlus } from "react-icons/go";
 import { IoSettingsOutline } from 'react-icons/io5';
 import { MdBook } from "react-icons/md";
-import { useSelector, useDispatch } from 'react-redux';
-import { addCurrentBusiness,updateBusiness } from '../store/slice/bookSlice';
-import { Business_Add, Header } from './Index';
+import { useDispatch, useSelector } from 'react-redux';
+import { addBooks, addBusinesses, addCurrentBusiness, removeBusiness, updateBusiness } from '../store/slice/bookSlice';
 import BusinessManager from '../utils/BusinessManager';
+import api from '../utils/api';
 import socket from '../utils/socket';
+import { Business_Add, Header } from './Index';
+import axios from 'axios'
 
 
 const UserLayout = ({ path, children }) => {
@@ -29,16 +31,42 @@ const UserLayout = ({ path, children }) => {
         dispatch(addCurrentBusiness(business))
     }
 
-    useEffect(()=>{
-        socket.on('update_business_client',data=>{
+    useEffect(() => {
+        socket.on('update_business_client', data => {
             dispatch(updateBusiness(data))
             dispatch(addCurrentBusiness(data))
+        })
+
+        socket.on('remove_business_client', data => {
+            dispatch(removeBusiness(data.id))
+            router.push('/checking')
+        })
+
+        socket.on('add_business_client', async(data) => {
+            try {
+                const res = await axios.get(`${api}/user/checking`,{
+                    headers: {
+                        "cb-access-token": localStorage.getItem("cb_access_token")
+                    }
+                })
+    
+                if (res.data.success) {
+    
+                    const { businesses, books } = res.data.data
+                    
+                    dispatch(addBusinesses(businesses))
+                    dispatch(addBooks(books))
+    
+                }
+            } catch (error) {
+                console.log(error)
+            }
         })
     })
 
     useEffect(() => {
         socket.emit('join_cashbook', { _id: user._id })
-        socket.on('connection',(socket)=>{
+        socket.on('connection', (socket) => {
 
         })
     })

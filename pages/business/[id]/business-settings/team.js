@@ -36,7 +36,7 @@ const team = () => {
                 <Head>
                     <title>Team - {currentBusiness?.name} - CashBook</title>
                 </Head>
-                <div className="w-8/12 pb-10">
+                <div className="w-full md:w-8/12 pb-10">
                     {role === 'Owner' || role === 'Partner' ?
                         <div className="p-4 flex justify-between items-center border rounded">
                             <div className="w-7/12">

@@ -3,17 +3,16 @@ import {
     DrawerContent,
     DrawerOverlay
 } from '@chakra-ui/react';
+import axios from 'axios';
 import React, { useState } from 'react';
-import { IoMdArrowBack } from "react-icons/io";
-import { IoMdCheckmarkCircle } from "react-icons/io";
+import { IoMdArrowBack, IoMdCheckmarkCircle } from "react-icons/io";
 import { MdCancel } from "react-icons/md";
-import axios from 'axios'
-import Business_AddMemberSuccess from './Business_AddMemberSuccess';
-import {useDispatch, useSelector} from 'react-redux'
-import { notificationNOT, notificationOK } from '../../utils/toastNotification';
-import api from '../../utils/api';
+import { useDispatch, useSelector } from 'react-redux';
 import { addCurrentBusiness, updateBusiness } from '../../store/slice/bookSlice';
-
+import api from '../../utils/api';
+import socket from '../../utils/socket';
+import { notificationNOT, notificationOK } from '../../utils/toastNotification';
+import Business_AddMemberSuccess from './Business_AddMemberSuccess';
 
 const Business_AddTeamMember = ({ view, setView }) => {
     const dispatch = useDispatch()
@@ -99,6 +98,7 @@ const Business_AddTeamMember = ({ view, setView }) => {
                 setLoading(false)
                 notificationOK(res.data.message)
                 setView(false)
+                socket.emit('add_business',{_id : res.data.member,business : res.data.data})
             }
 
         } catch (error) {
