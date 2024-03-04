@@ -40,7 +40,7 @@ export default function Business_RoleRemove({ member, view, setView }) {
         router.push(`/business/${currentBusiness._id}/business-settings/team`)
         notificationOK(res.data.message)
         setView(false)
-        socket.emit('remove_business',{_id : member.user._id,b_id : currentBusiness._id})
+        socket.emit('remove_business',{_id : member.user._id,b_id : currentBusiness._id,business : res.data.data})
       }
     } catch (error) {
       setLoading(false)
