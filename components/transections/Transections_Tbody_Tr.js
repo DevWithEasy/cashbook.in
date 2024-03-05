@@ -4,7 +4,7 @@ import { MdDeleteOutline, MdOutlineCheckBox, MdOutlineCheckBoxOutlineBlank } fro
 import { RiEdit2Line } from 'react-icons/ri';
 
 const Transections_Tbody_Tr = ({ entry, menuId, setMenuId, selected, setSelected, handleDetails, deleteView, setDeleteView, updateView, setUpdateView }) => {
-    const date = moment(entry.createdAt).format('DD MMM YYYY')
+    const date = moment(entry.updatedAt).format('DD MMM YYYY')
     const time = moment(entry.updatedAt).format('h:mm A')
 
     const handleCheck=()=>{

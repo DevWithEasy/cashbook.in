@@ -109,6 +109,7 @@ export const moveBook = async (data) => {
             dispatch(refresh())
             dispatch(action(res.data.data))
             setView(false)
+            socket.emit('update_book', {book : res.data.data})
         }
     } catch (err) {
         console.log(err)

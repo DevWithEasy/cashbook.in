@@ -5,7 +5,7 @@ import { GoPlus } from "react-icons/go";
 import { IoSettingsOutline } from 'react-icons/io5';
 import { MdBook } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-import { addBook, addBooks, addBusinesses, addCurrentBusiness, refresh, removeBusiness, renameBook, updateBusiness } from '../store/slice/bookSlice';
+import { addBooks, addBusinesses, addCurrentBusiness, removeBusiness, renameBook, updateBusiness } from '../store/slice/bookSlice';
 import BusinessManager from '../utils/BusinessManager';
 import api from '../utils/api';
 import socket from '../utils/socket';
@@ -19,7 +19,6 @@ const UserLayout = ({ path, children }) => {
     const { isAuth, user } = useSelector(state => state.auth)
     const router = useRouter()
     const [view, setView] = useState(false)
-    console.log(router.asPath)
 
     const businessManager = new BusinessManager(user, books, businesses, currentBusiness)
 
@@ -178,7 +177,7 @@ const UserLayout = ({ path, children }) => {
                     </div>
                 </div>
                 <div
-                    className='w-full md:w-10/12 overflow-y-auto'
+                    className='w-full md:w-10/12 overflow-y-auto bg-gray-50 md:bg-white'
                 >
                     {children}
                 </div>

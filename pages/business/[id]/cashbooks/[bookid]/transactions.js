@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Balance, Entry_Add, Entry_Category, Entry_Contact, Entry_Delete, Entry_Delete_Many, Entry_Details, Entry_Duplicate, Entry_Move, Entry_Opposite, Entry_Payment, Entry_Update, Loading, Transections_Header, Transections_NoFound, Transections_Pagination, Transections_Search, Transections_SortBy, Transections_Tbody, Transections_TheadAction, Transections_TheadMain, UserLayout } from '../../../../../components/Index';
+import { Balance, Entry_Add, Entry_Category, Entry_Contact, Entry_Delete, Entry_Delete_Many, Entry_Details, Entry_Duplicate, Entry_Move, Entry_Opposite, Entry_Payment, Entry_Update, Loading, Transections_Header, Transections_NoFound, Transections_Pagination, Transections_Search, Transections_SortBy, Transections_Tbody, Transections_TheadAction, Transections_TheadMain, UserLayout,Transections_List } from '../../../../../components/Index';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux'
 import Head from 'next/head'
@@ -84,7 +84,7 @@ const Transactions = () => {
         <UserLayout>
             {!loading ?
                 <div
-                    className='px-8 space-y-5'
+                    className='space-y-2 md:space-y-5'
                 >
                     <Head>
                         <title>{currentBook?.name}'s Transactions - CashBook</title>
@@ -92,150 +92,161 @@ const Transactions = () => {
 
                     <Transections_Header />
 
-                    <Transections_SortBy {...{
-                        typeBy, setTypeBy,
-                        durationBy, setDurationBy
-                    }} />
-
-                    <Transections_Search {...{ handleView }} />
-
-
-                    {entries?.length > 0 &&
-                        <Balance />
-                    }
-
-                    {entries?.length > 0 &&
-                        <Transections_Pagination {...{ selected }} />
-                    }
-
                     <div
-                        className='w-full overflow-y-auto'
+                        className='px-4 md:px-8 space-y-2 md:space-y-5'
                     >
-                        {entries?.length > 0 ?
-                            <table
-                                className='w-full'
-                            >
-                                {selected.length > 0 ?
-                                    <Transections_TheadAction {...{
-                                        selected,
-                                        handleSelectAll,
-                                        copyView, setCopyView,
-                                        moveView, setMoveView,
-                                        oppositeView, setOppositeView,
-                                        categoryView, setCategoryView,
-                                        paymentView, setPaymentView,
-                                        contactView, setContactView,
-                                        deleteManyView, setDeleteManyView
-                                    }} />
-                                    :
-                                    <Transections_TheadMain {...{
-                                        selected,
-                                        handleSelectAll,
-                                    }} />
-                                }
+                        <Transections_SortBy {...{
+                            typeBy, setTypeBy,
+                            durationBy, setDurationBy
+                        }} />
 
-                                <Transections_Tbody {...{
-                                    menuId, setMenuId,
-                                    selected,
-                                    setSelected,
-                                    handleSelectAll,
-                                    handleDetails,
-                                    deleteView, setDeleteView,
-                                    updateView, setUpdateView
-                                }} />
-                            </table>
-                            :
-                            <Transections_NoFound {...{ loading }} />
+                        <Transections_Search {...{ handleView }} />
+
+
+                        {entries?.length > 0 &&
+                            <Balance />
+                        }
+
+                        {entries?.length > 0 &&
+                            <Transections_Pagination {...{ selected }} />
+                        }
+
+                        <div
+                            className='w-full overflow-y-auto'
+                        >
+                            {entries?.length > 0 ?
+                                <>
+                                <Transections_List {...{
+                                    detailsView,setDetailsView,
+                                    setMenuId
+                                }}/>
+                                {/* <table
+                                    className='w-full'
+                                >
+                                    {selected.length > 0 ?
+                                        <Transections_TheadAction {...{
+                                            selected,
+                                            handleSelectAll,
+                                            copyView, setCopyView,
+                                            moveView, setMoveView,
+                                            oppositeView, setOppositeView,
+                                            categoryView, setCategoryView,
+                                            paymentView, setPaymentView,
+                                            contactView, setContactView,
+                                            deleteManyView, setDeleteManyView
+                                        }} />
+                                        :
+                                        <Transections_TheadMain {...{
+                                            selected,
+                                            handleSelectAll,
+                                        }} />
+                                    }
+
+                                    <Transections_Tbody {...{
+                                        menuId, setMenuId,
+                                        selected,
+                                        setSelected,
+                                        handleSelectAll,
+                                        handleDetails,
+                                        deleteView, setDeleteView,
+                                        updateView, setUpdateView
+                                    }} />
+                                </table> */}
+                                </>
+                                
+                                :
+                                <Transections_NoFound {...{ loading }} />
+                            }
+                        </div>
+
+                        {view &&
+                            <Entry_Add {...{
+                                type: entryType,
+                                setType: setEntryType,
+                                view, setView
+                            }} />
+                        }
+
+                        {detailsView &&
+                            <Entry_Details {...{
+                                id: menuId,
+                                view: detailsView,
+                                setView: setDetailsView
+                            }} />
+                        }
+
+                        {updateView &&
+                            <Entry_Update {...{
+                                id: menuId,
+                                view: updateView,
+                                setView: setUpdateView
+                            }} />
+                        }
+
+                        {deleteView &&
+                            <Entry_Delete {...{
+                                id: menuId,
+                                view: deleteView,
+                                setView: setDeleteView
+                            }} />
+                        }
+
+                        {deleteManyView &&
+                            <Entry_Delete_Many {...{
+                                items: selected,
+                                view: deleteManyView,
+                                setView: setDeleteManyView
+                            }} />
+                        }
+
+                        {moveView &&
+                            <Entry_Move {...{
+                                items: selected,
+                                view: moveView,
+                                setView: setMoveView
+                            }} />
+                        }
+
+                        {copyView &&
+                            <Entry_Duplicate {...{
+                                items: selected,
+                                view: copyView,
+                                setView: setCopyView
+                            }} />
+                        }
+
+                        {oppositeView &&
+                            <Entry_Opposite {...{
+                                items: selected,
+                                view: oppositeView,
+                                setView: setOppositeView
+                            }} />
+                        }
+
+                        {categoryView &&
+                            <Entry_Category {...{
+                                items: selected,
+                                view: categoryView,
+                                setView: setCategoryView
+                            }} />
+                        }
+
+                        {paymentView &&
+                            <Entry_Payment {...{
+                                items: selected,
+                                view: paymentView,
+                                setView: setPaymentView
+                            }} />
+                        }
+
+                        {contactView &&
+                            <Entry_Contact {...{
+                                items: selected,
+                                view: contactView,
+                                setView: setContactView
+                            }} />
                         }
                     </div>
-
-                    {view &&
-                        <Entry_Add {...{
-                            type: entryType,
-                            setType: setEntryType,
-                            view, setView
-                        }} />
-                    }
-
-                    {detailsView &&
-                        <Entry_Details {...{
-                            id: menuId,
-                            view: detailsView,
-                            setView: setDetailsView
-                        }} />
-                    }
-
-                    {updateView &&
-                        <Entry_Update {...{
-                            id: menuId,
-                            view: updateView,
-                            setView: setUpdateView
-                        }} />
-                    }
-
-                    {deleteView &&
-                        <Entry_Delete {...{
-                            id: menuId,
-                            view: deleteView,
-                            setView: setDeleteView
-                        }} />
-                    }
-
-                    {deleteManyView &&
-                        <Entry_Delete_Many {...{
-                            items: selected,
-                            view: deleteManyView,
-                            setView: setDeleteManyView
-                        }} />
-                    }
-
-                    {moveView &&
-                        <Entry_Move {...{
-                            items: selected,
-                            view: moveView,
-                            setView: setMoveView
-                        }} />
-                    }
-
-                    {copyView &&
-                        <Entry_Duplicate {...{
-                            items: selected,
-                            view: copyView,
-                            setView: setCopyView
-                        }} />
-                    }
-
-                    {oppositeView &&
-                        <Entry_Opposite {...{
-                            items: selected,
-                            view: oppositeView,
-                            setView: setOppositeView
-                        }} />
-                    }
-
-                    {categoryView &&
-                        <Entry_Category {...{
-                            items: selected,
-                            view: categoryView,
-                            setView: setCategoryView
-                        }} />
-                    }
-
-                    {paymentView &&
-                        <Entry_Payment {...{
-                            items: selected,
-                            view: paymentView,
-                            setView: setPaymentView
-                        }} />
-                    }
-
-                    {contactView &&
-                        <Entry_Contact {...{
-                            items: selected,
-                            view: contactView,
-                            setView: setContactView
-                        }} />
-                    }
                 </div>
                 :
                 <Loading />

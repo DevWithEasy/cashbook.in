@@ -36,7 +36,7 @@ const Entry_Details = ({ id, view, setView }) => {
             id, setEntry, setLoading
         })
     }, [id])
-    console.log(entry)
+    
     return (
         <>
             <Drawer
@@ -116,16 +116,20 @@ const Entry_Details = ({ id, view, setView }) => {
                                     <div
                                         className='space-x-3'
                                     >
-                                        <span
-                                            className='px-3 py-1 text-sm bg-[#EDEDFA] text-[#534ECD] rounded'
-                                        >
-                                            {entry?.category?.name}
-                                        </span>
-                                        <span
-                                            className='px-3 py-1 text-sm bg-[#E7F1F9] text-[#137AC9] rounded'
-                                        >
-                                            {entry?.payment?.name}
-                                        </span>
+                                        {entry?.category?.name &&
+                                            <span
+                                                className='px-3 py-1 text-sm bg-[#EDEDFA] text-[#534ECD] rounded'
+                                            >
+                                                {entry?.category?.name}
+                                            </span>
+                                        }
+                                        {entry?.payment?.name &&
+                                            <span
+                                                className='px-3 py-1 text-sm bg-[#E7F1F9] text-[#137AC9] rounded'
+                                            >
+                                                {entry?.payment?.name}
+                                            </span>
+                                        }
                                     </div>
                                     : <></>
                                 }

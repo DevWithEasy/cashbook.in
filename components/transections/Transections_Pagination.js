@@ -42,7 +42,7 @@ const Transections_Pagination = ({selected}) => {
     ]
     return (
         <div
-            className='flex justify-between '
+            className='pt-3 md:pt-0 flex justify-between items-center'
         >
             <p
                 className='text-sm space-x-3'
@@ -71,7 +71,7 @@ const Transections_Pagination = ({selected}) => {
                 >
                     <Menu>
                         <MenuButton
-                            className='border rounded'
+                            className='border rounded bg-white'
                         >
                             <button
                                 className='w-full px-2 py-1 flex justify-between items-center space-x-2 text-sm'

@@ -18,7 +18,7 @@ const Transections_Header = () => {
     const router = useRouter()
     return (
         <div
-            className='py-4 flex items-center border-b'
+            className='px-4 py-2 md:px-8 md:py-4 flex items-center border-b bg-white'
         >
             <div
                 className='w-1/2 flex items-center space-x-3'
@@ -76,8 +76,8 @@ const Transections_Header = () => {
                     }}
                     className='px-6 py-2 flex items-center space-x-2 text-[#4863D4]'
                 >
-                    <AiOutlineCloudUpload size={20} />
-                    <span>Add Bulk Entries</span>
+                    <AiOutlineCloudUpload size={25} />
+                    <span className='hidden md:inline-block'>Add Bulk Entries</span>
                 </button>
                 <Menu>
                     <MenuButton

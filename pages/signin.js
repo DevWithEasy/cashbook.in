@@ -60,10 +60,10 @@ const Signup = () => {
 
     return (
         <div
-            className='h-screen flex justify-between'
+            className='h-screen md:flex justify-between'
         >
             <div
-                className='w-4/12 p-8 bg-[#EDEFFB]'
+                className='hidden md:block md:w-4/12 p-8 bg-[#EDEFFB]'
             >
                 <Image
                     src={logo.src}
@@ -90,10 +90,10 @@ const Signup = () => {
                 </div>
             </div>
             <div
-                className='w-8/12 py-12'
+                className='mx-5 md:mx-0 md:w-8/12 md:py-12'
             >
                 <div
-                    className='w-5/12 mx-auto flex flex-col items-center space-y-5'
+                    className='md:w-5/12 md:mx-auto flex flex-col items-center space-y-5'
                 >
                     <Image
                         src={logo.src}

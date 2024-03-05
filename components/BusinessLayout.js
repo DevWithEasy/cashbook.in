@@ -1,12 +1,14 @@
 import { useRouter } from 'next/router';
-import React from 'react';
+import React, { useState } from 'react'
 import {useSelector} from 'react-redux'
-import BusinessManager from '../utils/BusinessManager';
+import BusinessManager from '../utils/BusinessManager'
+import { MdOutlineMenu } from "react-icons/md"
 
 const BusinessLayout = ({path,children}) => {
     const { businesses, currentBusiness, books } = useSelector(state => state.book)
     const { user } = useSelector(state => state.auth)
     const router = useRouter()
+    const [menu,setMenu] = useState(false)
 
     const businessManager = new BusinessManager(user,books, businesses, currentBusiness)
     const role = businessManager.getRole(currentBusiness)
@@ -35,6 +37,11 @@ const BusinessLayout = ({path,children}) => {
             <div
                 className='h-[70px] px-6 border-b flex items-center'
             >
+                <MdOutlineMenu
+                    size={30}
+                    onClick={()=>setMenu(!menu)}
+                    className='mr-3 cursor-pointer md:hidden'
+                />
                 <p
                     className='text-2xl'
                 >
@@ -46,14 +53,14 @@ const BusinessLayout = ({path,children}) => {
                 className='h-[calc(100vh-118px)] flex justify-between'
             >
                 <div
-                    className='w-3/12 pl-4 border-r'
+                    className={`${menu ? 'h-screen bg-white fixed shadow-xl' : 'hidden md:block md:w-3/12 pl-4 border-r '}`}
                 >
                     {
                         sidebars.map((topic,i)=>
                         <div
                             key={i}
                             onClick={()=>router.push(`/business/${currentBusiness?._id}/business-settings/${topic.path}`)}
-                            className='py-3 pr-3 border-b'
+                            className='md:py-3 p-3 md:pr-3 border-b'
                         >
                             <div
                                 className={`p-3 space-y-1 rounded cursor-pointer ${topic.path == path ? 'bg-[#EBEEFB]' : 'hover:bg-gray-100'}`}
@@ -70,7 +77,7 @@ const BusinessLayout = ({path,children}) => {
                     }
                 </div>
                 <div
-                    className='w-9/12 px-6 py-4 overflow-y-auto'
+                    className='w-full md:w-9/12 px-6 py-4 overflow-y-auto'
                 > 
                     {children}
                 </div>

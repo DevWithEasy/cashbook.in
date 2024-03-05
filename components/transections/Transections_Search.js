@@ -1,14 +1,15 @@
 import React from 'react';
 import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import { CiSearch } from 'react-icons/ci';
+import Transection_Search_Button from './Transection_Search_Button';
 
-const Transections_Search = ({handleView}) => {
+const Transections_Search = ({ handleView }) => {
     return (
         <div
-            className='flex justify-between items-center'
+            className='flex flex-col md:flex-row justify-between md:items-center space-y-3 md:space-y-0 md:space-x-10'
         >
             <div
-                className='relative w-6/12'
+                className='relative w-full md:w-6/12'
             >
                 <input
                     placeholder='Search by book name...'
@@ -19,24 +20,14 @@ const Transections_Search = ({handleView}) => {
                     className='absolute right-2 top-1 p-1 cursor-pointer'
                 />
             </div>
-            <div
-                className='flex justify-end text-white space-x-5'
-            >
-                <button
-                    onClick={() => handleView('cash_in')}
-                    className='px-8 py-2 flex items-center space-x-2 bg-[#01865F] active:ring-2 rounded'
-                >
-                    <AiOutlinePlus />
-                    <span>Cash In</span>
-                </button>
-                <button
-                    onClick={() => handleView('cash_out')}
-                    className='px-8 py-2 flex items-center space-x-2 bg-[#C93B3B] active:ring-2 rounded'
-                >
-                    <AiOutlineMinus />
-                    <span>Cash Out</span>
-                </button>
-            </div>
+            <Transection_Search_Button {...{
+                className : 'hidden md:w-6/12 md:flex justify-end text-white space-x-5',
+                handleView
+            }}/>
+            <Transection_Search_Button {...{
+                className : 'md:hidden fixed bottom-0 left-0 w-full p-2 flex justify-between bg-white text-white space-x-5',
+                handleView
+            }}/>
         </div>
     );
 };

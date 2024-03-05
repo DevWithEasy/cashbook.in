@@ -51,14 +51,14 @@ const Transections_SortBy = ({ typeBy, setTypeBy, durationBy, setDurationBy }) =
     ]
     return (
         <div
-            className='py-2 space-x-5'
+            className='hidden md:block py-2 space-x-5'
         >
             <Menu>
                 <MenuButton
-                    className='border rounded'
+                    className='border rounded bg-white'
                 >
                     <button
-                        className='w-full px-2 py-1 flex justify-between items-center space-x-2 text-sm'
+                        className='w-full px-2 py-1 flex justify-between items-center space-x-2 text-sm '
                     >
                         <span>Duration : {durationBy?.title}</span>
                         <TiArrowSortedDown />
@@ -88,7 +88,7 @@ const Transections_SortBy = ({ typeBy, setTypeBy, durationBy, setDurationBy }) =
             </Menu>
             <Menu>
                 <MenuButton
-                    className='border rounded'
+                    className='border rounded bg-white'
                 >
                     <button
                         className='w-full px-2 py-1 flex justify-between items-center space-x-2 text-sm'
