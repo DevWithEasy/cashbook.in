@@ -88,19 +88,19 @@ export default function Index() {
       </Head>
       <div
         style={{ background: c_section_hero }}
-        className="px-10 pt-20 flex justify-between overflow-hidden rounded-b-3xl"
+        className="px-4 md:px-10 pt-5 md:pt-20 flex flex-col md:flex-row justify-between space-y-10 md:spacce-y-0 overflow-hidden rounded-b-3xl"
       >
         <div
-          className="w-1/2 space-y-2"
+          className="md:w-1/2 space-y-2"
         >
           <h2
             style={{ color: c_main }}
-            className="text-5xl font-semibold"
+            className="text-3xl md:text-5xl font-semibold"
           >
             Cash Management App
           </h2>
           <h2
-            className="text-gray-600 text-5xl font-semibold"
+            className="text-gray-600 text-2xl md:text-5xl font-semibold"
           >
             For Business Growth
           </h2>
@@ -111,7 +111,7 @@ export default function Index() {
               hero_topics.map((topic, i) =>
                 <li
                   key={i}
-                  className="flex items-center space-x-2 text-lg"
+                  className="flex items-center space-x-2 md:text-lg"
                 >
                   <TiArrowRightThick className='text-[#4863D4]'/>
                   <span>{topic}</span>
@@ -120,16 +120,16 @@ export default function Index() {
             }
           </ul>
           <div
-            className="w-10/12 p-2 flex  space-x-2 bg-white border-2 rounded-md"
+            className="w-full md:w-10/12 p-2 flex  space-x-2 bg-white border-2 rounded-md"
           >
             <select
-              className="p-2 text-xl"
+              className="p-2 md:text-xl"
             >
               <option>BD</option>
             </select>
             <input
               type="phone"
-              className="w-full p-2 text-lg focus:outline-none"
+              className="w-full p-2 md:text-lg focus:outline-none"
               placeholder="Enter Phone Number"
             />
             <button
@@ -157,15 +157,15 @@ export default function Index() {
           </div>
         </div>
         <div
-          className="w-1/2 flex justify-end"
+          className="md:w-1/2 flex md:justify-end"
         >
           <img src={hero_image.src}
-            className="h-[500px] scale-110"
+            className="md:h-[500px] scale-110"
           />
         </div>
       </div>
       <div
-        className="w-9/12 mx-auto py-16 flex justify-between"
+        className="md:w-9/12 mx-5 md:mx-auto py-16 flex flex-col md:flex-row justify-between space-y-10 md:space-y-0"
       >
         {statuses.map((status, i) =>
           <div
@@ -191,7 +191,7 @@ export default function Index() {
         className="px-10 pb-[300px] rounded-3xl"
       >
         <h2
-          className="py-5 text-5xl text-white text-center font-semibold"
+          className="py-5 text-3xl md:text-5xl text-white text-center font-semibold"
         >
           Why CashBook App?
         </h2>
@@ -203,28 +203,28 @@ export default function Index() {
             whyTopics.map((topic, i) =>
               <div
                 key={i}
-                className={`flex justify-between space-x-5 ${i % 2 === 0 ? '' : 'flex-row-reverse'}`}
+                className={`flex flex-col md:flex-row justify-between md:space-x-5 ${i % 2 === 0 ? '' : 'md:flex-row-reverse'}`}
               >
                 <div
-                  className={`w-1/2 flex flex-col justify-center text-white space-y-2`}
+                  className={`md:w-1/2 flex flex-col justify-center text-white space-y-2`}
                 >
                   <p
-                    className={`text-3xl ${i % 2 === 0 ? '' : 'text-right'}`}
+                    className={`text-xl text-center md:text-3xl ${i % 2 === 0 ? '' : ' md:text-right'}`}
                   >
                     {topic.head}
                   </p>
                   <p
-                    className={`text-xl ${i % 2 === 0 ? '' : 'text-right'}`}
+                    className={`text-center md:text-xl ${i % 2 === 0 ? '' : 'md:text-right'}`}
                   >
                     {topic.title}
                   </p>
                 </div>
                 <div
-                  className='w-1/2 flex justify-center'
+                  className='md:w-1/2 flex justify-center'
                 >
                   <img
                     src={topic.image}
-                    className=''
+                    className='w-3/4 md:w-full'
                   />
                 </div>
               </div>
@@ -234,26 +234,26 @@ export default function Index() {
       </div>
       <div
         style={{ background: c_section_hero }}
-        className='w-10/12 mx-auto -mt-[200px] pt-10 flex justify-between rounded-3xl'
+        className='w-10/12 mx-auto -mt-[200px] pt-10 flex flex-col md:flex-row justify-between rounded-3xl'
       >
         <div
-          className='w-1/2'
+          className='md:w-1/2'
         >
           <img
             src={benifit_image.src}
-            className='-mt-[90px] h-[350px] scale-125'
+            className='-mt-[90px] h-[250px] md:h-[350px] mx-auto scale-125'
           />
         </div>
         <div
-          className='w-1/2 space-y-5'
+          className='md:w-1/2 mt-[50px] md:mt-0 p-6 md:p-0 space-y-5'
         >
           <h2
-            className='text-5xl font-bold'
+            className='text-3xl md:text-5xl font-bold'
           >
             Other Benefits
           </h2>
           <ul
-            className='space-y-2 text-xl'
+            className='space-y-2 md:text-xl'
           >
             {
               benifits.map((topic, i) =>
@@ -279,7 +279,7 @@ export default function Index() {
         className='px-10 pt-10'
       >
         <h2
-          className='py-5 text-center text-5xl'
+          className='py-5 text-center text-3xl md:text-5xl'
         >
           What People Say About Us?
         </h2>

@@ -38,37 +38,44 @@ const HomeLayout = ({ children }) => {
     ];
     return (
         <div>
-            <div className="sticky top-0 px-10 py-4 bg-white flex justify-between items-center border-b z-50">
-                <div>
+            <div className="sticky top-0 px-4 md:px-10 py-4 bg-white flex justify-between items-center border-b z-50">
+                <div
+                    className=""
+                >
                     <Link href="/">
-                    <Image
-                                src={logo.src}
-                                alt="logo"
-                                className=""
-                                height={39}
-                                width={150}
-                            />
+                        <Image
+                            src={logo.src}
+                            alt="logo"
+                            className="flex-1"
+                            height={39}
+                            width={150}
+                        />
                     </Link>
                 </div>
                 <div className="flex items-center space-x-4 text-base font-medium">
-                    {links.map((link, i) => (
-                        <Link 
-                            key={i} 
+                    <div
+                    className="hidden md:flex items-center space-x-4"
+                    >
+                        {links.map((link, i) => (
+                        <Link
+                            key={i}
                             href={link.path}
                             className="p-2"
                         >
                             {link.title}
                         </Link>
                     ))}
+                    </div>
+                    
                     <Link href="/signin" className="px-4 py-2 bg-[#4863D4] text-white rounded-md">
                         Login/Register
                     </Link>
                 </div>
             </div>
             {children}
-            <div className="mt-32 p-10 flex justify-between bg-[#D1D6ED]">
-                <div className="w-8/12 flex space-x-5">
-                    <div className="px-2 h-[148px] flex justify-center items-center bg-white rounded-xl">
+            <div className="mt-32 p-10 flex flex-col-reverse md:flex-row justify-between bg-[#D1D6ED]">
+                <div className="md:w-8/12 flex space-x-5">
+                    <div className="hidden px-2 h-[148px] md:flex justify-center items-center bg-white rounded-xl">
                         <Image
                             src={logo_cash.src}
                             alt="logo"
@@ -77,9 +84,9 @@ const HomeLayout = ({ children }) => {
                             width={148}
                         />
                     </div>
-                    <div className="space-y-2">
-                        <p className="text-4xl">Download Now</p>
-                        <p className="text-2xl text-gray-500">CashBook Is Available On</p>
+                    <div className="pt-10 md:pt-0 space-y-2">
+                        <p className="text-2xl md:text-4xl">Download Now</p>
+                        <p className="md:text-2xl text-gray-500">CashBook Is Available On</p>
                         <div className="w-full pt-5 flex space-x-4">
                             <div>
                                 <Image
@@ -111,57 +118,57 @@ const HomeLayout = ({ children }) => {
                         </div>
                     </div>
                 </div>
-                <div className="w-4/12">
+                <div className="md:w-4/12">
                     <img src={multipleDevices.src} className="-mt-32" />
                 </div>
             </div>
-            <div className="p-10 bg-[#2C324B] text-white">
-                <div className="flex justify-between space-x-5">
-                    <div className="w-3/12 flex flex-col space-y-5">
+            <div className="px-10 py-4 md:p-10 bg-[#2C324B] text-white overflow-hidden">
+                <div className="grid md:grid-cols-4 gap-y-10 md:gap-x-5">
+                    <div className="flex flex-col space-y-2 md:space-y-5">
                         <h2 className="text-lg font-bold">Company</h2>
                         <Link href="">
-                        Blogs
+                            Blogs
                         </Link>
                         <Link href="">
-                        About
+                            About
                         </Link>
-                        <div className="flex space-x-5">
+                        <div className="pt-2 flex space-x-3">
                             <a href="">
-                                <img src={linkedin.src} className="w-5 h-5" />
+                                <img src={linkedin.src} className="w-6 h-6" />
                             </a>
                             <a href="">
-                                <img src={facebook.src} className="w-5 h-5" />
+                                <img src={facebook.src} className="w-6 h-6" />
                             </a>
                             <a href="">
-                                <img src={youtube.src} className="w-5 h-5" />
+                                <img src={youtube.src} className="w-6 h-6" />
                             </a>
                             <a href="">
-                                <img src={instragram.src} className="w-5 h-5" />
+                                <img src={instragram.src} className="w-6 h-6" />
                             </a>
                             <a href="">
-                                <img src={twitter.src} className="w-5 h-5" />
+                                <img src={twitter.src} className="w-6 h-6" />
                             </a>
                         </div>
                     </div>
-                    <div className="w-3/12 flex flex-col space-y-5">
+                    <div className="flex flex-col space-y-2 md:space-y-5">
                         <h2 className="text-lg font-bold">Legal</h2>
                         <Link href="">
-                        Privacy Policies
+                            Privacy Policies
                         </Link>
                         <Link href="">
-                        FAQs
+                            FAQs
                         </Link>
                         <Link href="">
-                        Terms and Conditions
+                            Terms and Conditions
                         </Link>
                         <Link href="">
-                        Grievence Redressal Policy
+                            Grievence Redressal Policy
                         </Link>
                         <Link href="">
-                        LivQuik Terms & Conditions
+                            LivQuik Terms & Conditions
                         </Link>
                     </div>
-                    <div className="w-3/12 flex flex-col space-y-5">
+                    <div className="flex flex-col space-y-2 md:space-y-5">
                         <h2 className="text-lg font-bold">Contact</h2>
                         <p>
                             4th floor, Site Number: 233 22nd cross 16th Main, Sector 3, HSR
@@ -170,7 +177,7 @@ const HomeLayout = ({ children }) => {
                         <a href="">+8801717642515</a>
                         <a href="">devwitheasy@gmail.com</a>
                     </div>
-                    <div className="w-3/12 flex flex-col space-y-5">
+                    <div className="flex flex-col space-y-2 md:space-y-5">
                         <h2 className="text-lg font-bold">Certification</h2>
                     </div>
                 </div>

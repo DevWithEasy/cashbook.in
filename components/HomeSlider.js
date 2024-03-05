@@ -4,6 +4,7 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import { c_section_hero } from '../public/colors';
 import user_img from '../public/image/profile.png'
+import {isMobile} from 'react-device-detect'
 
 const HomeSlider = () => {
     const settings = {
@@ -11,9 +12,10 @@ const HomeSlider = () => {
         arrows: true,
         infinite: true,
         speed: 500,
-        slidesToShow: 2,
+        slidesToShow: isMobile ? 1 : 2,
         slidesToScroll: 1
     };
+    
     return (
         <div>
             <Slider {...settings}>
