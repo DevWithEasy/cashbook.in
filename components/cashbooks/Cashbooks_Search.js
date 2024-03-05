@@ -53,7 +53,7 @@ const Cashbooks_Search = ({ sortBy, setSortBy }) => {
                 className='w-5/12'
             >
                 <MenuButton
-                    className='border rounded focus:ring-2 ring-[#4863D4]'
+                    className='border rounded focus:ring-2 ring-[#4863D4] bg-white'
                 >
                     <div
                         className='w-full p-[10px] flex justify-between items-center space-x-2 text-sm'

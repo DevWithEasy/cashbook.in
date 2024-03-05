@@ -26,14 +26,16 @@ class BusinessManager {
     getCurrenBooks(id) {
         const matchingBooks = [];
         for (const book of this.books) {
-            if (book.user._id === this.user?._id) {
+            if (book?.user?._id === this.user?._id) {
                 matchingBooks.push(book);
                 continue;
             }
-            for (const member of book.members) {
-                if (member.user._id === this.user?._id) {
-                    matchingBooks.push(book);
-                    break;
+            if(book?.members?.length > 0){
+                for (const member of book?.members) {
+                    if (member?.user?._id === this.user?._id) {
+                        matchingBooks.push(book);
+                        break;
+                    }
                 }
             }
         }
@@ -47,14 +49,16 @@ class BusinessManager {
 
         const matchingBooks = [];
         for (const book of this.books) {
-            if (book.user._id === this.user?._id) {
+            if (book?.user?._id === this.user?._id) {
                 matchingBooks.push(book);
                 continue;
             }
-            for (const member of book.members) {
-                if (member.user._id === this.user?._id) {
-                    matchingBooks.push(book);
-                    break;
+            if(book?.members?.length > 0){
+                for (const member of book?.members) {
+                    if (member?.user?._id === this.user?._id) {
+                        matchingBooks.push(book);
+                        break;
+                    }
                 }
             }
         }

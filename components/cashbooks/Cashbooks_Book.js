@@ -25,7 +25,7 @@ const Cashbooks_Book = ({book,setId,updateView,setUpdateView,duplicateView,setDu
         <div
                 onMouseOver={() => setMenu(true)}
                 onMouseOut={() => setMenu(false)}
-                className='relative p-4 flex justify-between items-center space-x-5 border-b hover:bg-gray-100 cursor-pointer'
+                className='relative p-4 flex justify-between items-center space-x-5 md:border-b bg-white hover:bg-gray-100 cursor-pointer rounded-md md:rounded-none'
             >
                 <div
                     onClick={handleRoute}

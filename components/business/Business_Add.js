@@ -9,6 +9,7 @@ import { addBusiness } from '../../store/slice/bookSlice';
 import handleInput from '../../utils/handleInput';
 import axios from 'axios'
 import { notificationNOT, notificationOK } from '../../utils/toastNotification';
+import api from '../../utils/api';
 
 export default function Business_Add({ view, setView }) {
   const [value, setValue] = useState({
@@ -23,7 +24,7 @@ export default function Business_Add({ view, setView }) {
   const createBusiness = async () => {
     try {
       setLoading(true)
-      const res = await axios.post('/api/business', {
+      const res = await axios.post(`${api}/business`, {
         ...value,
         category: category.id,
         type: type.id
@@ -61,7 +62,7 @@ export default function Business_Add({ view, setView }) {
           transition={{
             duration: 0.3
           }}
-          className='h-screen w-10/12 flex flex-col justify-between bg-white shadow-md'
+          className='h-screen w-full md:w-10/12 flex flex-col justify-between bg-white shadow-md'
         >
           <div
             className='h-16 px-6 flex justify-between items-center border-b'

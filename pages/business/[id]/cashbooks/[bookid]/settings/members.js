@@ -32,7 +32,7 @@ const members = () => {
                     <title>Members - {currentBook?.name} - CashBook</title>
                 </Head>
                 <div className="w-full md:w-8/12">
-                    <div className="p-4 flex flex-col space-y-3 md:flex-row md:justify-between md:items-center border rounded">
+                    <div className="p-4 flex flex-col space-y-3 md:flex-row md:justify-between md:items-center bg-white border rounded">
                         <div className="md:w-7/12">
                             <p className="text-lg">Business Team</p>
                             <p className="text-sm text-gray-500">

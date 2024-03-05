@@ -42,7 +42,12 @@ const Checking = () => {
 
 
                 if (user.name.length > 0 && businessId !== null) {
-                    return router.push(`/business/${businessId}/cashbooks`)
+                    if(isMobile){
+                        return router.push(`/business`)
+                    }else{
+                        return router.push(`/business/${businessId}/cashbooks`)
+                    }
+                    
                 } else if (!user.name.length > 0 && businessId === null) {
                     return router.push(`/onboarding`)
                 } else if (user.name.length > 0 && businessId === null) {
