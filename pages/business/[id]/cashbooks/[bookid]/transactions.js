@@ -84,7 +84,7 @@ const Transactions = () => {
         <UserLayout>
             {!loading ?
                 <div
-                    className='space-y-2 md:space-y-5'
+                    className='h-[calc(100vh-48px)] bg-gray-100 md:bg-white space-y-2 md:space-y-5'
                 >
                     <Head>
                         <title>{currentBook?.name}'s Transactions - CashBook</title>

@@ -12,6 +12,7 @@ import { HiOutlineUsers } from 'react-icons/hi2';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
 import { MdOutlineFileDownload, MdOutlineGridOn, MdPictureAsPdf } from 'react-icons/md';
 import { useSelector } from 'react-redux'
+import Link from 'next/link'
 
 const Transections_Header = () => {
     const { currentBusiness, currentBook } = useSelector(state => state.book)
@@ -36,35 +37,35 @@ const Transections_Header = () => {
                 <div
                     className='pl-5 flex items-center text-[#4863D4] space-x-5'
                 >
-                    <button
+                    <Link
+                    href={`/business/${currentBusiness._id}/cashbooks/${currentBook._id}/settings/fields`}
                         className='relative group'
                     >
                         <IoSettingsOutline
-                            onClick={() => router.push(`/business/${currentBusiness._id}/cashbooks/${currentBook._id}/settings/fields`)}
                             size={22}
                             className='text-[#4863D4] cursor-pointer'
                         />
                         <span
-                            className='absolute hidden group-hover:block w-28 px-4 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded'
+                            className='absolute hidden group-hover:block w-28 px-4 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded z-50'
                         >
                             Book settings
                         </span>
-                    </button>
+                    </Link>
                     <span className='text-gray-200'>|</span>
-                    <button
+                    <Link
+                        href={`/business/${currentBusiness._id}/cashbooks/${currentBook._id}/settings/members`}
                         className='relative group'
                     >
                         <HiOutlineUsers
-                            onClick={() => router.push(`/business/${currentBusiness._id}/cashbooks/${currentBook._id}/settings/members`)}
                             size={22}
                             className='text-[#4863D4] cursor-pointer'
                         />
                         <span
-                            className='absolute hidden group-hover:block w-28 px-4 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded'
+                            className='absolute hidden group-hover:block w-28 px-4 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded z-50'
                         >
                             Add Member
                         </span>
-                    </button>
+                    </Link>
 
                 </div>
             </div>

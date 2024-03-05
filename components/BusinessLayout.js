@@ -3,6 +3,7 @@ import React, { useState } from 'react'
 import {useSelector} from 'react-redux'
 import BusinessManager from '../utils/BusinessManager'
 import { MdOutlineMenu } from "react-icons/md"
+import Link from 'next/link'
 
 const BusinessLayout = ({path,children}) => {
     const { businesses, currentBusiness, books } = useSelector(state => state.book)
@@ -57,9 +58,9 @@ const BusinessLayout = ({path,children}) => {
                 >
                     {
                         sidebars.map((topic,i)=>
-                        <div
+                        <Link
                             key={i}
-                            onClick={()=>router.push(`/business/${currentBusiness?._id}/business-settings/${topic.path}`)}
+                            href={`/business/${currentBusiness?._id}/business-settings/${topic.path}`}
                             className='md:py-3 p-3 md:pr-3 border-b'
                         >
                             <div
@@ -72,7 +73,7 @@ const BusinessLayout = ({path,children}) => {
                             {topic.desc}
                             </p>
                             </div>
-                        </div>
+                        </Link>
                         )
                     }
                 </div>

@@ -21,7 +21,7 @@ const Businesses = () => {
     return (
         <UserLayout>
             <div
-                className='h-[calc(100vh-48px)]'
+                className='h-[calc(100vh-48px)] bg-gray-100 md:bg-white'
             >
                 <div
                     className=''

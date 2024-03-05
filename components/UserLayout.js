@@ -180,7 +180,7 @@ const UserLayout = ({ path, children }) => {
                 }
 
                 <div
-                    className='w-full md:w-10/12 overflow-y-auto bg-gray-50 md:bg-white'
+                    className='w-full md:w-10/12 overflow-y-auto'
                 >
                     {children}
                 </div>

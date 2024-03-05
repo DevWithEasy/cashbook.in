@@ -5,6 +5,7 @@ import { Book_Update, Book_Duplicate, Book_Delete } from '../components/Index'
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux'
 import { MdOutlineMenu } from "react-icons/md"
+import Link from 'next/link'
 
 const BookSettingLayout = ({ path, children }) => {
     const { currentBusiness, currentBook } = useSelector(state => state.book)
@@ -30,7 +31,7 @@ const BookSettingLayout = ({ path, children }) => {
             className='h-[calc(100vh-48px)]'
         >
             <div
-                className='h-[70px] px-6 border-b flex items-center'
+                className='h-[60px] md:h-[70px] px-4 md:px-6 border-b flex items-center'
             >
                 <div
                     className='w-1/2 flex items-center space-x-3'
@@ -38,19 +39,23 @@ const BookSettingLayout = ({ path, children }) => {
                     <MdOutlineMenu
                         size={30}
                         onClick={() => setMenu(!menu)}
-                        className='mr-3 cursor-pointer md:hidden'
+                        className='mr-1 cursor-pointer md:hidden'
                     />
+                    <Link
+                        href={`/business/${currentBusiness._id}/cashbooks/${currentBook?._id}/transactions`}
+                        className='flex items-center space-x-1'
+                    >
                     <IoMdArrowRoundBack
-                        onClick={() => router.push(`/business/${currentBusiness._id}/cashbooks/`)}
                         size={25}
                         className='mt-1 cursor-pointer'
                     />
 
                     <p
-                        className='text-2xl'
+                        className='text-xl md:text-2xl'
                     >
-                        Settings <span className='text-sm'>({currentBook?.name})</span>
+                        Settings <span className='hidden md:inline-block text-sm'>({currentBook?.name})</span>
                     </p>
+                    </Link>
                 </div>
                 <div
                     className='w-1/2 flex justify-end'
@@ -115,7 +120,7 @@ const BookSettingLayout = ({ path, children }) => {
                     }
                 </div>
                 <div
-                    className='w-full md:w-9/12 px-6 py-4 border-l overflow-y-auto'
+                    className='w-full md:w-9/12 px-4 md:px-6 py-4 border-l overflow-y-auto'
                 >
                     {children}
                 </div>

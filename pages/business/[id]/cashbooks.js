@@ -46,7 +46,9 @@ const Cashbooks = () => {
 
     return (
         <UserLayout>
-            <div>
+            <div
+                className='h-[calc(100vh-48px)] bg-gray-100 md:bg-white'
+            >
                 <Head>
                     <title>{currentBusiness?.name} - CashBook</title>
                 </Head>
@@ -59,7 +61,7 @@ const Cashbooks = () => {
                     >
                         <div
                             onClick={() => setView(!view)}
-                            className='fixed bottom-7 right-3 px-4 py-2 flex justify-center space-x-2 items-center bg-[#4863D4] text-white rounded-full cursor-pointer'
+                            className='fixed bottom-7 right-3 md:hidden px-4 py-2 flex justify-center space-x-2 items-center bg-[#4863D4] text-white rounded-full cursor-pointer'
                         >
                             <GoPlus
                                 size={20}
