@@ -3,7 +3,7 @@ import { Transections_Tbody_Tr } from '../Index';
 import { useSelector } from 'react-redux'
 import Entry from '../../utils/Entry';
 
-const Transections_Tbody = ({ menuId, setMenuId, selected,setSelected, handleDetails, deleteView, setDeleteView, updateView, setUpdateView }) => {
+const Transections_Tbody = ({ menuId, setMenuId, selected,setSelected, handleDetails, deleteView, setDeleteView, updateView, setUpdateView,permission }) => {
     const { entries } = useSelector(state => state.book)
     const entryConst = new Entry(entries)
     const generatedEntries = entryConst.generatedEntry()
@@ -20,7 +20,7 @@ const Transections_Tbody = ({ menuId, setMenuId, selected,setSelected, handleDet
                             setSelected,
                             handleDetails,
                             deleteView, setDeleteView,
-                            updateView, setUpdateView
+                            updateView, setUpdateView,permission
                         }}
                     />
                 )

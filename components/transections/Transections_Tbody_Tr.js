@@ -3,7 +3,7 @@ import React from 'react';
 import { MdDeleteOutline, MdOutlineCheckBox, MdOutlineCheckBoxOutlineBlank } from 'react-icons/md';
 import { RiEdit2Line } from 'react-icons/ri';
 
-const Transections_Tbody_Tr = ({ entry, menuId, setMenuId, selected, setSelected, handleDetails, deleteView, setDeleteView, updateView, setUpdateView }) => {
+const Transections_Tbody_Tr = ({ entry, menuId, setMenuId, selected, setSelected, handleDetails, deleteView, setDeleteView, updateView, setUpdateView,permission }) => {
     const date = moment(entry.updatedAt).format('DD MMM YYYY')
     const time = moment(entry.updatedAt).format('h:mm A')
 
@@ -92,7 +92,8 @@ const Transections_Tbody_Tr = ({ entry, menuId, setMenuId, selected, setSelected
             <td
                 className='py-4 flex justify-center items-center'
             >
-                <div
+                {permission.transectionAction() &&
+                    <div
                     className={`flex space-x-3 ${menuId === entry?._id ? 'visible' : 'invisible'}`}
                 >
                     <RiEdit2Line
@@ -106,6 +107,7 @@ const Transections_Tbody_Tr = ({ entry, menuId, setMenuId, selected, setSelected
                         className='text-red-500 cursor-pointer'
                     />
                 </div>
+                }
             </td>
         </tr>
     );

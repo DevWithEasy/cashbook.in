@@ -14,7 +14,7 @@ import { MdOutlineFileDownload, MdOutlineGridOn, MdPictureAsPdf } from 'react-ic
 import { useSelector } from 'react-redux'
 import Link from 'next/link'
 
-const Transections_Header = () => {
+const Transections_Header = ({ permission }) => {
     const { currentBusiness, currentBook } = useSelector(state => state.book)
     const router = useRouter()
     return (
@@ -38,7 +38,7 @@ const Transections_Header = () => {
                     className='pl-5 flex items-center text-[#4863D4] space-x-5'
                 >
                     <Link
-                    href={`/business/${currentBusiness._id}/cashbooks/${currentBook._id}/settings/fields`}
+                        href={`/business/${currentBusiness._id}/cashbooks/${currentBook._id}/settings/fields`}
                         className='relative group'
                     >
                         <IoSettingsOutline
@@ -51,35 +51,41 @@ const Transections_Header = () => {
                             Book settings
                         </span>
                     </Link>
-                    <span className='text-gray-200'>|</span>
-                    <Link
-                        href={`/business/${currentBusiness._id}/cashbooks/${currentBook._id}/settings/members`}
-                        className='relative group'
-                    >
-                        <HiOutlineUsers
-                            size={22}
-                            className='text-[#4863D4] cursor-pointer'
-                        />
-                        <span
-                            className='absolute hidden group-hover:block w-28 px-4 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded z-50'
-                        >
-                            Add Member
-                        </span>
-                    </Link>
-
+                    {permission.bookMemberAdd() &&
+                        <>
+                            <span className='text-gray-200'>|</span>
+                            <Link
+                                href={`/business/${currentBusiness._id}/cashbooks/${currentBook._id}/settings/members`}
+                                className='relative group'
+                            >
+                                <HiOutlineUsers
+                                    size={22}
+                                    className='text-[#4863D4] cursor-pointer'
+                                />
+                                <span
+                                    className='absolute hidden group-hover:block w-28 px-4 py-1 pb-2 -translate-x-1/2 translate-y-3 bg-black text-xs text-white rounded z-50'
+                                >
+                                    Add Member
+                                </span>
+                            </Link>
+                        </>
+                    }
                 </div>
             </div>
             <div
                 className='w-1/2 flex justify-end space-x-5'
             >
-                <button
-                    onClick={() => {
-                    }}
-                    className='px-6 py-2 flex items-center space-x-2 text-[#4863D4]'
-                >
-                    <AiOutlineCloudUpload size={25} />
-                    <span className='hidden md:inline-block'>Add Bulk Entries</span>
-                </button>
+                {permission.bookMemberAdd() &&
+                    <button
+                        onClick={() => {
+                        }}
+                        className='px-6 py-2 flex items-center space-x-2 text-[#4863D4]'
+                    >
+                        <AiOutlineCloudUpload size={25} />
+                        <span className='hidden md:inline-block'>Add Bulk Entries</span>
+                    </button>
+                }
+
                 <Menu>
                     <MenuButton
 

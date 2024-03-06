@@ -46,3 +46,90 @@ export const stuffTopics = [
         ]
     }
 ]
+
+//book permission
+
+export const bookOwner = [
+    {
+        title: 'Permissions',
+        roles: [
+            'View entries and download reports',
+            'Add Cash In or Cash Out entries',
+            'Edit and delete entries',
+            'Access to all Book Settings',
+            'Move or copy entries from one book to other book',
+            'Access Book Activity and Entry’s Edit History',
+            'Duplicate and Delete Book',
+        ]
+    },
+    {
+        title: 'Restrictions',
+        roles: []
+    }
+]
+export const bookParner = [
+    {
+        title: 'Permissions',
+        roles: [
+            'View entries and download reports',
+            'Add Cash In or Cash Out entries',
+            'Edit and delete entries',
+            'Access to all Book Settings',
+            'Move or copy entries from one book to other book',
+            'Access Book Activity and Entry’s Edit History',
+            'Duplicate and Delete Book',
+        ]
+    },
+    {
+        title: 'Restrictions',
+        roles: []
+    }
+]
+export const bookDataOperator = [
+    {
+        title: 'Permissions',
+        roles: [
+            'Add Cash In or Cash Out entries',
+            'View entries by everyone',
+            'View net balance & download PDF or Excel',
+        ]
+    },
+    {
+        title: 'Restrictions',
+        roles: [
+            'Cannot edit entries',
+        ]
+    }
+]
+
+export const bookAdmin = [
+    {
+        title: 'Permissions',
+        roles: [
+            'Full access to book settings & activity log',
+            'Customize data operator permissions',
+            'Change roles of data operator or viewer',
+        ]
+    },
+    {
+        title: 'Restrictions',
+        roles: [
+            'Can’t remove owners or partners',
+            'Can’t delete book',
+        ]
+    }
+]
+
+export const bookViewer = [
+    {
+        title: 'Permissions',
+        roles: [
+            'View entries by everyone',
+            'View net balance & download PDF or Excel',
+        ]
+    },
+    {
+        title: 'Restrictions',
+        roles: []
+    }
+]

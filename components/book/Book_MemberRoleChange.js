@@ -10,6 +10,7 @@ import { addCurrentBook, renameBook } from '../../store/slice/bookSlice'
 import api from '../../utils/api'
 import { notificationNOT, notificationOK } from '../../utils/toastNotification'
 import { Book_AddMember_Role } from '../Index'
+import socket from '../../utils/socket'
 
 const Book_MemberRoleChange = ({ member, view, setView }) => {
     const dispatch = useDispatch()
@@ -37,6 +38,7 @@ const Book_MemberRoleChange = ({ member, view, setView }) => {
                 setView(false)
                 dispatch(addCurrentBook(res.data.data))
                 dispatch(renameBook(res.data.data))
+                socket.emit('update_book',{book : res.data.data})
             }
 
         } catch (error) {

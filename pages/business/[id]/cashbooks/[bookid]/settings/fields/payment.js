@@ -13,9 +13,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BookSettingLayout, Payment_Add, Payment_Delete, Payment_Import, Payment_Update, UserLayout } from '../../../../../../../components/Index';
 import { getData } from '../../../../../../../libs/API_CCP_Crud';
 import { addCCPs } from '../../../../../../../store/slice/bookSlice';
+import Permission from '../../../../../../../utils/Permission';
+import Link from 'next/link'
+import { TiInfo } from "react-icons/ti";
 
 const Payment = () => {
-    const { ccp, currentBook } = useSelector(state => state.book)
+    const { currentBook, ccp, currentBusiness } = useSelector(state => state.book)
+    const { user } = useSelector(state => state.auth)
+    const permission = new Permission(user, currentBook, currentBusiness)
     const router = useRouter()
     const dispatch = useDispatch()
     const { pathname } = router
@@ -29,12 +34,12 @@ const Payment = () => {
 
     useEffect(() => {
         getData({
-            url: `/api/payment?id=${currentBook._id}`,
+            url: `payment/${currentBook._id}`,
             dispatch,
             action: addCCPs
         })
     }, [])
-    
+
     return (
         <UserLayout>
             <BookSettingLayout {...{ path }}>
@@ -44,6 +49,14 @@ const Payment = () => {
                 <div
                     className='w-full md:w-8/12 space-y-5'
                 >
+                    {!permission.bookMemberAdd() &&
+                        <div
+                            className='p-3 flex items-center space-x-2 bg-[#F8EFE7] text-[#BD610D] border border-[#BD610D] rounded-md'
+                        >
+                            <TiInfo size={25} />
+                            <span>You don't have permissions to update fields in this book.</span>
+                        </div>
+                    }
                     <div
                         className='flex items-center space-x-1 text-sm text-gray-500'
                     >
@@ -51,12 +64,13 @@ const Payment = () => {
                         <span>|</span>
                         <span>Payment</span>
                     </div>
-                    <div
+                    <Link
+                        href={`/business/${currentBusiness?._id}/cashbooks/${currentBook?._id}/settings/fields`}
                         className='flex items-center space-x-5'
                     >
                         <IoArrowBackOutline size={20} />
                         <span>Payment</span>
-                    </div>
+                    </Link>
                     <div
                         className="p-4 flex justify-between items-center space-x-10 border rounded"
                     >
@@ -73,7 +87,7 @@ const Payment = () => {
                             </p>
                         </div>
                         <div
-                            onClick={() => setNoti(!isNoti)}
+                            onClick={() =>permission.bookMemberAdd() && setNoti(!isNoti)}
                             className="h-6 flex bg-gray-100 text-xs cursor-pointer"
                         >
                             <div
@@ -95,24 +109,26 @@ const Payment = () => {
                     <div
                         className={`space-y-5 ${!isNoti && 'pointer-events-none grayscale'}`}
                     >
-                        <div
-                            className='w-full pt-5 space-y-3'
-                        >
-                            <button
-                                onClick={() => setAddView(!addView)}
-                                className='w-full px-8 py-2 flex items-center space-x-2 text-[#4863D4] border hover:border-[#4863D4] focus:ring-2 rounded'
+                        {permission.bookMemberAdd() &&
+                            <div
+                                className='w-full pt-5 space-y-3'
                             >
-                                <MdAdd size={20} />
-                                <span>Add New Payment Mode</span>
-                            </button>
-                            <button
-                                onClick={() => setImportView(!importView)}
-                                className='w-full px-8 py-2 flex items-center space-x-2 text-[#4863D4] border hover:border-[#4863D4] focus:ring-2 rounded'
-                            >
-                                <MdOutlineContentCopy size={20} />
-                                <span>Import From Others Book</span>
-                            </button>
-                        </div>
+                                <button
+                                    onClick={() => setAddView(!addView)}
+                                    className='w-full px-8 py-2 flex items-center space-x-2 text-[#4863D4] border hover:border-[#4863D4] focus:ring-2 rounded'
+                                >
+                                    <MdAdd size={20} />
+                                    <span>Add New Payment Mode</span>
+                                </button>
+                                <button
+                                    onClick={() => setImportView(!importView)}
+                                    className='w-full px-8 py-2 flex items-center space-x-2 text-[#4863D4] border hover:border-[#4863D4] focus:ring-2 rounded'
+                                >
+                                    <MdOutlineContentCopy size={20} />
+                                    <span>Import From Others Book</span>
+                                </button>
+                            </div>
+                        }
                         <div
                             className='space-y-3 pb-10'
                         >
@@ -127,32 +143,33 @@ const Payment = () => {
                                             className='pl-4 py-2 flex justify-between items-center border rounded'
                                         >
                                             <span>{payment?.name}</span>
-                                            <Menu>
-                                                <MenuButton>
-                                                    <div className='px-4'><CiMenuKebab /></div>
-                                                </MenuButton>
-                                                <MenuList>
-                                                    <button
-                                                        onClick={() => {
-                                                            setUpdateView(!updateView)
-                                                            setId(payment?._id)
-                                                        }}
-                                                        className='w-full p-2 text-left hover:bg-slate-100'
-                                                    >
-                                                        Rename
-                                                    </button>
-                                                    <button
-                                                        onClick={() => {
-                                                            setDeleteView(!deleteView)
-                                                            setId(payment?._id)
-                                                        }}
-                                                        className='w-full p-2 text-left hover:bg-slate-100'
-                                                    >
-                                                        Delete
-                                                    </button>
-                                                </MenuList>
-                                            </Menu>
-
+                                            {permission.bookMemberAdd() &&
+                                                <Menu>
+                                                    <MenuButton>
+                                                        <div className='px-4'><CiMenuKebab /></div>
+                                                    </MenuButton>
+                                                    <MenuList>
+                                                        <button
+                                                            onClick={() => {
+                                                                setUpdateView(!updateView)
+                                                                setId(payment?._id)
+                                                            }}
+                                                            className='w-full p-2 text-left hover:bg-slate-100'
+                                                        >
+                                                            Rename
+                                                        </button>
+                                                        <button
+                                                            onClick={() => {
+                                                                setDeleteView(!deleteView)
+                                                                setId(payment?._id)
+                                                            }}
+                                                            className='w-full p-2 text-left hover:bg-slate-100'
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    </MenuList>
+                                                </Menu>
+                                            }
                                         </div>
                                     )
                                 }

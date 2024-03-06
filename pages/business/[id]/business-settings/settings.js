@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
 import { FaExchangeAlt } from "react-icons/fa";
-import { MdOutlineDelete } from "react-icons/md";
+import { MdOutlineDelete,MdLogout } from "react-icons/md";
 import { useSelector } from 'react-redux';
 import { BusinessLayout, Business_Delete, Business_OwnerChange, Business_TeamMemberLeave, UserLayout } from '../../../../components/Index';
 import BusinessManager from '../../../../utils/BusinessManager';
@@ -99,7 +99,7 @@ const settings = () => {
                                 onClick={() => setLeaveView(!leaveView)}
                                 className='px-6 py-2 flex items-center space-x-2 text-red-600 focus:ring-2 rounded'
                             >
-                                <MdOutlineDelete />
+                                <MdLogout />
                                 <span>Leave Business</span>
                             </button>
                         </div>

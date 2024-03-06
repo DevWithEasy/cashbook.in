@@ -1,12 +1,13 @@
-import { addBooks, addBusinesses, addCurrentBusiness, removeBusiness, renameBook, updateBusiness } from "../store/slice/bookSlice";
+import { addBooks, addBusinesses, addCurrentBook, addCurrentBusiness, removeBusiness, renameBook, updateBusiness } from "../store/slice/bookSlice";
 import api from "./api";
 import socket from "./socket";
 import axios from 'axios'
 
 class SocketManager{
-    constructor(dispatch,router){
+    constructor(dispatch,router,book){
         this.dispatch = dispatch
         this.router = router
+        this.book = book
     }
 
     handleChecking = async () => {
@@ -52,6 +53,9 @@ class SocketManager{
     bookUpdate(){
         socket.on('update_book_client', data => {
             this.dispatch(renameBook(data))
+            if (this.book?._id === data._id) {
+                this.dispatch(addCurrentBook(data))
+            }
         })
     }
 
@@ -63,13 +67,10 @@ class SocketManager{
             }
         })
     }
-/**
- * 
- * @param {object} currentBook 
- */
-    removeMemberFromBook(currentBook){
+
+    removeMemberFromBook(){
         socket.on('remove_team_client', data => {
-            if (currentBook._id === data._id) {
+            if (this.book?._id === data._id) {
                 this.router.push('/checking')
             } else {
                 this.dispatch(renameBook(data))

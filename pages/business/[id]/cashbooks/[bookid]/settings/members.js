@@ -5,7 +5,7 @@ import Image from 'next/image'
 import user_image from '../../../../../../public/image/profile.png'
 import { useSelector } from "react-redux";
 import { useRouter } from 'next/router';
-import { BookSettingLayout, UserLayout, Book_AddMember, Book_MemberRoleChange, Book_MemberRemove } from '../../../../../../components/Index';
+import { BookSettingLayout, UserLayout, Book_AddMember, Book_MemberRoleChange, Book_MemberRemove, Book_RolePermission } from '../../../../../../components/Index';
 import Head from 'next/head'
 import {
     Menu,
@@ -13,10 +13,12 @@ import {
     MenuList
 } from '@chakra-ui/react';
 import { CiMenuKebab } from 'react-icons/ci';
+import Permission from '../../../../../../utils/Permission';
 
 const members = () => {
-    const user = useSelector(state => state.auth.user)
-    const { currentBook } = useSelector(state => state.book)
+    const { currentBusiness, currentBook } = useSelector(state => state.book)
+    const { user } = useSelector(state => state.auth)
+    const permission = new Permission(user, currentBook, currentBusiness)
     const router = useRouter()
     const { pathname } = router
     const path = pathname.split('/').pop()
@@ -24,6 +26,7 @@ const members = () => {
     const [updateView, setUpdateView] = useState(false)
     const [deleteView, setDeleteView] = useState(false)
     const [member, setMember] = useState()
+    const [roleView, setRoleView] = useState(false)
 
     return (
         <UserLayout>
@@ -32,7 +35,8 @@ const members = () => {
                     <title>Members - {currentBook?.name} - CashBook</title>
                 </Head>
                 <div className="w-full md:w-8/12">
-                    <div className="p-4 flex flex-col space-y-3 md:flex-row md:justify-between md:items-center bg-white border rounded">
+                    {permission.bookMemberAdd() &&
+                        <div className="p-4 flex flex-col space-y-3 md:flex-row md:justify-between md:items-center bg-white border rounded">
                         <div className="md:w-7/12">
                             <p className="text-lg">Business Team</p>
                             <p className="text-sm text-gray-500">
@@ -47,9 +51,13 @@ const members = () => {
                             <span>Add team member</span>
                         </button>
                     </div>
+                    }
                     <div className="py-5 flex justify-between items-center">
                         <p className="font-semibold">Total Members (1)</p>
-                        <button className="flex items-center space-x-2 text-[#4863D4]">
+                        <button
+                            onClick={() => setRoleView(!roleView)}
+                            className="flex items-center space-x-2 text-[#4863D4]"
+                        >
                             <span>View roles & permissions</span>
                             <IoIosArrowForward />
                         </button>
@@ -112,31 +120,33 @@ const members = () => {
                                                 >
                                                     {member?.role}
                                                 </span>
-                                                <Menu>
-                                                    <MenuButton>
-                                                        <div className='pl-4'><CiMenuKebab /></div>
-                                                    </MenuButton>
-                                                    <MenuList>
-                                                        <button
-                                                            onClick={() => {
-                                                                setUpdateView(!updateView)
-                                                                setMember(member)
-                                                            }}
-                                                            className='w-full p-2 text-left hover:bg-slate-100'
-                                                        >
-                                                            Change Role
-                                                        </button>
-                                                        <button
-                                                            onClick={() => {
-                                                                setDeleteView(!deleteView)
-                                                                setMember(member)
-                                                            }}
-                                                            className='w-full p-2 text-left hover:bg-slate-100'
-                                                        >
-                                                            Remove
-                                                        </button>
-                                                    </MenuList>
-                                                </Menu>
+                                                {permission.bookUpdate() &&
+                                                    <Menu>
+                                                        <MenuButton>
+                                                            <div className='pl-4'><CiMenuKebab /></div>
+                                                        </MenuButton>
+                                                        <MenuList>
+                                                            <button
+                                                                onClick={() => {
+                                                                    setUpdateView(!updateView)
+                                                                    setMember(member)
+                                                                }}
+                                                                className='w-full p-2 text-left hover:bg-slate-100'
+                                                            >
+                                                                Change Role
+                                                            </button>
+                                                            <button
+                                                                onClick={() => {
+                                                                    setDeleteView(!deleteView)
+                                                                    setMember(member)
+                                                                }}
+                                                                className='w-full p-2 text-left hover:bg-slate-100'
+                                                            >
+                                                                Remove
+                                                            </button>
+                                                        </MenuList>
+                                                    </Menu>
+                                                }
                                             </div>
                                         </div>
                                     </div>
@@ -163,6 +173,12 @@ const members = () => {
                             member,
                             view: deleteView,
                             setView: setDeleteView
+                        }} />
+                    }
+                    {roleView &&
+                        <Book_RolePermission {...{
+                            view: roleView,
+                            setView: setRoleView
                         }} />
                     }
                 </div>

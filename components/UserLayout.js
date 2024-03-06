@@ -11,6 +11,7 @@ import api from '../utils/api';
 import socket from '../utils/socket';
 import { Business_Add, Header } from './Index';
 import axios from 'axios'
+import SocketManager from '../utils/SocketManager';
 
 
 const UserLayout = ({ path, children }) => {
@@ -22,6 +23,8 @@ const UserLayout = ({ path, children }) => {
 
     const businessManager = new BusinessManager(user, books, businesses, currentBusiness)
 
+    const Socket = new SocketManager(dispatch,router,currentBook)
+
     if (!isAuth) {
         router.push('/signin')
     }
@@ -31,63 +34,23 @@ const UserLayout = ({ path, children }) => {
         dispatch(addCurrentBusiness(business))
     }
 
-    const handleChecking = async () => {
-        try {
-            const res = await axios.get(`${api}/user/checking`, {
-                headers: {
-                    "cb-access-token": localStorage.getItem("cb_access_token")
-                }
-            })
-
-            if (res.data.success) {
-
-                const { businesses, books } = res.data.data
-
-                dispatch(addBusinesses(businesses))
-                dispatch(addBooks(books))
-            }
-        } catch (error) {
-            console.log(error)
-        }
-    }
-
     useEffect(() => {
         //===============Business=================
-        socket.on('update_business_client', data => {
-            dispatch(updateBusiness(data))
-            dispatch(addCurrentBusiness(data))
-        })
 
-        socket.on('remove_business_client', data => {
-            dispatch(removeBusiness(data.id))
-            router.push('/checking')
-        })
+        Socket.addBusiness()
+        Socket.businessUpdate()
+        Socket.removeBusiness()
 
-        socket.on('add_business_client', async (data) => {
-            handleChecking()
-        })
         //===============Business=================
 
         //===============Book=================
+        
+        Socket.bookUpdate()
         //add book member
-        socket.on('add_team_client', data => {
-            handleChecking()
-            if (router.asPath === `/business/${data?.business}/cashbooks`) {
-                router.reload()
-            }
-        })
-        socket.on('update_book_client', data => {
-            dispatch(renameBook(data))
-        })
-
+        Socket.addMemberInBook()
         //remove book member
-        socket.on('remove_team_client', data => {
-            if (currentBook._id === data._id) {
-                router.push('/checking')
-            } else {
-                dispatch(renameBook(data))
-            }
-        })
+        Socket.removeMemberFromBook()
+
         //===============Book=================
     })
 

@@ -1,14 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Balance, Entry_Add, Entry_Category, Entry_Contact, Entry_Delete, Entry_Delete_Many, Entry_Details, Entry_Duplicate, Entry_Move, Entry_Opposite, Entry_Payment, Entry_Update, Loading, Transections_Header, Transections_NoFound, Transections_Pagination, Transections_Search, Transections_SortBy, Transections_Tbody, Transections_TheadAction, Transections_TheadMain, UserLayout,Transections_List } from '../../../../../components/Index';
+import { Balance, Entry_Add, Entry_Category, Entry_Contact, Entry_Delete, Entry_Delete_Many, Entry_Details, Entry_Duplicate, Entry_Move, Entry_Opposite, Entry_Payment, Entry_Update, Loading, Transections_Header, Transections_NoFound, Transections_Pagination, Transections_Search, Transections_SortBy, Transections_Tbody, Transections_TheadAction, Transections_TheadMain, UserLayout, Transections_List } from '../../../../../components/Index';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux'
 import Head from 'next/head'
 import { addEntries } from '../../../../../store/slice/bookSlice';
 import axios from 'axios'
 import api from '../../../../../utils/api';
+import Permission from '../../../../../utils/Permission';
 
 const Transactions = () => {
-    const { entries, currentBook } = useSelector(state => state.book)
+    const { entries, currentBook,currentBusiness } = useSelector(state => state.book)
+    const {user} = useSelector(state=>state.auth)
+    const permission = new Permission(user,currentBook,currentBusiness)
     const router = useRouter()
     const { bookid } = router.query
     const dispatch = useDispatch()
@@ -90,7 +93,7 @@ const Transactions = () => {
                         <title>{currentBook?.name}'s Transactions - CashBook</title>
                     </Head>
 
-                    <Transections_Header />
+                    <Transections_Header {...{permission}} />
 
                     <div
                         className='px-4 md:px-8 space-y-2 md:space-y-5'
@@ -100,7 +103,7 @@ const Transactions = () => {
                             durationBy, setDurationBy
                         }} />
 
-                        <Transections_Search {...{ handleView }} />
+                        <Transections_Search {...{ handleView,permission }} />
 
 
                         {entries?.length > 0 &&
@@ -112,48 +115,54 @@ const Transactions = () => {
                         }
 
                         <div
-                            className='w-full overflow-y-auto'
+                            className='w-full'
                         >
                             {entries?.length > 0 ?
                                 <>
-                                <Transections_List {...{
-                                    detailsView,setDetailsView,
-                                    setMenuId
-                                }}/>
-                                {/* <table
-                                    className='w-full'
-                                >
-                                    {selected.length > 0 ?
-                                        <Transections_TheadAction {...{
-                                            selected,
-                                            handleSelectAll,
-                                            copyView, setCopyView,
-                                            moveView, setMoveView,
-                                            oppositeView, setOppositeView,
-                                            categoryView, setCategoryView,
-                                            paymentView, setPaymentView,
-                                            contactView, setContactView,
-                                            deleteManyView, setDeleteManyView
-                                        }} />
-                                        :
-                                        <Transections_TheadMain {...{
-                                            selected,
-                                            handleSelectAll,
-                                        }} />
-                                    }
-
-                                    <Transections_Tbody {...{
-                                        menuId, setMenuId,
-                                        selected,
-                                        setSelected,
-                                        handleSelectAll,
-                                        handleDetails,
-                                        deleteView, setDeleteView,
-                                        updateView, setUpdateView
+                                    <Transections_List {...{
+                                        detailsView, setDetailsView,
+                                        setMenuId
                                     }} />
-                                </table> */}
+                                    <div
+                                        className='hidden md:block w-full overflow-y-auto'
+                                    >
+                                        <table
+                                            className='w-full'
+                                        >
+                                            {selected.length > 0 ?
+                                                <Transections_TheadAction {...{
+                                                    selected,
+                                                    handleSelectAll,
+                                                    copyView, setCopyView,
+                                                    moveView, setMoveView,
+                                                    oppositeView, setOppositeView,
+                                                    categoryView, setCategoryView,
+                                                    paymentView, setPaymentView,
+                                                    contactView, setContactView,
+                                                    deleteManyView, setDeleteManyView
+                                                }} />
+                                                :
+                                                <Transections_TheadMain {...{
+                                                    selected,
+                                                    handleSelectAll,
+                                                }} />
+                                            }
+
+                                            <Transections_Tbody {...{
+                                                menuId, setMenuId,
+                                                selected,
+                                                setSelected,
+                                                handleSelectAll,
+                                                handleDetails,
+                                                deleteView, setDeleteView,
+                                                updateView, setUpdateView,
+                                                permission
+                                            }} />
+                                        </table>
+                                    </div>
+
                                 </>
-                                
+
                                 :
                                 <Transections_NoFound {...{ loading }} />
                             }

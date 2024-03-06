@@ -54,17 +54,20 @@ const BusinessLayout = ({path,children}) => {
                 className='h-[calc(100vh-118px)] flex justify-between'
             >
                 <div
-                    className={`${menu ? 'h-screen bg-white fixed shadow-xl' : 'hidden md:block md:w-3/12 pl-4 border-r '}`}
+                    className={`${menu ? 'h-screen bg-white fixed shadow-xl' : 'hidden md:block md:w-3/12 border-r'}`}
                 >
                     {
                         sidebars.map((topic,i)=>
                         <Link
                             key={i}
                             href={`/business/${currentBusiness?._id}/business-settings/${topic.path}`}
+                        >
+                        <div
+                            key={i}
                             className='md:py-3 p-3 md:pr-3 border-b'
                         >
                             <div
-                                className={`p-3 space-y-1 rounded cursor-pointer ${topic.path == path ? 'bg-[#EBEEFB]' : 'hover:bg-gray-100'}`}
+                                className={`w-full p-3 space-y-1 rounded cursor-pointer ${topic.path == path ? 'bg-[#EBEEFB]' : 'hover:bg-gray-100'}`}
                             >
                             <p>{topic.title}</p>
                             <p
@@ -73,6 +76,7 @@ const BusinessLayout = ({path,children}) => {
                             {topic.desc}
                             </p>
                             </div>
+                        </div>
                         </Link>
                         )
                     }

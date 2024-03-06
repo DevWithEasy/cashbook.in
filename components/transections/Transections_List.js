@@ -9,7 +9,9 @@ const Transections_List = ({ detailsView, setDetailsView,setMenuId }) => {
     const entryConst = new Entry(entries)
     const generatedEntries = entryConst.generatedEntry()
     return (
-        <div>
+        <div
+            className='md:hidden pb-16'
+        >
             {
                 generatedEntries.map(entry =>
                     <div
