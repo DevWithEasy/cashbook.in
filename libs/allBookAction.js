@@ -50,7 +50,6 @@ export const updateBook = async (id, name, setLoading, dispatch, action, refresh
             }
         })
         if (res.data.status === 200) {
-            console.log(res.data.data)
             setLoading(false)
             notificationOK(res.data.message)
             dispatch(action(res.data.data))

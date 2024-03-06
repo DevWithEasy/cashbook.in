@@ -1,6 +1,7 @@
 import axios from "axios"
 import { notificationNOT, notificationOK } from "../utils/toastNotification"
 import api from "../utils/api"
+import moment from "moment"
 
 export const createEntry = async (data) => {
     const { id, value, setLoading, dispatch, action, setView } = data
@@ -25,27 +26,32 @@ export const createEntry = async (data) => {
 }
 
 export const createEntryOther = async (data) => {
-    const { id, value, setValue, type, setLoading, dispatch, action } = data
+    const { id, value, setLoading, dispatch, action, setDate, setHour, setMinute, setAmPm, setValue, setContact, setCategory, setPayment } = data
     try {
         setLoading(true)
-        const res = await axios.post(`${api}/transection/add`, value, {
+        const res = await axios.post(`${api}/transection/${id}`, value, {
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
         })
-        if (res.data.data) {
+        if (res.data.success) {
             setLoading(false)
             notificationOK(res.data.message)
             dispatch(action(res.data.data))
+            setDate(moment().format('YYYY-MM-DD'))
+            setHour(moment().format('hh'))
+            setMinute(moment().format('mm'))
+            setAmPm(moment().format('A'))
             setValue({
-                book: id,
-                amount: '',
-                entryType: type,
+                amount: 0,
                 remark: '',
-                history: []
             })
+            setContact({})
+            setCategory({})
+            setPayment({})
         }
     } catch (err) {
+        console.log(err)
         setLoading(false)
         notificationNOT(err.message)
     }
@@ -220,10 +226,10 @@ export const ccpUpdateEntry = async (data) => {
             }
         })
         if (res.data.status === 200) {
-            const {message,data} = res.data
+            const { message, data } = res.data
             setLoading(false)
             notificationOK(res.data.message)
-            data.forEach(entry=>{
+            data.forEach(entry => {
                 dispatch(action(entry))
             })
             setView(false)

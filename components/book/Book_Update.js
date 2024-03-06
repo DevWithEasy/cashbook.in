@@ -10,14 +10,13 @@ import { updateBook } from '../../libs/allBookAction';
 import { addCurrentBook, refresh, renameBook } from '../../store/slice/bookSlice';
 import handleInput from '../../utils/handleInput';
 
-const Book_Update = ({view, setView, isCurrent }) => {
-  const { currentBook } = useSelector(state => state.book)
+const Book_Update = ({id,view, setView, isCurrent }) => {
+  const { books } = useSelector(state => state.book)
   const [loading, setLoading] = useState(false)
-  const [value, setValue] = useState(currentBook)
+  const [value, setValue] = useState(books.find(book=>book._id === id))
   const dispatch = useDispatch()
   return (
     <>
-
       <Modal
         isOpen={view}
         size='xl'
@@ -52,7 +51,7 @@ const Book_Update = ({view, setView, isCurrent }) => {
           >
             <button
               onClick={(e) => updateBook(
-                currentBook._id,
+                id,
                 value?.name,
                 setLoading,
                 dispatch,

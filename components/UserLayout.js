@@ -23,7 +23,7 @@ const UserLayout = ({ path, children }) => {
 
     const businessManager = new BusinessManager(user, books, businesses, currentBusiness)
 
-    const Socket = new SocketManager(dispatch,router,currentBook)
+    const Socket = new SocketManager(dispatch,router,currentBook,currentBusiness)
 
     if (!isAuth) {
         router.push('/signin')

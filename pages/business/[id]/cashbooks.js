@@ -43,7 +43,7 @@ const Cashbooks = () => {
     useEffect(() => {
         router.query.id && getBusinessBooks()
     }, [router.query.id, random])
-
+    
     return (
         <UserLayout>
             <div
@@ -115,6 +115,7 @@ const Cashbooks = () => {
                 }
                 {updateView &&
                     <Book_Update {...{
+                        id,
                         view: updateView,
                         setView: setUpdateView,
                         isCurrent: false

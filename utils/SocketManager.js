@@ -4,10 +4,11 @@ import socket from "./socket";
 import axios from 'axios'
 
 class SocketManager{
-    constructor(dispatch,router,book){
+    constructor(dispatch,router,book,business){
         this.dispatch = dispatch
         this.router = router
         this.book = book
+        this.business = business
     }
 
     handleChecking = async () => {
@@ -33,7 +34,9 @@ class SocketManager{
     businessUpdate(){
         socket.on('update_business_client', data => {
             this.dispatch(updateBusiness(data))
-            this.dispatch(addCurrentBusiness(data))
+            if(this.business?._id === data?._id){
+                this.dispatch(addCurrentBusiness(data))
+            }
         })
     }
 
@@ -53,7 +56,7 @@ class SocketManager{
     bookUpdate(){
         socket.on('update_book_client', data => {
             this.dispatch(renameBook(data))
-            if (this.book?._id === data._id) {
+            if (this.book?._id === data?._id) {
                 this.dispatch(addCurrentBook(data))
             }
         })

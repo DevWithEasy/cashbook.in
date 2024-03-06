@@ -138,6 +138,7 @@ const BookSettingLayout = ({ path, children }) => {
 
                 {updateView &&
                     <Book_Update {...{
+                        id: currentBook?._id,
                         view: updateView,
                         setView: setUpdateView,
                         isCurrent: true

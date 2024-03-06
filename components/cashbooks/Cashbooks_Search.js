@@ -55,12 +55,12 @@ const Cashbooks_Search = ({ sortBy, setSortBy }) => {
                 <MenuButton
                     className='border rounded focus:ring-2 ring-[#4863D4] bg-white'
                 >
-                    <div
+                    <button
                         className='w-full p-[10px] flex justify-between items-center space-x-2 text-sm'
                     >
                         <span>Sort by : {sortBy?.title}</span>
                         <TiArrowSortedDown />
-                    </div>
+                    </button>
                 </MenuButton>
                 <MenuList>
                     {

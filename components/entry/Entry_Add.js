@@ -17,12 +17,12 @@ import { createEntry, createEntryOther } from '../../libs/allEntryAction';
 import Entry_Add_Header from '../entry-helper/Entry_Add_Header';
 import Entry_Add_Type from '../entry-helper/Entry_Add_Type';
 import handleInput from '../../utils/handleInput';
-import {useDispatch,useSelector} from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { addEntry } from '../../store/slice/bookSlice';
 
 
 const Entry_Add = ({ type, setType, view, setView }) => {
-    const {currentBook} = useSelector(state=>state.book)
+    const { currentBook } = useSelector(state => state.book)
     const dispatch = useDispatch()
     const [timeView, setTimeView] = useState(false)
     const [categoryView, setCategoryView] = useState(false)
@@ -31,7 +31,7 @@ const Entry_Add = ({ type, setType, view, setView }) => {
     const [paymentAddView, setPaymentAddView] = useState(false)
     const [contactView, setContactView] = useState(false)
     const [contactAddView, setContactAddView] = useState(false)
-    const [loading,setLoading] = useState(false)
+    const [loading, setLoading] = useState(false)
 
     //time handling
     const [date, setDate] = useState(moment().format('YYYY-MM-DD'))
@@ -115,13 +115,13 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                                 name='amount'
                                 type='number'
                                 placeholder='eg - 1000'
-                                onChange={(e)=>handleInput(e,value,setValue)}
+                                onChange={(e) => handleInput(e, value, setValue)}
                                 autoFocus
                                 className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                             />
                         </div>
 
-                        <Entry_Add_Contact {...{ contact, setContact,contactAddView, setContactAddView, contactView, setContactView }} />
+                        <Entry_Add_Contact {...{ contact, setContact, contactAddView, setContactAddView, contactView, setContactView }} />
 
                         <div
                             className='space-y-1'
@@ -130,7 +130,7 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                             <input
                                 name='remark'
                                 type='text'
-                                onChange={(e)=>handleInput(e,value,setValue)}
+                                onChange={(e) => handleInput(e, value, setValue)}
                                 placeholder='eg - Enter Detail (Name, Bill No, Item, Quantity etc)'
                                 className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                             />
@@ -139,9 +139,9 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                         <div
                             className='flex justify-between space-x-5'
                         >
-                            <Entry_Add_Category {...{category, setCategory, addView, setAddView, categoryView, setCategoryView }} />
+                            <Entry_Add_Category {...{ category, setCategory, addView, setAddView, categoryView, setCategoryView }} />
 
-                            <Entry_Add_Payment {...{ payment, setPayment,paymentAddView, setPaymentAddView, paymentView, setPaymentView }} />
+                            <Entry_Add_Payment {...{ payment, setPayment, paymentAddView, setPaymentAddView, paymentView, setPaymentView }} />
 
                         </div>
                     </div>
@@ -150,16 +150,16 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                     >
                         <button
                             onClick={() => createEntry({
-                                id : currentBook?._id,
-                                value : {
+                                id: currentBook?._id,
+                                value: {
                                     ...value,
                                     type,
-                                    category : category?._id || '',
-                                    payment : payment?._id || '',
-                                    contact : contact?._id || '',
-                                    createdAt : dateObj
+                                    category: category?._id || '',
+                                    payment: payment?._id || '',
+                                    contact: contact?._id || '',
+                                    createdAt: dateObj
                                 },
-                                action : addEntry,
+                                action: addEntry,
                                 dispatch,
                                 setView,
                                 setLoading
@@ -170,7 +170,19 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                         </button>
                         <button
                             onClick={() => createEntryOther({
-
+                                id: currentBook?._id,
+                                value: {
+                                    ...value,
+                                    type,
+                                    category: category?._id || '',
+                                    payment: payment?._id || '',
+                                    contact: contact?._id || '',
+                                    createdAt: dateObj
+                                },
+                                action: addEntry,
+                                dispatch,
+                                setLoading,
+                                setDate,setHour,setMinute,setAmPm,setValue,setContact,setCategory,setPayment
                             })}
                             className='px-4 py-3 bg-[#4863D4] text-white rounded'
                         >
