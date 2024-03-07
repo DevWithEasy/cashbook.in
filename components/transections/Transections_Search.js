@@ -3,6 +3,7 @@ import { CiSearch } from 'react-icons/ci';
 import Transection_Search_Button from './Transection_Search_Button'
 
 const Transections_Search = ({ handleView,permission }) => {
+    
     return (
         <div
             className='flex flex-col md:flex-row justify-between md:items-center space-y-3 md:space-y-0 md:space-x-10'

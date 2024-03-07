@@ -2,6 +2,7 @@ import axios from "axios"
 import { notificationNOT, notificationOK } from "../utils/toastNotification"
 import api from "../utils/api"
 import moment from "moment"
+import socket from "../utils/socket"
 
 export const createEntry = async (data) => {
     const { id, value, setLoading, dispatch, action, setView } = data
@@ -17,6 +18,7 @@ export const createEntry = async (data) => {
             notificationOK(res.data.message)
             dispatch(action(res.data.data))
             setView(false)
+            socket.emit('add_transection',id)
         }
     } catch (err) {
         console.log(err)
@@ -43,12 +45,13 @@ export const createEntryOther = async (data) => {
             setMinute(moment().format('mm'))
             setAmPm(moment().format('A'))
             setValue({
-                amount: 0,
+                amount: '',
                 remark: '',
             })
             setContact({})
             setCategory({})
             setPayment({})
+            socket.emit('add_transection',id)
         }
     } catch (err) {
         console.log(err)
@@ -58,7 +61,7 @@ export const createEntryOther = async (data) => {
 }
 
 export const updateEntry = async (data) => {
-    const { value, setLoading, dispatch, action, setView } = data
+    const { value,book, setLoading, dispatch, action, refresh, setView } = data
 
     try {
         setLoading(true)
@@ -71,7 +74,9 @@ export const updateEntry = async (data) => {
             setLoading(false)
             notificationOK(res.data.message)
             dispatch(action(res.data.data))
+            dispatch(refresh())
             setView(false)
+            socket.emit('update_transection',{id : book,entry : res.data.data})
         }
     } catch (err) {
         setLoading(false)
@@ -80,7 +85,7 @@ export const updateEntry = async (data) => {
 }
 
 export const deleteEntry = async (data) => {
-    const { id, setLoading, dispatch, action, setView } = data
+    const {book, id, setLoading, dispatch, action, setView,setDetailsView } = data
     try {
         setLoading(true)
         const res = await axios.delete(`${api}/transection/${id}`, {
@@ -93,6 +98,10 @@ export const deleteEntry = async (data) => {
             notificationOK(res.data.message)
             dispatch(action(id))
             setView(false)
+            if(setDetailsView){
+                setDetailsView(false)
+            }
+            socket.emit('delete_transection',{id : book,entry : id})
         }
     } catch (err) {
         setLoading(false)

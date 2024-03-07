@@ -32,6 +32,7 @@ const Entry_Add = ({ type, setType, view, setView }) => {
     const [contactView, setContactView] = useState(false)
     const [contactAddView, setContactAddView] = useState(false)
     const [loading, setLoading] = useState(false)
+    const [anotherLoading, setAnotherLoading] = useState(false)
 
     //time handling
     const [date, setDate] = useState(moment().format('YYYY-MM-DD'))
@@ -42,7 +43,7 @@ const Entry_Add = ({ type, setType, view, setView }) => {
     const dateObj = moment(dateTimeString, 'YYYY/MM/DD hh:mm A').toDate()
 
     const [value, setValue] = useState({
-        amount: 0,
+        amount: '',
         remark: '',
     })
     const [contact, setContact] = useState({})
@@ -114,6 +115,7 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                             <input
                                 name='amount'
                                 type='number'
+                                value={value.amount}
                                 placeholder='eg - 1000'
                                 onChange={(e) => handleInput(e, value, setValue)}
                                 autoFocus
@@ -130,6 +132,7 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                             <input
                                 name='remark'
                                 type='text'
+                                value={value.remark}
                                 onChange={(e) => handleInput(e, value, setValue)}
                                 placeholder='eg - Enter Detail (Name, Bill No, Item, Quantity etc)'
                                 className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
@@ -181,12 +184,12 @@ const Entry_Add = ({ type, setType, view, setView }) => {
                                 },
                                 action: addEntry,
                                 dispatch,
-                                setLoading,
+                                setLoading : setAnotherLoading,
                                 setDate,setHour,setMinute,setAmPm,setValue,setContact,setCategory,setPayment
                             })}
                             className='px-4 py-3 bg-[#4863D4] text-white rounded'
                         >
-                            Save & Add New
+                            {anotherLoading ? 'Saving...' : 'Save & Add New'}
                         </button>
                     </div>
 

@@ -1,4 +1,4 @@
-import { addBooks, addBusinesses, addCurrentBook, addCurrentBusiness, removeBusiness, renameBook, updateBusiness } from "../store/slice/bookSlice";
+import { addBooks, addBusinesses, addCurrentBook, addCurrentBusiness, addEntries, removeBusiness, removeEntry, renameBook, updateBusiness, updatePrevEntry } from "../store/slice/bookSlice";
 import api from "./api";
 import socket from "./socket";
 import axios from 'axios'
@@ -30,7 +30,21 @@ class SocketManager{
             console.log(error)
         }
     }
-
+    getTransections = async (id) =>{
+        try {
+            const res = await axios.get(`${api}/transection/all/${id}`, {
+                headers: {
+                    "cb-access-token": localStorage.getItem("cb_access_token")
+                }
+            })
+            if (res.data.success) {
+                this.dispatch(addEntries(res.data.data))
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    //======================================
     businessUpdate(){
         socket.on('update_business_client', data => {
             this.dispatch(updateBusiness(data))
@@ -52,7 +66,7 @@ class SocketManager{
             this.handleChecking()
         })
     }
-
+    //==============================================
     bookUpdate(){
         socket.on('update_book_client', data => {
             this.dispatch(renameBook(data))
@@ -77,6 +91,31 @@ class SocketManager{
                 this.router.push('/checking')
             } else {
                 this.dispatch(renameBook(data))
+            }
+        })
+    }
+    //=======================================
+    addTransection(){
+        socket.on('client_add_transection',data=>{
+            const path = `/business/${data.business}/cashbooks/${data.book}/transactions`
+            if(this.router.asPath === path){
+                this.getTransections(data.book)
+            }
+        })
+    }
+    updateTransection(){
+        socket.on('client_update_transection',data=>{
+            const path = `/business/${data.business}/cashbooks/${data.book}/transactions`
+            if(this.router.asPath === path){
+                this.dispatch(updatePrevEntry(data.entry))
+            }
+        })
+    }
+    deleteTransection(){
+        socket.on('client_delete_transection',data=>{
+            const path = `/business/${data.business}/cashbooks/${data.book}/transactions`
+            if(this.router.asPath === path){
+                this.dispatch(removeEntry(data.entry))
             }
         })
     }

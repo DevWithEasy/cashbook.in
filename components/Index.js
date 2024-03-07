@@ -1,4 +1,4 @@
-import Balance from "./Balance";
+import Balance from "./transections//Balance";
 import BookSettingLayout from "./BookSettingLayout";
 import BusinessLayout from "./BusinessLayout";
 import Header from "./Header";

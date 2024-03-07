@@ -52,7 +52,7 @@ class Permission {
     bookMemberAdd() {
         const role = this.findBusinessRole()
         const bookRole = this.findBookRole()
-        if (role === 'Owner' || role === 'Partner' || (role === 'Stuff' && bookRole === 'Admin')) {
+        if (role === 'Owner' || role === 'Partner' || (role === 'Staff' && bookRole === 'Admin')) {
             return true
         }else{
             return false
@@ -67,9 +67,11 @@ class Permission {
             return true
         }
     }
+
     transectionAdd() {
-        const role = this.findBookRole()
-        if (role == 'Data Operator' || role == 'Admin') {
+        const role = this.findBusinessRole()
+        const bookRole = this.findBookRole()
+        if (role === 'Owner' || role === 'Partner' || (role === 'Staff' && bookRole === 'Admin') || (role === 'Staff' && bookRole === 'Data Operator')) {
             return true
         }else{
             return false

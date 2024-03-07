@@ -34,7 +34,7 @@ const Header = () => {
                     src={logo.src}
                     alt="logo"
                     className=""
-                    height={25}
+                    height={30}
                     width={150}
                 />
             </Link>

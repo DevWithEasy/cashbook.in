@@ -87,7 +87,7 @@ const Transactions = () => {
         <UserLayout>
             {!loading ?
                 <div
-                    className='h-[calc(100vh-48px)] bg-gray-100 md:bg-white space-y-2 md:space-y-5'
+                    className='h-[calc(100vh-48px)] bg-gray-100 md:bg-white space-y-2 md:space-y-5 overflow-y-auto'
                 >
                     <Head>
                         <title>{currentBook?.name}'s Transactions - CashBook</title>
@@ -180,7 +180,8 @@ const Transactions = () => {
                             <Entry_Details {...{
                                 id: menuId,
                                 view: detailsView,
-                                setView: setDetailsView
+                                setView: setDetailsView,
+                                permission
                             }} />
                         }
 

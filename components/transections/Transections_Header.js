@@ -1,18 +1,17 @@
-import React from 'react';
 import {
     Menu,
     MenuButton,
-    MenuList,
-    MenuItem,
-} from '@chakra-ui/react'
-import { IoMdArrowRoundBack } from 'react-icons/io';
+    MenuList
+} from '@chakra-ui/react';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
-import { IoSettingsOutline } from 'react-icons/io5';
-import { HiOutlineUsers } from 'react-icons/hi2';
+import React from 'react';
 import { AiOutlineCloudUpload } from 'react-icons/ai';
+import { HiOutlineUsers } from 'react-icons/hi2';
+import { IoMdArrowRoundBack } from 'react-icons/io';
+import { IoSettingsOutline } from 'react-icons/io5';
 import { MdOutlineFileDownload, MdOutlineGridOn, MdPictureAsPdf } from 'react-icons/md';
-import { useSelector } from 'react-redux'
-import Link from 'next/link'
+import { useSelector } from 'react-redux';
 
 const Transections_Header = ({ permission }) => {
     const { currentBusiness, currentBook } = useSelector(state => state.book)
@@ -76,26 +75,25 @@ const Transections_Header = ({ permission }) => {
                 className='w-1/2 flex justify-end space-x-5'
             >
                 {permission.bookMemberAdd() &&
-                    <button
-                        onClick={() => {
-                        }}
+                    <Link
+                        href={`/business/${currentBusiness._id}/cashbooks/${currentBook._id}/import-transactions`}
                         className='px-6 py-2 flex items-center space-x-2 text-[#4863D4]'
                     >
                         <AiOutlineCloudUpload size={25} />
                         <span className='hidden md:inline-block'>Add Bulk Entries</span>
-                    </button>
+                    </Link>
                 }
 
                 <Menu>
                     <MenuButton
 
                     >
-                        <button
+                        <div
                             className='px-6 py-2 flex items-center space-x-2 text-[#4863D4] border active:ring-2 rounded'
                         >
                             <MdOutlineFileDownload />
                             <span>Reports</span>
-                        </button>
+                        </div>
 
                     </MenuButton>
                     <MenuList>

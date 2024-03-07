@@ -44,8 +44,8 @@ const Transections_List = ({ detailsView, setDetailsView,setMenuId }) => {
                             </span>
                             <p className='text-sm'>Balance: {entry?.stock}</p>
                         </div>
-                        {entry?.remarks &&
-                            <p className='text-sm'>{entry?.remarks}</p>
+                        {entry?.remark &&
+                            <p className='text-sm'>{entry?.remark}</p>
                         }
                         <p className='text-sm'>
                             {getEntryDate(entry?.updatedAt)}

@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 import { BsClock } from "react-icons/bs";
 import { useDispatch, useSelector } from 'react-redux';
 import { updateEntry } from '../../libs/allEntryAction';
-import { updatePrevEntry } from '../../store/slice/bookSlice';
+import { refresh, updatePrevEntry } from '../../store/slice/bookSlice';
 import handleInput from '../../utils/handleInput';
 import { Category_Add, Contact_Add, Payment_Add } from '../Index';
 import Entry_Add_AMPM from '../entry-helper/Entry_Add_AMPM';
@@ -175,10 +175,12 @@ const Entry_Update = ({id,view, setView }) => {
                                     contact : contact?._id || '',
                                     createdAt : dateObj
                                 },
+                                book : currentBook?._id,
                                 action : updatePrevEntry,
                                 dispatch,
                                 setView,
-                                setLoading
+                                setLoading,
+                                refresh
                             })}
                             className='px-8 py-3 bg-[#4863D4] text-white rounded'
                         >

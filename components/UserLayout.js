@@ -5,13 +5,11 @@ import { GoPlus } from "react-icons/go";
 import { IoSettingsOutline } from 'react-icons/io5';
 import { MdBook } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-import { addBooks, addBusinesses, addCurrentBusiness, removeBusiness, renameBook, updateBusiness } from '../store/slice/bookSlice';
+import { addCurrentBusiness } from '../store/slice/bookSlice';
 import BusinessManager from '../utils/BusinessManager';
-import api from '../utils/api';
+import SocketManager from '../utils/SocketManager';
 import socket from '../utils/socket';
 import { Business_Add, Header } from './Index';
-import axios from 'axios'
-import SocketManager from '../utils/SocketManager';
 
 
 const UserLayout = ({ path, children }) => {
@@ -52,6 +50,11 @@ const UserLayout = ({ path, children }) => {
         Socket.removeMemberFromBook()
 
         //===============Book=================
+
+        //=========================
+        Socket.addTransection()
+        Socket.updateTransection()
+        Socket.deleteTransection()
     })
 
     useEffect(() => {

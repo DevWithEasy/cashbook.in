@@ -14,7 +14,7 @@ const Transections_TheadAction_Change = ({ categoryView, setCategoryView, paymen
             <MenuButton
 
             >
-                <button
+                <div
                     className='flex items-center space-x-2 text-[#4863D4]'
                 >
                     <FaExchangeAlt
@@ -22,7 +22,7 @@ const Transections_TheadAction_Change = ({ categoryView, setCategoryView, paymen
                     />
                     <span>Change Field</span>
                     <MdOutlineArrowDropDown size={20} className='text-gray-500' />
-                </button>
+                </div>
 
             </MenuButton>
             <MenuList

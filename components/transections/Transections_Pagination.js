@@ -73,12 +73,12 @@ const Transections_Pagination = ({selected}) => {
                         <MenuButton
                             className='border rounded bg-white'
                         >
-                            <button
+                            <div
                                 className='w-full px-2 py-1 flex justify-between items-center space-x-2 text-sm'
                             >
                                 <span>Page 01</span>
                                 <TiArrowSortedDown />
-                            </button>
+                            </div>
                         </MenuButton>
                         <MenuList>
                             {

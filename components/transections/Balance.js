@@ -2,7 +2,7 @@ import React from 'react';
 import { BiPlus, BiMinus } from 'react-icons/bi';
 import { TbEqual } from 'react-icons/tb'
 import { useSelector } from 'react-redux'
-import Entry from '../utils/Entry';
+import Entry from '../../utils/Entry';
 import { isMobile } from 'react-device-detect'
 
 const Balance = () => {

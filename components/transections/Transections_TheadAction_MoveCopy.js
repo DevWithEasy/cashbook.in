@@ -13,7 +13,7 @@ const Transections_TheadAction_MoveCopy = ({ copyView, setCopyView, moveView, se
             <MenuButton
 
             >
-                <button
+                <div
                     className='flex items-center space-x-2 text-[#4863D4]'
                 >
                     <MdOutlineTurnRight
@@ -21,7 +21,7 @@ const Transections_TheadAction_MoveCopy = ({ copyView, setCopyView, moveView, se
                     />
                     <span>Move or Copy</span>
                     <MdOutlineArrowDropDown size={20} className='text-gray-500' />
-                </button>
+                </div>
 
             </MenuButton>
             <MenuList

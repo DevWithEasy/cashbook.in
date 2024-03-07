@@ -15,9 +15,9 @@ import moment from 'moment';
 import { entryDetails } from '../../libs/allEntryAction';
 
 
-const Entry_Details = ({ id, view, setView }) => {
+const Entry_Details = ({ id, view, setView, permission }) => {
     const { user } = useSelector(state => state.auth)
-    const { entries } = useSelector(state => state.book)
+    const { entries, random } = useSelector(state => state.book)
     const [entry, setEntry] = useState(entries.find(e => e._id === id))
     const [actionView, setActionView] = useState(false)
     const [updateView, setUpdateView] = useState(false)
@@ -35,8 +35,8 @@ const Entry_Details = ({ id, view, setView }) => {
         entryDetails({
             id, setEntry, setLoading
         })
-    }, [id])
-    
+    }, [id, random])
+
     return (
         <>
             <Drawer
@@ -232,34 +232,44 @@ const Entry_Details = ({ id, view, setView }) => {
                     <div
                         className='h-20 px-6 flex justify-end items-center space-x-5 border-t'
                     >
-                        <button
-                            onClick={() => setDeleteView(!deleteView)}
-                            className='px-6 py-3 flex items-center space-x-2 text-red-500 border rounded'
-                        >
-                            <MdDeleteOutline size={20} />
-                            <span>Delete</span>
-                        </button>
-                        <button
-                            onClick={() => setActionView(!actionView)}
-                            className='px-6 py-3 flex items-center space-x-2 text-[#4863D4] border rounded'
-                        >
-                            <span>More Action</span>
-                            <MdOutlineKeyboardArrowDown size={20} />
-                        </button>
-                        <button
-                            onClick={() => setUpdateView(!updateView)}
-                            className='px-8 py-3 flex items-center space-x-2 bg-[#4863D4] text-white rounded'
-                        >
-                            <span>Edit</span>
-                            <AiOutlineEdit size={20} />
-                        </button>
+                        {permission.bookMemberAdd() &&
+                            <button
+                                onClick={() => setDeleteView(!deleteView)}
+                                className='px-6 py-3 flex items-center space-x-2 text-red-500 border rounded'
+                            >
+                                <MdDeleteOutline size={20} />
+                                <span>Delete</span>
+                            </button>
+                        }
+
+                        {permission.bookUpdate() &&
+                            <button
+                                onClick={() => setActionView(!actionView)}
+                                className='px-6 py-3 flex items-center space-x-2 text-[#4863D4] border rounded'
+                            >
+                                <span>More Action</span>
+                                <MdOutlineKeyboardArrowDown size={20} />
+                            </button>
+                        }
+
+                        {permission.bookMemberAdd() &&
+                            <button
+                                onClick={() => setUpdateView(!updateView)}
+                                className='px-8 py-3 flex items-center space-x-2 bg-[#4863D4] text-white rounded'
+                            >
+                                <span>Edit</span>
+                                <AiOutlineEdit size={20} />
+                            </button>
+                        }
+
                     </div>
 
                     {deleteView &&
                         <Entry_Delete {...{
                             id,
                             view: deleteView,
-                            setView: setDeleteView
+                            setView: setDeleteView,
+                            setDetailsView: setView
                         }} />
                     }
                     {updateView &&

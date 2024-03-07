@@ -14,8 +14,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteEntry } from '../../libs/allEntryAction';
 import { removeEntry } from '../../store/slice/bookSlice';
 
-export default function Entry_Delete({id, view, setView }) {
-  const {entries} = useSelector(state=>state.book)
+export default function Entry_Delete({id, view, setView,setDetailsView }) {
+  const {currentBook,entries} = useSelector(state=>state.book)
   const entry = entries.find(e=>e._id === id)
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
@@ -85,11 +85,13 @@ export default function Entry_Delete({id, view, setView }) {
           >
             <button
               onClick={(e) => deleteEntry({
+                book : currentBook._id,
                 id,
                 action : removeEntry,
                 dispatch,
                 setLoading,
-                setView
+                setView,
+                setDetailsView
               })}
               className='flex items-center space-x-2 px-6 py-3 border text-red-500 rounded'
 
