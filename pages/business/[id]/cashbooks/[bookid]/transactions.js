@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Balance, Entry_Add, Entry_Category, Entry_Contact, Entry_Delete, Entry_Delete_Many, Entry_Details, Entry_Duplicate, Entry_Move, Entry_Opposite, Entry_Payment, Entry_Update, Loading, Transections_Header, Transections_NoFound, Transections_Pagination, Transections_Search, Transections_SortBy, Transections_Tbody, Transections_TheadAction, Transections_TheadMain, UserLayout, Transections_List } from '../../../../../components/Index';
+import { Balance, Entry_Add, Entry_Category, Entry_Contact, Entry_Delete, Entry_Delete_Many, Entry_Details, Entry_Duplicate, Entry_Move, Entry_Opposite, Entry_Payment, Entry_Update, Loading, Transections_Header, Transections_NoFound, Transections_Pagination, Transections_Search, Transections_SortBy, Transections_Tbody, Transections_TheadAction, Transections_TheadMain, UserLayout, Transections_List, Transection_Export } from '../../../../../components/Index';
 import { useRouter } from 'next/router';
 import { useDispatch, useSelector } from 'react-redux'
 import Head from 'next/head'
@@ -9,9 +9,9 @@ import api from '../../../../../utils/api';
 import Permission from '../../../../../utils/Permission';
 
 const Transactions = () => {
-    const { entries, currentBook,currentBusiness } = useSelector(state => state.book)
-    const {user} = useSelector(state=>state.auth)
-    const permission = new Permission(user,currentBook,currentBusiness)
+    const { entries, currentBook, currentBusiness } = useSelector(state => state.book)
+    const { user } = useSelector(state => state.auth)
+    const permission = new Permission(user, currentBook, currentBusiness)
     const router = useRouter()
     const { bookid } = router.query
     const dispatch = useDispatch()
@@ -30,6 +30,8 @@ const Transactions = () => {
     const [categoryView, setCategoryView] = useState(false)
     const [paymentView, setPaymentView] = useState(false)
     const [contactView, setContactView] = useState(false)
+    const [exportView, setExportView] = useState(false)
+    const [exportType, setExportType] = useState('')
     const [entryType, setEntryType] = useState('cash_in')
     const [durationBy, setDurationBy] = useState({
         title: 'All Time',
@@ -93,7 +95,7 @@ const Transactions = () => {
                         <title>{currentBook?.name}'s Transactions - CashBook</title>
                     </Head>
 
-                    <Transections_Header {...{permission}} />
+                    <Transections_Header {...{ permission,setExportType,setExportView }} />
 
                     <div
                         className='px-4 md:px-8 space-y-2 md:space-y-5'
@@ -103,7 +105,7 @@ const Transactions = () => {
                             durationBy, setDurationBy
                         }} />
 
-                        <Transections_Search {...{ handleView,permission }} />
+                        <Transections_Search {...{ handleView, permission }} />
 
 
                         {entries?.length > 0 &&
@@ -254,6 +256,13 @@ const Transactions = () => {
                                 items: selected,
                                 view: contactView,
                                 setView: setContactView
+                            }} />
+                        }
+                        {exportView &&
+                            <Transection_Export {...{
+                                exportType,
+                                view: exportView,
+                                setView: setExportView
                             }} />
                         }
                     </div>

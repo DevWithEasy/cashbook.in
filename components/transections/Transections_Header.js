@@ -13,7 +13,7 @@ import { IoSettingsOutline } from 'react-icons/io5';
 import { MdOutlineFileDownload, MdOutlineGridOn, MdPictureAsPdf } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 
-const Transections_Header = ({ permission }) => {
+const Transections_Header = ({ permission,setExportType,setExportView }) => {
     const { currentBusiness, currentBook } = useSelector(state => state.book)
     const router = useRouter()
     return (
@@ -86,10 +86,10 @@ const Transections_Header = ({ permission }) => {
 
                 <Menu>
                     <MenuButton
-
+                        className='border hover:border-[#4863D4] focus:ring-2 rounded'
                     >
                         <div
-                            className='px-6 py-2 flex items-center space-x-2 text-[#4863D4] border active:ring-2 rounded'
+                            className='px-6 py-2 flex items-center space-x-2 text-[#4863D4]'
                         >
                             <MdOutlineFileDownload />
                             <span>Reports</span>
@@ -98,13 +98,21 @@ const Transections_Header = ({ permission }) => {
                     </MenuButton>
                     <MenuList>
                         <button
-                            className='p-2 flex space-x-2'
+                            onClick={()=>{
+                                setExportType('pdf')
+                                setExportView(true)
+                            }}
+                            className='p-2 -mt-[8px] w-full flex space-x-2 hover:bg-gray-100'
                         >
                             <MdPictureAsPdf size={25} />
                             <span>PDF Report</span>
                         </button>
                         <button
-                            className='p-2 flex space-x-2'
+                            onClick={()=>{
+                                setExportType('excel')
+                                setExportView(true)
+                            }}
+                            className='p-2 -mb-[8px] w-full flex space-x-2 hover:bg-gray-100'
                         >
                             <MdOutlineGridOn size={25} />
                             <span>Excel Report</span>
