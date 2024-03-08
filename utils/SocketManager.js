@@ -119,6 +119,15 @@ class SocketManager{
             }
         })
     }
+
+    importTransection(){
+        socket.on('client_import_transecion',data=>{
+            const path = `/business/${data.business}/cashbooks/${data.book}/transactions`
+            if(this.router.asPath === path){
+                this.getTransections(data.book)
+            }
+        })
+    }
 }
 
 export default SocketManager

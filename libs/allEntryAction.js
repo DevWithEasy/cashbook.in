@@ -224,6 +224,28 @@ export const oppositeEntry = async (data) => {
     }
 }
 
+export const importEntry = async (data) => {
+    const { book, entries, setLoading, setView } = data
+
+    try {
+        setLoading(true)
+        const res = await axios.post(`${api}/transection/import/${book}`, { entries }, {
+            headers: {
+                "cb-access-token": localStorage.getItem("cb_access_token")
+            }
+        })
+        if (res.data.status === 200) {
+            setLoading(false)
+            notificationOK(res.data.message)
+            setView(false)
+            socket.emit('import_transecion', {id : book})
+        }
+    } catch (err) {
+        setLoading(false)
+        notificationNOT(err.message)
+    }
+}
+
 export const ccpUpdateEntry = async (data) => {
     const { field, id, items, dispatch, action, setLoading, setView, setFirstView } = data
 
