@@ -24,7 +24,7 @@ class Permission {
     }
 
     members(){
-        if(this.book?.members.length > 0){
+        if(this.book?.members?.length > 0){
             return this.book?.members?.length
         }else{
             return 0
