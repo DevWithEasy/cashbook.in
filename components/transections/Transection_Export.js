@@ -1,30 +1,44 @@
 import { motion } from 'framer-motion';
 import moment from 'moment';
-import Image from "next/image";
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import { CiSettings } from "react-icons/ci";
 import { useSelector } from 'react-redux';
 import Entry from '../../utils/Entry';
 import { useDownloadExcel } from 'react-export-table-to-excel';
 import { useReactToPrint } from 'react-to-print';
+import { MdFileDownload } from "react-icons/md";
+import { Transection_Export_Balance, Transection_Export_PDFHeader, Transection_Export_Setting, Transection_Export_Tbody, Transection_Export_TbodyExcel, Transection_Export_Thead } from './transection_export_helper/Transection_Export_Index';
+import { IoArrowBack } from "react-icons/io5";
 
 const Transection_Export = ({ exportType, view, setView }) => {
     const { entries, currentBook } = useSelector(state => state.book)
     const EntryManager = new Entry(entries)
     const lastEntry = EntryManager.generatedEntry()[0]
+    const [setting, setSetting] = useState(false)
+    const [fields, setFields] = useState([
+        'remark',
+        'category',
+        'payment',
+        'contact',
+        'members',
+        'cashin',
+        'cashout',
+        'balance'
+    ])
     const printRef = useRef()
     const excelRef = useRef()
+
     const handlePrint = useReactToPrint({
         content: () => printRef.current,
-        documentTitle: currentBook?.name
+        documentTitle: `${currentBook?.name} ${moment().format('DD MMM YYYY')}@Cashbook`
     })
 
     const { onDownload } = useDownloadExcel({
         currentTableRef: excelRef.current,
-        filename: currentBook?.name,
+        filename: `${currentBook?.name} ${moment().format('DD MMM YYYY')}@Cashbook`,
         sheet: currentBook?.name
     })
-    console.log(exportType)
+
     return (
         <>
             <div
@@ -45,7 +59,7 @@ const Transection_Export = ({ exportType, view, setView }) => {
                     <div
                         className='h-16 px-6 flex justify-between items-center border-b'
                     >
-                        <h2 className='text-xl'>Add New Business</h2>
+                        <h2 className='text-xl'>Export Transactions</h2>
                         <button
                             onClick={() => setView(!view)}
                             className='px-4 py-1 border rounded-md'
@@ -55,174 +69,124 @@ const Transection_Export = ({ exportType, view, setView }) => {
                     </div>
                     <div
                         style={{ height: 'calc(100vh - 144px)' }}
-                        className='px-6 py-4 space-y-6 overflow-y-auto'
+                        className='px-6 py-4 space-y-5 overflow-y-auto'
                     >
                         <div
                             className='flex justify-between items-center'
                         >
-                            <p
-                                className='text-3xl'
-                            >
-                                Preview
-                            </p>
-                            <button
-                                className='px-6 py-2 flex items-center space-x-2 border hover:border-[#4863D4] text-[#4863D4] rounded-md'
-                            >
-                                <CiSettings size={20} />
-                                <span>PDF Settings</span>
-                            </button>
-                        </div>
-                        <div
-                            className={`${exportType === 'pdf' ? 'p-10' : ''}`}
-                        >
-                            <div
-                                ref={printRef}
-                                className={`${exportType === 'pdf' && 'border'} rounded-md print:m-5 print:border-none`}
-                            >
-                                {/* header */}
-                                {exportType === 'pdf' &&
-                                    <div
-                                        className='px-4 py-2 flex items-center space-x-3 bg-[#F2F5FF] rounded-t-md'
-                                    >
-                                        <div>
-                                            <Image
-                                                src='/logo.svg'
-                                                alt="logo"
-                                                className=""
-                                                height={30}
-                                                width={80}
-                                            />
-                                        </div>
-                                        <div>
-                                            <p className='text-2xl print:text-xl font-bold'>CashBook Report</p>
-                                            <p
-                                                className='text-sm'
-                                            >
-                                                Generated On - 08 Mar 2024, 6:06 PM.Generated by - Robiul Awal (+8801717642515)
-                                            </p>
-                                        </div>
-                                    </div>
-                                }
-                                {/* transections */}
-                                <div
-                                    className='px-6 py-4 space-y-5'
+                            {!setting ?
+                                <p
+                                    className='text-2xl'
                                 >
-                                    {/* balance */}
-                                    {exportType === 'pdf' &&
-                                        <div
-                                            className='space-y-2'
-                                        >
-                                            <p className='text-2xl print:text-xl font-bold'>{currentBook?.name}</p>
-                                            <div
-                                                className='grid grid-cols-3 border rounded-md print:border-gray-300'
-                                            >
-                                                <div
-                                                    className='p-2 border-r print:border-gray-300'
-                                                >
-                                                    <p className='text-sm text-gray-500'>Total Cash In</p>
-                                                    <p className='text-green-600 font-bold'>{EntryManager.cashIn()}</p>
-                                                </div>
-                                                <div
-                                                    className='p-2 border-r print:border-gray-300'
-                                                >
-                                                    <p className='text-sm text-gray-500'>Total Cash Out</p>
-                                                    <p className='text-red-600 font-bold'>{EntryManager.cashOut()}</p>
-                                                </div>
-                                                <div
-                                                    className='p-2'
-                                                >
-                                                    <p className='text-sm text-gray-500'>Final Balance</p>
-                                                    <p className='font-bold'>{EntryManager.balance()}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    }
+                                    Preview
+                                </p>
+                                :
+                                <button
+                                    onClick={() => setSetting(false)}
+                                    className='flex items-center space-x-3 text-2xl'
+                                >
+                                    <IoArrowBack size={25} />
+                                    <span>PDF Settings</span>
+                                </button>
+                            }
+                            {(exportType === 'pdf' && !setting) &&
+                                <button
+                                    onClick={() => setSetting(!setting)}
+                                    className='px-6 py-2 flex items-center space-x-2 border hover:border-[#4863D4] text-[#4863D4] rounded-md'
+                                >
+                                    <CiSettings size={20} />
+                                    <span>
+                                        PDF Settings
+                                    </span>
+                                </button>
+                            }
 
+                        </div>
+                        {setting ?
+                            <Transection_Export_Setting {...{ fields, setFields }} />
+                            :
+                            <div
+                                className={`${exportType === 'pdf' ? 'p-5' : ''}`}
+                            >
+                                <div
+                                    ref={printRef}
+                                    className={`${exportType === 'pdf' && 'border'} rounded-md print:m-2 print:border-none`}
+                                >
+                                    {/* header */}
+                                    {exportType === 'pdf' &&
+                                        <Transection_Export_PDFHeader />
+                                    }
+                                    {/* transections */}
                                     <div
-                                        className='space-y-3 pb-10'
+                                        className='px-6 py-4 space-y-5 print:p-4'
                                     >
+                                        {/* balance */}
                                         {exportType === 'pdf' &&
-                                            <p>Total No. of entries: {entries?.length}</p>
+                                            <Transection_Export_Balance {...{
+                                                EntryManager, currentBook
+                                            }} />
                                         }
+
                                         <div
-                                            className='w-full overflow-x-auto'
+                                            className='space-y-3 pb-10'
                                         >
-                                            <table
-                                                ref={excelRef}
-                                                className='w-full print:text-sm'
+                                            {exportType === 'pdf' &&
+                                                <p>Total No. of entries: {entries?.length}</p>
+                                            }
+                                            <div
+                                                className='w-full overflow-x-auto'
                                             >
-                                                <thead>
-                                                    <tr
-                                                        className='bg-[#F2F5FF] '
-                                                    >
-                                                        <td className='p-2 border print:border-gray-300'>Date</td>
-                                                        <td className='p-2 border print:border-gray-300'>Remark</td>
-                                                        <td className='p-2 border print:border-gray-300'>Contact</td>
-                                                        <td className='p-2 border print:border-gray-300'>Category</td>
-                                                        <td className='p-2 border print:border-gray-300'>Mode</td>
-                                                        <td className='p-2 text-right border print:border-gray-300'>Cash In</td>
-                                                        <td className='p-2 text-right border print:border-gray-300'>Cash Out</td>
-                                                        <td className='p-2 border print:border-gray-300'>Entry By</td>
-                                                        <td className='p-2 text-right border print:border-gray-300'>Balance</td>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    {
-                                                        EntryManager.generatedEntry().map(entry =>
-                                                            <tr
-                                                                key={entry?._id}
-                                                                className='print:text-[12px]'
-                                                            >
-                                                                <td className='p-2 border print:border-gray-300'>{moment(entry?.createdAt).format('DD MMM YYYY')}</td>
-                                                                <td className='p-2 border print:border-gray-300'>{entry?.remark}</td>
-                                                                <td className='p-2 border print:border-gray-300'>{entry?.contact?.name}</td>
-                                                                <td className='p-2 border print:border-gray-300'>{entry?.category?.name}</td>
-                                                                <td className='p-2 border print:border-gray-300'>{entry?.payment?.name}</td>
-                                                                <td className='p-2 border text-right print:border-gray-300'>{entry?.entryType === 'cash_in' && entry?.amount}</td>
-                                                                <td className='p-2 border text-right print:border-gray-300'>{entry?.entryType === 'cash_out' && entry?.amount}</td>
-                                                                <td className='p-2 border print:border-gray-300'>{entry?.user?.name}</td>
-                                                                <td className='p-2 border text-right print:border-gray-300'>{entry?.stock}</td>
-                                                            </tr>
-                                                        )
+                                                <table
+                                                    ref={excelRef}
+                                                    className='w-full print:text-sm'
+                                                >
+                                                    <Transection_Export_Thead {...{ fields }} />
+                                                    {exportType === 'pdf' ?
+                                                        <Transection_Export_Tbody {...{
+                                                            lastEntry,
+                                                            EntryManager,
+                                                            entries: EntryManager.generatedEntry(),
+                                                            fields
+                                                        }} />
+                                                        :
+                                                        <Transection_Export_TbodyExcel {...{
+                                                            lastEntry,
+                                                            EntryManager,
+                                                            entries: EntryManager.generatedEntry()
+                                                        }} />
                                                     }
-                                                    <tr
-                                                        className='bg-[#F2F5FF] font-bold'
-                                                    >
-                                                        <td className='p-2 border print:border-gray-300'>{moment(lastEntry?.createdAt).format('DD MMM YYYY')}</td>
-                                                        <td className='p-2 border print:border-gray-300'>Final Balance</td>
-                                                        <td className='p-2 border print:border-gray-300'></td>
-                                                        <td className='p-2 border print:border-gray-300'></td>
-                                                        <td className='p-2 border print:border-gray-300'></td>
-                                                        <td className='p-2 text-right border print:border-gray-300'>{EntryManager.cashIn()}</td>
-                                                        <td className='p-2 text-right border print:border-gray-300'>{EntryManager.cashOut()}</td>
-                                                        <td className='p-2 border print:border-gray-300'></td>
-                                                        <td className='p-2 text-right border print:border-gray-300'>{EntryManager.balance()}</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        }
+
                     </div>
                     <div
                         className='h-20 px-6 flex justify-end items-center border-t'
                     >
                         {
                             exportType === 'pdf' ?
-                                <button
-                                    onClick={handlePrint}
-                                    className='px-6 py-3 bg-[#4863D4] text-white rounded-md'
-                                >
-                                    Download PDF
-                                </button>
+                                <>
+                                    {!setting &&
+                                        <button
+                                            onClick={handlePrint}
+                                            className='px-6 py-3 flex items-center space-x-2 bg-[#4863D4] text-white rounded-md'
+                                        >
+                                            <MdFileDownload />
+                                            <span>Download PDF</span>
+                                        </button>
+                                    }
+                                </>
                                 :
                                 <button
                                     onClick={onDownload}
-                                    className='px-6 py-3 bg-[#4863D4] text-white rounded-md'
+                                    className='px-6 py-3 flex items-center space-x-2 bg-[#4863D4] text-white rounded-md'
                                 >
-                                    Download Excel
+                                    <MdFileDownload />
+                                    <span>Download Excel</span>
                                 </button>
                         }
                     </div>
