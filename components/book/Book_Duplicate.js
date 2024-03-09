@@ -21,6 +21,7 @@ const Book_Duplicate = ({id, view, setView }) => {
         'payment',
         'contact'
     ])
+    
     const stepsTopics = [
         {
             title: 'Members and Roles',
