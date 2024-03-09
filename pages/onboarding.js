@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react'
 import { MdCheckBoxOutlineBlank, MdCheckBox } from "react-icons/md";
 import { useDispatch } from 'react-redux';

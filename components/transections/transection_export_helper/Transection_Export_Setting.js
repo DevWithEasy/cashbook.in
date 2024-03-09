@@ -56,7 +56,7 @@ const Transection_Export_Setting = ({ fields,setFields }) => {
             <p
                 className='text-sm'
             >
-                Select columns you wish to include in “All Entries"
+                Select columns you wish to include in All Entries
             </p>
             <div
                 className='grid grid-cols-3 gap-3'

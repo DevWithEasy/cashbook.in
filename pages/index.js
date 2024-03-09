@@ -1,23 +1,20 @@
+import Head from 'next/head';
+import { TiArrowRightThick } from "react-icons/ti";
+import HomeLayout from '../components/HomeLayout';
+import HomeSlider from '../components/HomeSlider';
 import { c_green, c_main, c_section_hero } from "../public/colors";
 import android from '../public/image/Google_Play_Store_badge.svg';
 import apple from '../public/image/IOS_App_Store_badge.svg';
 import web from '../public/image/Web_App_badge.svg';
+import w_image_1 from '../public/image/incomeAndExpense.webp';
+import w_image_3 from '../public/image/multipleBusinesses.webp';
+import w_image_4 from '../public/image/passbook.webp';
+import w_image_5 from '../public/image/reports.webp';
+import w_image_2 from '../public/image/staffToBusiness.webp';
 import hero_image from '../public/image/uncleWithBlueBg.webp';
-import w_image_1 from '../public/image/incomeAndExpense.webp'
-import w_image_2 from '../public/image/staffToBusiness.webp'
-import w_image_3 from '../public/image/multipleBusinesses.webp'
-import w_image_4 from '../public/image/passbook.webp'
-import w_image_5 from '../public/image/reports.webp'
-import benifit_image from '../public/image/uncleWithoutBg.webp'
-import HomeSlider from '../components/HomeSlider';
-import HomeLayout from '../components/HomeLayout';
-import Head from 'next/head';
-import Entry from '../utils/Entry';
-import { TiArrowRightThick } from "react-icons/ti";
+import benifit_image from '../public/image/uncleWithoutBg.webp';
 
 export default function Index() {
-  const entry = new Entry()
-  console.log(entry.generatedEntry())
 
   const hero_topics = [
     'Track Income & Expenses',

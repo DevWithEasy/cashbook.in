@@ -1,3 +1,4 @@
+"use client"
 import moment from 'moment';
 import Head from 'next/head';
 import Link from 'next/link';
@@ -60,12 +61,11 @@ const ImportTransections = () => {
             reader.readAsText(file);
         }
     };
-    console.log(entries)
     return (
         <UserLayout>
             <div>
                 <Head>
-                    <title>Import Entries{currentBook?.name}' - CashBook</title>
+                    <title>Import Entries {currentBook?.name} - CashBook</title>
                 </Head>
 
                 <div

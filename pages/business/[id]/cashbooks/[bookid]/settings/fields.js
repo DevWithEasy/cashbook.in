@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import {BookSettingLayout,UserLayout} from '../../../../../../components/Index';
 import { useRouter } from 'next/router';

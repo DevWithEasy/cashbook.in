@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import { useSelector } from 'react-redux';
@@ -179,7 +180,7 @@ const BusinessMemberInfo = () => {
                                 businessManager.getBooks(currentBusiness).length > 0 &&
                                 businessManager.getBooks(currentBusiness).map(book =>
                                     <div
-                                        kety={book?._id}
+                                        key={book?._id}
                                         className='flex items-center space-x-4'
                                     >
                                         <ImUsers

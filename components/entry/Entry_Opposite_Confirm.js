@@ -44,7 +44,7 @@ export default function Entry_Opposite_Confirm({ items, book, view, setView, set
                 className='flex space-x-2'
               >
                 <RxDotFilled size={25} className='text-gray-500' />
-                <span>‘Cash In’ entries will be added as ‘Cash Out’ entries in '{book?.name}' and vice versa</span>
+                <span><b>Cash In</b> entries will be added as <b>Cash Out</b> entries in <b>{book?.name} </b>and vice versa</span>
               </p>
               <Image
                 src={opposite.src}
@@ -56,7 +56,7 @@ export default function Entry_Opposite_Confirm({ items, book, view, setView, set
                 className='flex space-x-2'
               >
                 <RxDotFilled size={25} className='text-gray-500' />
-                <span>This will change the net balance of '{book?.name}'</span>
+                <span>This will change the net balance of <b>{book?.name}</b></span>
               </p>
             </div>
             <div

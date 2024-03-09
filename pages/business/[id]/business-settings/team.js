@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from "react";
 import { UserLayout, BusinessLayout, Business_AddTeamMember, Business_RolePermission } from "../../../../components/Index";
 import Image from "next/image";

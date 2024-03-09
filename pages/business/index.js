@@ -1,21 +1,16 @@
-import { Business_Add, UserLayout } from '../../components/Index';
-import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios'
-import { GoPlus } from "react-icons/go";
-import { IoSettingsOutline } from 'react-icons/io5';
-import { MdBook } from "react-icons/md";
-import { useRouter } from 'next/router';
-import React, { useEffect, useState } from 'react';
+"use client"
+import Link from 'next/link';
+import React, { useState } from 'react';
 import { BsBuildings } from "react-icons/bs";
-import BusinessManager from '../../utils/BusinessManager';
-import Link from 'next/link'
 import { CiSearch } from 'react-icons/ci';
+import { GoPlus } from "react-icons/go";
+import { useSelector } from 'react-redux';
+import { Business_Add, UserLayout } from '../../components/Index';
+import BusinessManager from '../../utils/BusinessManager';
 
 const Businesses = () => {
-    const dispatch = useDispatch()
-    const { books, businesses, currentBusiness, currentBook } = useSelector(state => state.book)
-    const { isAuth, user } = useSelector(state => state.auth)
-    const router = useRouter()
+    const { books, businesses, currentBusiness} = useSelector(state => state.book)
+    const { user } = useSelector(state => state.auth)
     const [view, setView] = useState(false)
     const businessManager = new BusinessManager(user, books, businesses, currentBusiness)
     return (

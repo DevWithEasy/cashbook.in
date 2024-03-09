@@ -1,40 +1,23 @@
-import { useDisclosure } from "@chakra-ui/react";
+"use client"
+import moment from "moment";
 import Head from "next/head";
+import Image from "next/image";
 import React, { useState } from 'react';
-import { useDispatch, useSelector } from "react-redux";
-import Layout from "../components/Layout";
+import { IoIosLogOut } from "react-icons/io";
 import { MdVerified } from "react-icons/md";
 import { RiEdit2Line } from "react-icons/ri";
-import { IoIosLogOut } from "react-icons/io";
-import Image from "next/image";
-import user_img from '../public/image/profile.png'
+import { useSelector } from "react-redux";
+import Layout from "../components/Layout";
 import UpadateProfile from "../components/UpdateProfile";
 import UpdateProfilePhoto from "../components/UpdateProfilePhoto";
-import moment from "moment";
+import user_img from '../public/image/profile.png';
 
 export default function Profile() {
     const [isNoti, setNoti] = useState(false)
-    const user = useSelector(state => state.auth.user)
-    const dispatch = useDispatch()
+    const {user} = useSelector(state => state.auth)
     const [view, setView] = useState(false)
     const [updatePhoto, setUpdatePhoto] = useState(false)
-    const [deleteAccount, setDeleteAccount] = useState(false)
-    const [image, setImage] = useState(null)
-    const [file, setFile] = useState(null)
-    const [password, setPassword] = useState({
-        email: user.email,
-        oldPassword: '',
-        newPassword: ''
-    })
-    const handleFile = (e) => {
-        setFile(e.target.files[0])
-        const fileReader = new FileReader()
-        fileReader.onload = (e) => {
-            setImage(e.target.result)
-        }
-        fileReader.readAsDataURL(e.target.files[0])
-    }
-    console.log(user)
+    
     return (
         <Layout>
             <div

@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react';
 import { ImSpinner9 } from "react-icons/im";
 import { isMobile } from 'react-device-detect'

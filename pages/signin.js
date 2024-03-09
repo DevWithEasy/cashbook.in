@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useRef, useState } from 'react';
 import logo from '../public/cashbook.svg';
 import sideImage from '../public/image/carousel_01.svg'

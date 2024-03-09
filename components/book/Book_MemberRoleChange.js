@@ -67,7 +67,7 @@ const Book_MemberRoleChange = ({ member, view, setView }) => {
                                 className='px-6 py-4 flex justify-between items-center'
                             >
                                 <p className='text-xl'>
-                                    Change {member?.user?.name}' Role
+                                    Change {member?.user?.name} Role
                                 </p>
                                 <button
                                     onClick={() => setView(!view)}

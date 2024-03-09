@@ -1,3 +1,4 @@
+"use client"
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useState } from 'react';
@@ -59,7 +60,7 @@ const Contact = () => {
                             className='p-3 flex items-center space-x-2 bg-[#F8EFE7] text-[#BD610D] border border-[#BD610D] rounded-md'
                         >
                             <TiInfo size={25} />
-                            <span>You don't have permissions to update fields in this book.</span>
+                            <span>You dont have permissions to update fields in this book.</span>
                         </div>
                     }
                     <div
@@ -163,6 +164,7 @@ const Contact = () => {
                                 {
                                     ccp.map(contact =>
                                         <div
+                                            key={contact?._id}
                                             className='pl-4 py-2 flex justify-between items-center border rounded'
                                         >
                                             <div

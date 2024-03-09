@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react';
 import {UserLayout,Business_Update,BusinessLayout} from '../../../../components/Index';
 import { MdOutlineEdit } from "react-icons/md";

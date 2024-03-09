@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import Layout from '../components/Layout';
-import Image from 'next/image';
-import { IoIosArrowDown, IoIosArrowUp, IoMdCheckmarkCircle } from "react-icons/io";
+"use client"
 import axios from 'axios';
-import { categories, types } from '../public/image/bussiness/business_data';
-import handleInput from '../utils/handleInput';
-import { ImSpinner9 } from "react-icons/im";
 import Head from 'next/head';
-import { notificationNOT, notificationOK } from '../utils/toastNotification';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux'
+import React, { useState } from 'react';
+import { IoIosArrowDown, IoIosArrowUp, IoMdCheckmarkCircle } from "react-icons/io";
+import { useDispatch } from 'react-redux';
+import Layout from '../components/Layout';
+import { categories, types } from '../public/image/bussiness/business_data';
 import { addBusiness } from '../store/slice/bookSlice';
 import api from '../utils/api';
+import handleInput from '../utils/handleInput';
+import { notificationNOT, notificationOK } from '../utils/toastNotification';
 
 const AddFirstBusiness = () => {
     const dispatch = useDispatch()

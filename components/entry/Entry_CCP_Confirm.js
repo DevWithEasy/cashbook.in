@@ -58,7 +58,7 @@ export default function Entry_CCP_Confirm({ items, id, field, view, setView, set
                                 className='flex items-center space-x-2'
                             >
                                 <RxDotFilled size={25} className='text-gray-500' />
-                                <span>Selected entry will be added to '{find?.name}' {field}</span>
+                                <span>Selected entry will be added to <b>{find?.name}</b> {field}</span>
                             </p>
                         }
                     </div>

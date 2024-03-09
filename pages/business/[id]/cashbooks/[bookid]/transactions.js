@@ -1,3 +1,4 @@
+"use client"
 import React, { useEffect, useState } from 'react';
 import { Balance, Entry_Add, Entry_Category, Entry_Contact, Entry_Delete, Entry_Delete_Many, Entry_Details, Entry_Duplicate, Entry_Move, Entry_Opposite, Entry_Payment, Entry_Update, Loading, Transections_Header, Transections_NoFound, Transections_Pagination, Transections_Search, Transections_SortBy, Transections_Tbody, Transections_TheadAction, Transections_TheadMain, UserLayout, Transections_List, Transection_Export } from '../../../../../components/Index';
 import { useRouter } from 'next/router';
@@ -92,7 +93,7 @@ const Transactions = () => {
                     className='h-[calc(100vh-48px)] bg-gray-100 md:bg-white space-y-2 md:space-y-5 overflow-y-auto'
                 >
                     <Head>
-                        <title>{currentBook?.name}'s Transactions - CashBook</title>
+                        <title>{currentBook?.name}s Transactions - CashBook</title>
                     </Head>
 
                     <Transections_Header {...{ permission,setExportType,setExportView }} />
