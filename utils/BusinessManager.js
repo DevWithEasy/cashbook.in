@@ -65,7 +65,7 @@ class BusinessManager {
 
         const businessBooks = matchingBooks.filter(book => book?.business === id)
 
-        return businessBooks.length
+        return businessBooks?.length
     }
 
     getTotalMembers() {
@@ -107,25 +107,25 @@ class BusinessManager {
     }
 
     getBusinessInfo(){
-        if(this.currentBusiness?.name.length > 0 && this.currentBusiness?.address.length > 0 && this.currentBusiness?.phone.length > 0 && this.currentBusiness?.email.length > 0){
+        if(this.currentBusiness?.name?.length > 0 && this.currentBusiness?.address?.length > 0 && this.currentBusiness?.phone?.length > 0 && this.currentBusiness?.email?.length > 0){
             return {
                 num : 6,
                 width : 100,
                 color : 'bg-blue-500'
             }
-        }else if(this.currentBusiness?.name.length > 0 && this.currentBusiness?.address.length > 0 && this.currentBusiness?.phone.length > 0){
+        }else if(this.currentBusiness?.name?.length > 0 && this.currentBusiness?.address?.length > 0 && this.currentBusiness?.phone?.length > 0){
             return {
                 num : 5,
                 width : 83.3,
                 color : 'bg-red-500'
             }
-        }else if(this.currentBusiness?.name.length > 0 && this.currentBusiness?.address.length > 0){
+        }else if(this.currentBusiness?.name?.length > 0 && this.currentBusiness?.address?.length > 0){
             return {
                 num : 4,
                 width : 66.64,
                 color : 'bg-red-400'
             }
-        }else if(this.currentBusiness?.name.length > 0){
+        }else if(this.currentBusiness?.name?.length > 0){
             return {
                 num : 3,
                 width : 49.98,
