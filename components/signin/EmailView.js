@@ -1,15 +1,13 @@
-import React, { useState } from 'react';
+import axios from 'axios';
 import Link from 'next/link';
-import axios from 'axios'
+import React, { useState } from 'react';
 import { IoArrowBackOutline } from "react-icons/io5";
-import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { login } from '../../store/slice/authSlice';
-import { notificationOK } from '../../utils/toastNotification';
 import api from '../../utils/api';
+import { notificationOK } from '../../utils/toastNotification';
 
 const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleView, success, setSuccess, loading, setLoading }) => {
-    const router = useRouter()
     const dispatch = useDispatch()
     const [otp, setOtp] = useState('')
 
@@ -19,7 +17,7 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
     const handleVerify = async (e) => {
         e.preventDefault()
         const mail = localStorage.getItem('cb_email') || email
-        setLoading(!loading)
+        setLoading(true)
         try {
             const res = await axios.post(`${api}/user/verify-otp?email=${mail}&otp=${otp}`)
 
@@ -27,7 +25,7 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
 
                 const { message, data } = res.data
 
-                setLoading(!loading)
+                setLoading(false)
                 dispatch(login(data))
 
                 localStorage.setItem('cb_access_token', res.data.token)
@@ -39,7 +37,7 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
             }
         } catch (error) {
             console.log(error)
-            setLoading(!loading)
+            setLoading(false)
         }
     }
 
@@ -125,7 +123,7 @@ const EmailView = ({ inputRef, handleChange, handleLogin, email, valid, handleVi
                                 className={`w-full p-3 rounded ${otp.length == 6 ? 'bg-[#4863D4] text-white' : 'bg-gray-100 text-gray-300 cursor-not-allowed'}`}
                                 disabled={otp.length == 6 ? false : true}
                             >
-                                {!loading ?
+                                {loading ?
                                     'Verifying...'
                                     :
                                     'Verify'

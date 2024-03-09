@@ -59,13 +59,13 @@ const Transection_Export_Setting = ({ fields,setFields }) => {
                 Select columns you wish to include in All Entries
             </p>
             <div
-                className='grid grid-cols-3 gap-3'
+                className='grid grid-cols-2 md:grid-cols-3 gap-3'
             >
                 {
                     settingsCompulsary.map((s, i) =>
                         <div
                             key={i}
-                            className='p-4 flex items-center space-x-2 bg-[#EEEEEE] rounded-md cursor-pointer'
+                            className='p-2 md:p-4 flex items-center space-x-2 bg-[#EEEEEE] rounded-md cursor-not-allowed'
                         >
                             <div>
                                 <RiCheckboxFill size={25} className='text-[#2563EB] ' />
@@ -84,7 +84,7 @@ const Transection_Export_Setting = ({ fields,setFields }) => {
                     <div
                     key={i}
                     onClick={()=>handleColumn(s.column)}
-                    className={`p-4 flex items-center space-x-2 border rounded-md cursor-pointer ${fields.includes(s.column) ? 'bg-[#EBEEFD]' : ''}`}
+                    className={`p-2 md:p-4 flex items-center space-x-2 border rounded-md cursor-pointer ${fields.includes(s.column) ? 'bg-[#EBEEFD]' : ''}`}
                 >
                     <div>
                         {

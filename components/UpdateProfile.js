@@ -4,14 +4,41 @@ import {
   ModalOverlay
 } from '@chakra-ui/react';
 import React, { useState } from 'react';
-import { useDispatch,useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import handleInput from '../utils/handleInput';
+import axios from 'axios'
+import api from '../utils/api';
+import { notificationNOT, notificationOK } from '../utils/toastNotification';
+import { login } from '../store/slice/authSlice';
 
 export default function UpadateProfile({ view, setView }) {
-  const {user} = useSelector(state=>state.auth)
+  const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch()
-  const [value,setValue] = useState(user)
+  const [value, setValue] = useState(user)
   const [loading, setLoading] = useState(false)
+
+  const handleUpdate = async () => {
+    try {
+      setLoading(true)
+      const res = await axios.put(`${api}/user/update`, value, {
+        headers: {
+          "cb-access-token": localStorage.getItem("cb_access_token")
+        }
+      })
+      
+      if (res.data.success) {
+        notificationOK(res.data.message)
+        dispatch(login(res.data.data))
+        setLoading(false)
+        setView(false)
+      }
+    } catch (error) {
+      console.log(error)
+      notificationNOT()
+      setLoading(false)
+    }
+  }
+  
   return (
     <>
       <Modal
@@ -46,7 +73,7 @@ export default function UpadateProfile({ view, setView }) {
                 <input
                   name='name'
                   value={value?.name}
-                  onChange={(e)=>handleInput(e)}
+                  onChange={(e) => handleInput(e, value, setValue)}
                   className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                 />
               </div>
@@ -57,7 +84,7 @@ export default function UpadateProfile({ view, setView }) {
                 <input
                   name='email'
                   value={value?.email}
-                  onChange={(e)=>handleInput(e)}
+                  onChange={(e) => handleInput(e, value, setValue)}
                   className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                 />
               </div>
@@ -68,7 +95,7 @@ export default function UpadateProfile({ view, setView }) {
                 <input
                   name='number'
                   value={value?.number}
-                  onChange={(e)=>handleInput(e)}
+                  onChange={(e) => handleInput(e, value, setValue)}
                   className='w-full px-4 py-2 border rounded focus:outline-[#4863D4]'
                 />
               </div>
@@ -83,9 +110,10 @@ export default function UpadateProfile({ view, setView }) {
                 Cancel
               </button>
               <button
+                onClick={handleUpdate}
                 className='px-8 py-3 bg-[#4863d4] text-white border rounded'
               >
-                Save
+                {loading ? "Saving..." : "Save Change"}
               </button>
             </div>
           </div>
