@@ -91,7 +91,7 @@ export default function Business_Add({ view, setView }) {
                 name='name'
                 placeholder='Added Business Name'
                 onChange={(e) => handleInput(e, value, setValue)}
-                className='w-1/2 p-2 border rounded focus:outline-[#4863D4]'
+                className='w-3/4 p-2 border rounded focus:outline-[#4863D4]'
                 autoFocus={true}
               />
             </div>
@@ -137,7 +137,7 @@ export default function Business_Add({ view, setView }) {
               </div>
               {categoryView &&
                 <div
-                  className='pt-5 grid grid-cols-4 gap-4'
+                  className='pt-5 grid grid-cols-2 gap-4'
                 >
                   {
                     categories.map(cat =>
@@ -209,7 +209,7 @@ export default function Business_Add({ view, setView }) {
               </div>
               {typeView &&
                 <div
-                  className='pt-5 grid grid-cols-4 gap-4'
+                  className='pt-5 grid grid-cols-2 gap-4'
                 >
                   {
                     types.map(typ =>

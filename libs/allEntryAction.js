@@ -110,10 +110,10 @@ export const deleteEntry = async (data) => {
 }
 
 export const deleteEntryMany = async (data) => {
-    const { items, setLoading, dispatch, action, setView } = data
+    const {book,business, items, setLoading, dispatch, action, setView } = data
     try {
         setLoading(true)
-        const res = await axios.put(`${api}/transection/deletemany`,
+        const res = await axios.put(`${api}/transection/delete-many`,
             { entries: items },
             {
                 headers: {
@@ -127,8 +127,10 @@ export const deleteEntryMany = async (data) => {
                 dispatch(action(id))
             })
             setView(false)
+            socket.emit('delete_many_transection',{book_id : book, business_id : business,entries : items})
         }
     } catch (err) {
+        console.log(err)
         setLoading(false)
         notificationNOT(err.message)
     }

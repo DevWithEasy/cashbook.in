@@ -42,7 +42,7 @@ const Transections_Pagination = ({selected}) => {
     ]
     return (
         <div
-            className='pt-3 md:pt-0 flex justify-between items-center'
+            className='sticky top-0 p-2 flex justify-between items-center bg-white rounded-md'
         >
             <p
                 className='text-sm space-x-3'

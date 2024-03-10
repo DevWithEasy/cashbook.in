@@ -15,7 +15,7 @@ import { deleteEntryMany } from '../../libs/allEntryAction';
 import { removeEntry } from '../../store/slice/bookSlice';
 
 export default function Entry_Delete_Many({ items, view, setView }) {
-  const { entries, currentBook } = useSelector(state => state.book)
+  const { entries, currentBook,currentBusiness } = useSelector(state => state.book)
   const entry = entries.find(e => e._id === items[0])
   const dispatch = useDispatch()
   const [loading, setLoading] = useState(false)
@@ -92,6 +92,8 @@ export default function Entry_Delete_Many({ items, view, setView }) {
           >
             <button
               onClick={() => deleteEntryMany({
+                book : currentBook._id,
+                business : currentBusiness._id,
                 items,
                 action: removeEntry,
                 dispatch,

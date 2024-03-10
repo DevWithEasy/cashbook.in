@@ -55,6 +55,7 @@ const UserLayout = ({ path, children }) => {
         Socket.addTransection()
         Socket.updateTransection()
         Socket.deleteTransection()
+        Socket.deleteManyTransection()
         Socket.importTransection()
     })
 

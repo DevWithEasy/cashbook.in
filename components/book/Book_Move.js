@@ -143,7 +143,7 @@ const Book_Move = ({ id,view, setView }) => {
                     {addBusinessView &&
                         <Business_Add {...{
                             view : addBusinessView,
-                            setview : setAddBusinessView
+                            setView : setAddBusinessView
                         }}/>
                     }
                 </DrawerContent>

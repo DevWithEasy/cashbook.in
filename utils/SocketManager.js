@@ -120,6 +120,17 @@ class SocketManager{
         })
     }
 
+    deleteManyTransection(){
+        socket.on('client_delete_many_transection',data=>{
+            const path = `/business/${data.business_id}/cashbooks/${data.book_id}/transactions`
+            if(this.router.asPath === path){
+                data?.entries.forEach(entry =>{
+                    this.dispatch(removeEntry(entry))
+                })
+            }
+        })
+    }
+
     importTransection(){
         socket.on('client_import_transecion',data=>{
             const path = `/business/${data.business}/cashbooks/${data.book}/transactions`

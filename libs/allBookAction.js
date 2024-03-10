@@ -97,7 +97,7 @@ export const moveBook = async (data) => {
     const {id, to, setLoading, dispatch, action,refresh, setView} = data
     try {
         setLoading(true)
-        const res = await axios.put(`${api}/book/move?id=${id}&to=${to}`, {},{
+        const res = await axios.put(`${api}/book/move/${id}&/?to=${to}`, {},{
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
