@@ -121,7 +121,7 @@ export const copyBook = async (data) => {
     const {id, values, setLoading, dispatch, action,refresh, setView} = data
     try {
         setLoading(true)
-        const res = await axios.put(`${api}/book/copy?id=${id}`, {values},{
+        const res = await axios.put(`${api}/book/copy/${id}`, {values},{
             headers: {
                 "cb-access-token": localStorage.getItem("cb_access_token")
             }
