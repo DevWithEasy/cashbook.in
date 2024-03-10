@@ -53,7 +53,7 @@ const Cashbooks_Search = ({ sortBy, setSortBy }) => {
                 className='w-5/12'
             >
                 <MenuButton
-                    className='border rounded focus:ring-2 ring-[#4863D4] bg-white'
+                    className='border rounded focus:ring-2 ring-[#4863D4] focus:border-none bg-white'
                 >
                     <div
                         className='w-full p-[10px] flex justify-between items-center space-x-2 text-sm'
@@ -62,29 +62,27 @@ const Cashbooks_Search = ({ sortBy, setSortBy }) => {
                         <TiArrowSortedDown />
                     </div>
                 </MenuButton>
-                <MenuList>
+                <MenuList
+                    className='space-y-2'
+                >
                     {
                         sorts.map((sort, i) =>
-                            <MenuItem
+                            <button
                                 key={i}
+                                onClick={() => setSortBy(sort)}
+                                className='px-2 py-1 w-full flex items-center space-x-2 hover:bg-gray-50'
                             >
-                                <button
-                                    onClick={() => setSortBy(sort)}
-                                    className='flex items-center space-x-2'
-                                >
-                                    {sort.sort === sortBy.sort ?
-                                        <MdOutlineRadioButtonChecked className='text-[#4863D4]' />
-                                        :
-                                        <MdRadioButtonUnchecked />
-                                    }
-                                    <span>
-                                        {sort.title}
-                                    </span>
-                                </button>
-                            </MenuItem>
+                                {sort.sort === sortBy.sort ?
+                                    <MdOutlineRadioButtonChecked className='text-[#4863D4]' />
+                                    :
+                                    <MdRadioButtonUnchecked />
+                                }
+                                <span>
+                                    {sort.title}
+                                </span>
+                            </button>
                         )
                     }
-                    <div></div>
                 </MenuList>
             </Menu>
 

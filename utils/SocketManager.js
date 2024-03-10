@@ -76,6 +76,15 @@ class SocketManager{
         })
     }
 
+    bookMove(){
+        socket.on('move_book_client', data => {
+            this.dispatch(renameBook(data))
+            if (this.router.asPath === `/business/${this.business}/cashbooks`) {
+                this.handleChecking()
+            }
+        })
+    }
+
     addMemberInBook(){
         socket.on('add_team_client', data => {
             this.handleChecking()

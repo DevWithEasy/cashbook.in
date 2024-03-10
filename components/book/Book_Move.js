@@ -127,6 +127,7 @@ const Book_Move = ({ id,view, setView }) => {
                         <button
                             onClick={() => moveBook({
                                 id,
+                                from : currentBusiness._id,
                                 to : business?._id,
                                 action : renameBook,
                                 refresh,

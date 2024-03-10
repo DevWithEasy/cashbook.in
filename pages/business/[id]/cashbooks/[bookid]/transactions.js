@@ -130,7 +130,7 @@ const Transactions = () => {
                                         className='hidden md:block w-full overflow-y-auto'
                                     >
                                         <table
-                                            className='w-full'
+                                            className='w-full sticky'
                                         >
                                             {selected.length > 0 ?
                                                 <Transections_TheadAction {...{
