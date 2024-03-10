@@ -5,7 +5,7 @@ import { GoPlus } from "react-icons/go";
 import { IoSettingsOutline } from 'react-icons/io5';
 import { MdBook } from "react-icons/md";
 import { useDispatch, useSelector } from 'react-redux';
-import { addCurrentBusiness } from '../store/slice/bookSlice';
+import { addBooks, addCurrentBusiness } from '../store/slice/bookSlice';
 import BusinessManager from '../utils/BusinessManager';
 import SocketManager from '../utils/SocketManager';
 import socket from '../utils/socket';
@@ -44,6 +44,7 @@ const UserLayout = ({ path, children }) => {
         //===============Book=================
         
         Socket.bookUpdate()
+        Socket.bookMove()
         //add book member
         Socket.addMemberInBook()
         //remove book member
@@ -61,11 +62,8 @@ const UserLayout = ({ path, children }) => {
 
     useEffect(() => {
         socket.emit('join_cashbook', { _id: user._id })
-        socket.on('connection', (socket) => {
-
-        })
     })
-
+    
     return (
         <div
             className='h-screen overflow-hidden'

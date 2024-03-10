@@ -31,7 +31,9 @@ const Cashbooks = () => {
 
     const getBusinessBooks = async () => {
 
-        getBooks(router.query.id, dispatch, reAddCurrentBooks)
+        Promise.all(
+            [getBooks(router.query.id, dispatch, reAddCurrentBooks)]
+        )
 
         const findBusiness = businesses.find(business => business._id === router.query.id)
         dispatch(addCurrentBusiness(findBusiness))

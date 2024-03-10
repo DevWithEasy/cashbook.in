@@ -103,7 +103,6 @@ export const moveBook = async (data) => {
             }
         })
         if (res.data.status === 200) {
-            console.log(res.data.data)
             setLoading(false)
             dispatch(refresh())
             dispatch(action(res.data.data))

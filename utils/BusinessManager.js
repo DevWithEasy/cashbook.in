@@ -46,7 +46,6 @@ class BusinessManager {
     }
 
     totalBook(id) {
-
         const matchingBooks = [];
         for (const book of this.books) {
             if (book?.user?._id === this.user?._id) {

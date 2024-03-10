@@ -1,4 +1,4 @@
-import { addBooks, addBusinesses, addCurrentBook, addCurrentBusiness, addEntries, removeBusiness, removeEntry, renameBook, updateBusiness, updatePrevEntry } from "../store/slice/bookSlice";
+import { addBooks, addBusinesses, addCurrentBook, addCurrentBusiness, addEntries, refresh, removeBusiness, removeEntry, renameBook, updateBusiness, updatePrevEntry } from "../store/slice/bookSlice";
 import api from "./api";
 import socket from "./socket";
 import axios from 'axios'
@@ -78,9 +78,12 @@ class SocketManager{
 
     bookMove(){
         socket.on('move_book_client', data => {
+            console.log(data)
             this.dispatch(renameBook(data))
-            if (this.router.asPath === `/business/${this.business}/cashbooks`) {
+            if (this.router.asPath === `/business/${this.business._id}/cashbooks`) {
+                console.log('right')
                 this.handleChecking()
+                this.dispatch(refresh)
             }
         })
     }
