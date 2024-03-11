@@ -38,6 +38,7 @@ const UserLayout = ({ path, children }) => {
         Socket.addBusiness()
         Socket.businessUpdate()
         Socket.removeBusiness()
+        Socket.leaveBusiness()
 
         //===============Business=================
 
@@ -63,7 +64,7 @@ const UserLayout = ({ path, children }) => {
     useEffect(() => {
         socket.emit('join_cashbook', { _id: user._id })
     })
-    
+    // console.log(router.asPath)
     return (
         <div
             className='h-screen overflow-hidden'

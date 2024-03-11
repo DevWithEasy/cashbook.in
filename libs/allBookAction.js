@@ -80,7 +80,6 @@ export const deleteBook = async (name, book, router, setLoading, dispatch, actio
         })
         if (res.data.status === 200) {
             setLoading(false)
-            router.push("/")
             dispatch(action(book._id))
             dispatch(refresh())
             setView(false)
@@ -127,9 +126,9 @@ export const copyBook = async (data) => {
         })
         if (res.data.status === 200) {
             setLoading(false)
-            // dispatch(refresh())
-            // dispatch(action(res.data.data))
-            // setView(false)
+            dispatch(refresh())
+            dispatch(action(res.data.data))
+            setView(false)
         }
     } catch (err) {
         console.log(err)

@@ -25,6 +25,7 @@ class SocketManager{
 
                 this.dispatch(addBusinesses(businesses))
                 this.dispatch(addBooks(books))
+                console.log(res.data.success)
             }
         } catch (error) {
             console.log(error)
@@ -63,6 +64,12 @@ class SocketManager{
 
     addBusiness(){
         socket.on('add_business_client', async (data) => {
+            this.handleChecking()
+        })
+    }
+
+    leaveBusiness(){
+        socket.on('business_leave_client', async (data) => {
             this.handleChecking()
         })
     }

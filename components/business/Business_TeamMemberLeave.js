@@ -4,20 +4,43 @@ import {
   ModalContent,
   ModalFooter,
   ModalOverlay
-} from '@chakra-ui/react';
-import moment from 'moment';
-import React, { useState } from 'react';
-import { RxDotFilled } from "react-icons/rx";
-import { useDispatch, useSelector } from 'react-redux';
-import { deleteEntry } from '../../libs/allEntryAction';
-import { removeEntry } from '../../store/slice/bookSlice';
+} from '@chakra-ui/react'
+import axios from 'axios'
+import React, { useState } from 'react'
+import { RxDotFilled } from "react-icons/rx"
+import { useSelector } from 'react-redux'
+import api from '../../utils/api'
+import { notificationNOT, notificationOK } from '../../utils/toastNotification'
+import { useRouter } from 'next/router'
+import socket from '../../utils/socket'
 
-export default function Business_TeamMemberLeave({ id, view, setView }) {
-  const { entries } = useSelector(state => state.book)
-  const entry = entries.find(e => e._id === id)
-  const dispatch = useDispatch()
+export default function Business_TeamMemberLeave({ view, setView }) {
+  const { currentBusiness } = useSelector(state => state.book)
+  const { user } = useSelector(state => state.auth)
+  const router = useRouter()
   const [loading, setLoading] = useState(false)
-  const date = moment(entry?.createdAt).format('DD MMM YYYY')
+
+  const handleLeaveBusiness = async () => {
+    setLoading(true)
+    try {
+      const res = await axios.put(`${api}/business/leave/${currentBusiness._id}/${user._id}`, {}, {
+        headers: {
+          "cb-access-token": localStorage.getItem("cb_access_token")
+        }
+      })
+      if (res.data.success) {
+        setLoading(false)
+        notificationOK(res.data.message)
+        socket.emit('business_leave', {business : res.data.data})
+        router.push('/checking')
+      }
+
+    } catch (error) {
+      setLoading(false)
+      notificationNOT(error.message)
+    }
+  }
+
   return (
     <>
       <Modal
@@ -52,7 +75,7 @@ export default function Business_TeamMemberLeave({ id, view, setView }) {
                 className='flex items-center space-x-2'
               >
                 <span>
-                <RxDotFilled size={25} className='text-gray-500' />
+                  <RxDotFilled size={25} className='text-gray-500' />
                 </span>
                 <span>We will also notify the business owner & other members that you have left the business.</span>
               </p>
@@ -72,13 +95,7 @@ export default function Business_TeamMemberLeave({ id, view, setView }) {
             </button>
 
             <button
-              onClick={(e) => deleteEntry({
-                id,
-                action: removeEntry,
-                dispatch,
-                setLoading,
-                setView
-              })}
+              onClick={handleLeaveBusiness}
               className='px-6 py-3 border bg-[#C93B3B] text-white rounded'
 
             >
