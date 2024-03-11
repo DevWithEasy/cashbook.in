@@ -28,10 +28,10 @@ const Invite = () => {
 
     return (
         <div
-            className='h-screen pt-10  bg-gray-100 overflow-y-auto'
+            className='h-screen py-10  bg-gray-100 overflow-y-auto'
         >
             <div
-                className='w-8/12 mx-auto bg-white rounded'
+                className='md:w-8/12 mx-4 md:mx-auto bg-white rounded'
             >
                 <div
                     className='p-6 flex justify-center items-center space-x-5 text-3xl'
@@ -48,20 +48,21 @@ const Invite = () => {
                 </div>
                 <hr />
                 <div
-                    className='p-8 flex justify-between'
+                    className='p-8 flex flex-col md:flex-row justify-between'
                 >
                     <div
-                        className='w-1/2'
+                        className='md:w-1/2 flex justify-center'
                     >
                         <Image
                             src='/image/invite.png'
                             alt=''
                             height={350}
                             width={450}
+                            className='w-[300px]'
                         />
                     </div>
                     <div
-                        className='w-1/2 flex flex-col space-y-5'
+                        className='md:w-1/2 flex flex-col space-y-5'
                     >
                         <h2 className='text-3xl font-semibold'>{router?.query?.name} added you to a business.</h2>
                         
